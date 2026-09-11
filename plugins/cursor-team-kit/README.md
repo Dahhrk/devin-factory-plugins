@@ -1,4 +1,4 @@
-# cursor-team-kit-converted
+# cursor-team-kit
 
 Devin conversion of the public MIT-licensed
 [cursor-team-kit](https://github.com/cursor/plugins/tree/main/cursor-team-kit)
@@ -6,8 +6,8 @@ Cursor plugin by Eric Zakariasson / Cursor (v1.2.0, cursor/plugins@`f5bdd68`).
 Not affiliated with or endorsed by Cursor — see
 [`../../NOTICE.md`](../../NOTICE.md).
 
-Skills resolve as `/cursor-team-kit-converted:<skill>`, e.g.
-`/cursor-team-kit-converted:deslop`, `/cursor-team-kit-converted:verify-this`.
+Skills resolve as `/cursor-team-kit:<skill>`, e.g.
+`/cursor-team-kit:deslop`, `/cursor-team-kit:verify-this`.
 
 ## Caveats
 

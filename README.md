@@ -6,7 +6,7 @@ marketplace: one repo, one meta-plugin, three plugins.
 Devin discovers [Agent Skills](https://docs.devin.ai/product-guides/skills) from
 `.agents/skills/`, `.devin/skills/`, `.cursor/skills/` and friends in a repo, and
 from installed plugins. Cursor marketplace plugins do **not** load natively in
-Devin — the `*-converted` plugins here are repackaged SKILL.md trees, not a live
+Devin — the converted plugins here are repackaged SKILL.md trees, not a live
 Cursor integration.
 
 ## What's inside
@@ -16,9 +16,9 @@ Cursor integration.
 | `dark-factory-pack` (root) | Meta-plugin. Installing it pulls the three below. |
 | [`factory-baseline`](plugins/factory-baseline) | Factory house rules: draft-PR-only checklist, Done means + Keep handoff, no-secrets-in-kitchen screen. |
 | [`pstack`](plugins/pstack) | Conversion of the public MIT [pstack](https://github.com/cursor/plugins/tree/main/pstack) Cursor plugin (poteto-mode, `principle-*`, verification authoring, review workflows). |
-| [`cursor-team-kit-converted`](plugins/cursor-team-kit-converted) | Conversion of the public MIT [cursor-team-kit](https://github.com/cursor/plugins/tree/main/cursor-team-kit) Cursor plugin (`deslop`, `verify-this`, `control-cli`, `control-ui`, PR/CI helpers). |
+| [`cursor-team-kit`](plugins/cursor-team-kit) | Conversion of the public MIT [cursor-team-kit](https://github.com/cursor/plugins/tree/main/cursor-team-kit) Cursor plugin (`deslop`, `verify-this`, `control-cli`, `control-ui`, PR/CI helpers). |
 
-Skills resolve as `/<plugin>:<skill>`, e.g. `/cursor-team-kit-converted:deslop`,
+Skills resolve as `/<plugin>:<skill>`, e.g. `/cursor-team-kit:deslop`,
 `/factory-baseline:draft-pr-only`, `/pstack:poteto-mode`.
 
 ## Install
@@ -48,7 +48,7 @@ Cloud sessions — an admin adds one required entry under
 ```
 
 Required plugins install recursively, so requiring `dark-factory-pack` brings
-`factory-baseline`, `pstack`, and `cursor-team-kit-converted` with it.
+`factory-baseline`, `pstack`, and `cursor-team-kit` with it.
 
 Devin Cloud supports rules, skills, hooks (except `session_start` / `session_end`),
 and MCP servers. Subagents (`agents/`) are CLI/Desktop-only today, so the ported
@@ -64,7 +64,7 @@ CI runs the same script on every PR.
 
 ## Attribution
 
-`pstack` and `cursor-team-kit-converted` are **inspired-by conversions**
+`pstack` and `cursor-team-kit` are **inspired-by conversions**
 of MIT-licensed upstream work, redistributed under the upstream licenses kept in
 each plugin directory. See [NOTICE.md](NOTICE.md). This repo is not affiliated
 with or endorsed by Cursor, Anysphere, or the upstream authors.
