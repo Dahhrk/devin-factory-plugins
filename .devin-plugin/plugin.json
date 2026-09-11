@@ -15,7 +15,7 @@
     {
       "source": "git-subdir",
       "url": "https://github.com/Dahhrk/devin-factory-plugins.git",
-      "path": "plugins/pstack-converted"
+      "path": "plugins/pstack"
     },
     {
       "source": "git-subdir",
