@@ -1,0 +1,8 @@
+{
+  "name": "pstack-converted",
+  "version": "0.1.0",
+  "description": "Dark factory conversion of the public MIT-licensed pstack Cursor plugin: poteto-mode, principle-* skills, verification authoring, and review workflows, repackaged as Devin Agent Skills",
+  "author": { "name": "Dark factory" },
+  "license": "MIT",
+  "keywords": ["devin", "plugin", "converted", "pstack", "poteto-mode", "principles", "workflow"]
+}
