@@ -4,13 +4,13 @@ This repository redistributes and adapts third-party, MIT-licensed work. It is
 not affiliated with, sponsored by, or endorsed by Cursor / Anysphere or the
 upstream plugin authors. "Inspired by / converted", not official.
 
-## plugins/pstack-converted
+## plugins/pstack
 
 - Upstream: [`cursor/plugins/pstack`](https://github.com/cursor/plugins/tree/main/pstack) v0.15.2 (cursor/plugins@`f5bdd68`)
-- Author: Lauren Tan — MIT, copy kept at `plugins/pstack-converted/LICENSE`
+- Author: Lauren Tan — MIT, copy kept at `plugins/pstack/LICENSE`
 - Changes made in conversion:
   - `.cursor-plugin/plugin.json` → `.devin-plugin/plugin.json` with a Devin
-    manifest (`name: pstack-converted`).
+    manifest (`name: pstack`).
   - Flat `agents/<name>.md` → `agents/<name>/AGENT.md` (Devin layout).
   - Skill frontmatter `name` normalized to kebab-case matching its directory
     (`Poteto Mode` → `poteto-mode`, `Make Bot UI` → `make-bot-ui`,

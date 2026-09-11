@@ -1,12 +1,12 @@
-# pstack-converted
+# pstack
 
 Devin conversion of the public MIT-licensed
 [pstack](https://github.com/cursor/plugins/tree/main/pstack) Cursor plugin by
 Lauren Tan (v0.15.2, cursor/plugins@`f5bdd68`). Not affiliated with or endorsed
 by Cursor or the upstream author — see [`../../NOTICE.md`](../../NOTICE.md).
 
-Skills resolve as `/pstack-converted:<skill>`, e.g. `/pstack-converted:poteto-mode`,
-`/pstack-converted:tdd`, `/pstack-converted:unslop`.
+Skills resolve as `/pstack:<skill>`, e.g. `/pstack:poteto-mode`,
+`/pstack:tdd`, `/pstack:unslop`.
 
 ## Caveats
 
