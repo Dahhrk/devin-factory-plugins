@@ -22,14 +22,14 @@ upstream plugin authors. "Inspired by / converted", not official.
     material — Devin does not load either surface. `assets/logo.png` kept for
     tree parity. Upstream `README.md` is superseded by the conversion README.
 
-## plugins/cursor-team-kit-converted
+## plugins/cursor-team-kit
 
 - Upstream: [`cursor/plugins/cursor-team-kit`](https://github.com/cursor/plugins/tree/main/cursor-team-kit) v1.2.0 (cursor/plugins@`f5bdd68`)
 - Author: Eric Zakariasson / Cursor — MIT, copy kept at
-  `plugins/cursor-team-kit-converted/LICENSE`
+  `plugins/cursor-team-kit/LICENSE`
 - Changes made in conversion:
   - `.cursor-plugin/plugin.json` → `.devin-plugin/plugin.json`
-    (`name: cursor-team-kit-converted`).
+    (`name: cursor-team-kit`).
   - Flat `agents/<name>.md` → `agents/<name>/AGENT.md`.
   - `rules/*.mdc` → `rules/*.md` with Devin rule frontmatter
     (`alwaysApply: true` → `trigger: always_on`).

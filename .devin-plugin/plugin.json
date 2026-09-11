@@ -20,7 +20,7 @@
     {
       "source": "git-subdir",
       "url": "https://github.com/Dahhrk/devin-factory-plugins.git",
-      "path": "plugins/cursor-team-kit-converted"
+      "path": "plugins/cursor-team-kit"
     }
   ]
 }
