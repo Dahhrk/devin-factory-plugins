@@ -2,8 +2,9 @@
 
 Devin conversion of the public MIT-licensed
 [cursor-team-kit](https://github.com/cursor/plugins/tree/main/cursor-team-kit)
-Cursor plugin by Eric Zakariasson / Cursor (v1.2.0). Not affiliated with or
-endorsed by Cursor — see [`../../NOTICE.md`](../../NOTICE.md).
+Cursor plugin by Eric Zakariasson / Cursor (v1.2.0, cursor/plugins@`f5bdd68`).
+Not affiliated with or endorsed by Cursor — see
+[`../../NOTICE.md`](../../NOTICE.md).
 
 Skills resolve as `/cursor-team-kit-converted:<skill>`, e.g.
 `/cursor-team-kit-converted:deslop`, `/cursor-team-kit-converted:verify-this`.
@@ -18,3 +19,5 @@ Skills resolve as `/cursor-team-kit-converted:<skill>`, e.g.
 - `agents/` subagents are CLI/Desktop-only in Devin today.
 - `control-cli` / `control-ui` expect the upstream team's local tooling; use
   them as patterns unless that tooling exists in the repo.
+- `assets/avatar.png` is upstream's plugin avatar, kept for tree parity; the
+  Devin manifest does not reference it.
