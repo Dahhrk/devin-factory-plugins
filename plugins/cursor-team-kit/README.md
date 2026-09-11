@@ -16,7 +16,10 @@ Skills resolve as `/cursor-team-kit:<skill>`, e.g.
 - Shipping-flavored skills (`review-and-ship`, `new-branch-and-pr`,
   `loop-on-ci`) assume merge authority. In the dark factory they stop at a
   draft PR — Riddler → Gordon → human plate.
-- `agents/` subagents are CLI/Desktop-only in Devin today.
+- `agents/` subagents are CLI/Desktop-only in Devin today. `ci-watcher` keeps
+  upstream's `model: fast` pin; `thermo-nuclear-code-quality-review` pins
+  `claude-fable-5-1-high` per the pstack Devin model map
+  (`../pstack/rules/pstack-models.md`).
 - `control-cli` / `control-ui` expect the upstream team's local tooling; use
   them as patterns unless that tooling exists in the repo.
 - `assets/avatar.png` is upstream's plugin avatar, kept for tree parity; the

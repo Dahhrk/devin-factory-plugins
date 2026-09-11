@@ -8,6 +8,22 @@ by Cursor or the upstream author — see [`../../NOTICE.md`](../../NOTICE.md).
 Skills resolve as `/pstack:<skill>`, e.g. `/pstack:poteto-mode`,
 `/pstack:tdd`, `/pstack:unslop`.
 
+## Model routing (Devin edition)
+
+`run_subagent` takes a profile, not a model — the Cursor-side
+`pstack-models.mdc` slug map cannot route in Devin. This plugin therefore
+ships the map natively:
+
+- `rules/pstack-models.md` — always-on rule mapping every pstack role to a
+  Devin slug (`claude-fable-5-1-high` for judgment, `swe-2-max` for fast code,
+  `gpt-5-6-sol-xhigh` / `gemini-3-8-flash-high` for panel diversity). It
+  supersedes the `.mdc` file in Devin sessions.
+- `agents/panelist-{claude,gpt,swe,gemini}` — one profile per model family
+  with `model:` pinned. For panels (arena runners, interrogate reviewers,
+  architect runners, swarm workers) spawn one of each.
+- `model:` is also pinned on `poteto-agent` (judgment) and `comment-sicko`
+  (fast/free).
+
 ## Caveats
 
 - Skill bodies are upstream text. They reference Cursor surfaces (slash
