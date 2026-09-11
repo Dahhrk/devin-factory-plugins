@@ -1,5 +1,5 @@
 {
-  "name": "cursor-team-kit-converted",
+  "name": "cursor-team-kit",
   "version": "0.1.1",
   "description": "Dark factory conversion of the public MIT-licensed cursor-team-kit Cursor plugin: deslop, verify-this, control-cli, control-ui, and PR/CI helpers, repackaged as Devin Agent Skills",
   "author": { "name": "Dark factory" },
