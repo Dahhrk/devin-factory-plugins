@@ -23,6 +23,20 @@ Before touching code, establish the gate the fixes will run against:
 - Vendored, generated, and third-party trees are out of scope — never
   rewrite them.
 
+## Pass 0.5 — the mechanical scan
+
+Run the bundled scanner before judging anything by eye:
+
+```
+node <this skill dir>/scripts/scan.mjs <repo root>
+```
+
+It counts the grep-able smells — comment lines, TODO markers, debug
+leftovers, anonymous multi-statement blocks, awaits inside loops,
+linear scans inside loops — and names the hotspot files. Counts seed
+the survey: a hotspot file with 46 comment lines is a finding, not a
+maybe. Heuristics flag candidates; read before deleting.
+
 ## The survey
 
 Walk the repo and log findings as `path:line — rule — fix shape`. Order:
@@ -33,24 +47,30 @@ Walk the repo and log findings as `path:line — rule — fix shape`. Order:
    signature, AI-flavored justification paragraphs. Keep-list is
    `smallest-correct-diff`: license headers, API contracts, forced
    non-obvious behavior, faulty-rule suppressions.
-3. **Surface shrink** — single-use helpers that inline cleaner, wrappers
+3. **Function hygiene** — every unit of behavior has a name. Anonymous
+   multi-statement blocks inline in calls get extracted to named
+   functions; vague names (`data`, `tmp`, `handler`, `doIt`) get renamed
+   to what the function does; god-functions split at named seams.
+   Single-expression lambdas stay inline — naming `x => x.id` is noise.
+4. **Surface shrink** — single-use helpers that inline cleaner, wrappers
    around what the platform already does, speculative abstractions
    ("configurable" knobs nobody turns), N-copy-paste sites that are one
    shared function.
-4. **Perf smells** — N+1 calls, awaits serialized in loops, allocation
+5. **Perf smells** — N+1 calls, awaits serialized in loops, allocation
    churn on hot paths, recomputed constants, unbounded collections.
    Each one gets a claimed-fix note, and the fix carries a number
    (benchmark/profile/timing before-after) per smallest-correct-diff.
-5. **Contract surfaces** — `AGENTS.md` present? `verify-*` / control CLI
+6. **Contract surfaces** — `AGENTS.md` present? `verify-*` / control CLI
    for a product? CI gates wired? `.devin/` blueprint if the repo wants
    the cloud lane? Missing pieces are findings too.
 
 ## Report
 
-Findings table ordered by risk x value — correctness and perf first,
-cosmetics last. Each row is a unit the human can approve or skip. Do not
-start fixing until the human says go, unless they asked for the full
-sweep outright.
+Findings table ordered by risk x value — perf and least-code first,
+cosmetics last. Performance is the highest-priority finding class:
+a hot-path defect outranks a hundred style nits. Each row is a unit the
+human can approve or skip. Do not start fixing until the human says go,
+unless they asked for the full sweep outright.
 
 ## Fixing
 
