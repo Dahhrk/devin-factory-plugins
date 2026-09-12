@@ -14,6 +14,11 @@ afterthought.
   work. Poke the inputs, read the outputs — an adapter beats a
   reimplementation. (Proven shape: a licence lookup as three functions around
   `SpreadsheetApp`, not a lookup engine rebuilt in Apps Script.)
+- **Registry over wiring.** When N things each need plumbing (routes,
+  achievements, metadata, handlers), one registry/config entry beats N
+  hand-wired sites — add the row, derive the plumbing. (Proven shape:
+  achievements auto-generated per game from a `GAMES` list, not wired per
+  game.)
 - **Minimal is not sloppy.** Boundary validation, concurrency guards, and
   honest error paths stay in the diff. Small surface, full correctness.
 - **No comments by default.** Code explains itself — narration, banners,
