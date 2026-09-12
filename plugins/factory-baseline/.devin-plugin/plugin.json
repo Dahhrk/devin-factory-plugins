@@ -1,6 +1,6 @@
 {
   "name": "factory-baseline",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "description": "Dark factory house rules for the Devin coding lane: draft PRs only, Done means + Keep handoffs, human authorship, professional commits, and no secrets in the public kitchen",
   "author": { "name": "Dark factory" },
   "license": "MIT",
