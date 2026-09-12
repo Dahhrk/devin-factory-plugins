@@ -1,5 +1,5 @@
 ---
-description: Prefer the fastest correct path and the smallest code that carries it — thin shims over existing machinery, correctness guards stay in, performance counts as correctness
+description: Prefer the fastest correct path and the smallest code that carries it — no comments, thin shims over existing machinery, correctness guards stay in, performance counts as correctness
 trigger: always_on
 ---
 
@@ -16,6 +16,12 @@ afterthought.
   `SpreadsheetApp`, not a lookup engine rebuilt in Apps Script.)
 - **Minimal is not sloppy.** Boundary validation, concurrency guards, and
   honest error paths stay in the diff. Small surface, full correctness.
+- **No comments by default.** Code explains itself — narration, banners,
+  commented-out corpses, and justification paragraphs get deleted. The only
+  survivors: legal/license headers, public-API doc contracts, non-obvious
+  behavior forced by an external dependency (mark it for reshape), and lint
+  suppressions where the rule is faulty. Same leash as
+  `pstack:comment-sicko`.
 - **Delete before adding.** If the diff shrinks by removing code instead of
   wrapping it, remove. A helper used once whose body reads clearer inline
   goes inline.
