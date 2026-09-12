@@ -1,0 +1,16 @@
+# Devin cloud environment for the marketplace repo itself.
+# Git-backed blueprint — discovered at the repo root. No dependency install:
+# the tree is JSON/YAML/Markdown and the validator is plain node.
+
+knowledge:
+  - name: test
+    contents: |
+      Validate the whole tree before any commit:
+        node scripts/validate-plugins.mjs
+      Must print "Plugin validation passed." Same script runs in CI.
+
+  - name: rules
+    contents: |
+      Draft PRs only — the author never merges, humans plate. One verifiable
+      unit per PR with Done means + Keep. Upstream skill bodies stay verbatim;
+      Devin-only additions live outside them. See AGENTS.md.
