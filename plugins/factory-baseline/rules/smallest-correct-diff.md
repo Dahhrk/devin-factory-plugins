@@ -27,5 +27,11 @@ afterthought.
   goes inline.
 - **Performance counts as correctness.** Allocation churn, N+1 calls, and
   pointless awaits on hot paths are defects — flag them like bugs, not nits.
+- **Claimed optimizations carry numbers.** A PR or handoff that says
+  "faster" or "optimized" attaches the evidence: a benchmark, a profile, an
+  allocation count, a timing diff — before/after, not vibes. "Should be
+  quicker" is a hypothesis, not an optimization. If measuring is impractical
+  (cold path, third-party bound), say that plainly instead of implying a
+  win.
 - If the minimal version cannot carry the requirement, say why and widen the
   diff deliberately — do not grow it by default.
