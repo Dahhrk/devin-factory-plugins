@@ -7,9 +7,9 @@ trigger: always_on
 
 This is the operating layer on top of pstack, ported for Devin. Do not
 reimplement pstack here. The `pstack` plugin carries the skills; this rule
-carries the contract. (The Cursor lane's equivalent is
-`~/.cursor/rules/poteto-factory-os.mdc` — user-global, so it never reaches
-cloud sessions. This file does.)
+carries the contract. In Devin sessions this file supersedes
+`~/.cursor/rules/poteto-factory-os.mdc` (user-global — invisible to cloud
+sessions; on Cursor it still applies there).
 
 ## Default entry
 
