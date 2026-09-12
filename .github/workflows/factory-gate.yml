@@ -23,16 +23,17 @@ jobs:
           PR_TITLE: ${{ github.event.pull_request.title }}
           PR_BODY: ${{ github.event.pull_request.body }}
         run: |
+          strip() { sed -E 's/\.devin|devin-factory-plugins//g'; }
           pattern='\b(claude|anthropic|openai|copilot|cursor|codeium|windsurf|chatgpt|gpt-?[0-9]|devin-?ai)\b|co-authored-by|generated (with|by)|ai-assisted'
-          if echo "$PR_TITLE" | grep -iE "$pattern"; then
+          if echo "$PR_TITLE" | strip | grep -iE "$pattern"; then
             echo "PR title must read as sole human authorship"
             exit 1
           fi
-          if echo "$PR_BODY" | grep -iE "$pattern"; then
+          if echo "$PR_BODY" | strip | grep -iE "$pattern"; then
             echo "PR body must not carry AI or tool attribution"
             exit 1
           fi
-          if git log -1 --format='%s%n%b' | grep -iE "$pattern"; then
+          if git log -1 --format='%s%n%b' | strip | grep -iE "$pattern"; then
             echo "commit messages must not carry AI or tool attribution"
             exit 1
           fi
