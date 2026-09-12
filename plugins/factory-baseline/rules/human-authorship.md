@@ -14,6 +14,12 @@ AI identity.
   "Generated with" footers, no AI/tool references in commit messages, PR
   bodies, code comments, or file headers. Commit messages read as if a human
   wrote them: professional, imperative, first-person ownership.
+- **No tool names either.** `devin`, `cursor`, `claude`, `gpt`, `swe` in a
+  commit subject, PR title, or posted body is attribution by another name —
+  scope by the feature, not the tool (`feat(cloud):`, `docs(factory):`,
+  never `feat(devin):`). The only survivors are literal artifact names a
+  reader needs: `.devin/` paths, repo slugs like `devin-factory-plugins`,
+  `@Devin` mentions, and CLI invocations (`devin plugins update`).
 - **No em dash in commit messages** — use a regular hyphen.
 - **PRs under the human's account where possible.** In sessions with the
   human's `gh` auth, `gh pr create` opens as them. In cloud sessions the
