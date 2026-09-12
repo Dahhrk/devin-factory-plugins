@@ -17,6 +17,12 @@ runs under, regardless of repo.
   fastest correct path, smallest surface, no comments, thin shims over
   existing machinery, performance as correctness. Encoded from a proven
   cloud run.
+- `rules/human-authorship.md` — everything ships under the human's GitHub
+  account: human git author, no AI trailers/footers/co-author lines, PRs via
+  the human's `gh` token where available.
+- `rules/professional-commits.md` — the commit/PR message craft:
+  Conventional Commits, imperative subjects, why-not-what bodies, ordered
+  commit stories, no scratchpad history.
 - `skills/` — `draft-pr-only`, `done-means-keep-handoff`,
   `no-secrets-in-kitchen`.
 - `AGENTS.md` — house rules injected wherever the plugin is installed.
