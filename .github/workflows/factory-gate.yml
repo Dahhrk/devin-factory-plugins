@@ -1,0 +1,38 @@
+name: factory-gate
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  attribution:
+    name: attribution
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Refuse tracked secrets
+        run: |
+          if git ls-files --error-unmatch .env >/dev/null 2>&1; then
+            echo ".env must not be tracked"
+            exit 1
+          fi
+      - name: Refuse AI or tool attribution in PR title, body, and tip commit
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: |
+          pattern='\b(claude|anthropic|openai|copilot|cursor|codeium|windsurf|chatgpt|gpt-?[0-9]|devin-?ai)\b|co-authored-by|generated (with|by)|ai-assisted'
+          if echo "$PR_TITLE" | grep -iE "$pattern"; then
+            echo "PR title must read as sole human authorship"
+            exit 1
+          fi
+          if echo "$PR_BODY" | grep -iE "$pattern"; then
+            echo "PR body must not carry AI or tool attribution"
+            exit 1
+          fi
+          if git log -1 --format='%s%n%b' | grep -iE "$pattern"; then
+            echo "commit messages must not carry AI or tool attribution"
+            exit 1
+          fi
