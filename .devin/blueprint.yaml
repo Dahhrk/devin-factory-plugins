@@ -2,6 +2,10 @@
 # Git-backed blueprint — discovered at the repo root. No dependency install:
 # the tree is JSON/YAML/Markdown and the validator is plain node.
 
+maintenance: |
+  git config user.name "Dark"
+  git config user.email "32241100+Dahhrk@users.noreply.github.com"
+
 knowledge:
   - name: test
     contents: |

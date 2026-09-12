@@ -1,7 +1,7 @@
 {
   "name": "factory-baseline",
-  "version": "0.2.0",
-  "description": "Dark factory house rules for the Devin coding lane: draft PRs only, Done means + Keep handoffs, and no secrets in the public kitchen",
+  "version": "0.3.0",
+  "description": "Dark factory house rules for the Devin coding lane: draft PRs only, Done means + Keep handoffs, human authorship, and no secrets in the public kitchen",
   "author": { "name": "Dark factory" },
   "license": "MIT",
   "keywords": ["devin", "plugin", "factory", "draft-pr", "handoff", "secrets"]
