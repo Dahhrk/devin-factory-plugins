@@ -23,7 +23,8 @@ runs under, regardless of repo.
 - `rules/professional-commits.md` — the commit/PR message craft:
   Conventional Commits, imperative subjects, why-not-what bodies, ordered
   commit stories, no scratchpad history.
-- `skills/` — `draft-pr-only`, `done-means-keep-handoff`,
+- `skills/` — `factory-pass` (sweep an existing codebase to spec),
+  `draft-pr-only`, `done-means-keep-handoff`,
   `no-secrets-in-kitchen`.
 - `AGENTS.md` — house rules injected wherever the plugin is installed.
 
