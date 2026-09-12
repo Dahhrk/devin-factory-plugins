@@ -31,4 +31,10 @@ runs under, regardless of repo.
   `no-secrets-in-kitchen`.
 - `AGENTS.md` — house rules injected wherever the plugin is installed.
 
+This plugin's `rules/` is the source of truth for the lane-neutral rules.
+`node scripts/sync-factory-rules.mjs` mirrors them to `~/.cursor/rules/`
+(as `.mdc`) and `~/.devin/rules/` so the Cursor and Claude lanes stay in
+step — run it after any rule change lands. `factory-os` and `close-loop`
+are lane-specific by design and are not synced.
+
 Handles resolve as `/factory-baseline:<skill>`.
