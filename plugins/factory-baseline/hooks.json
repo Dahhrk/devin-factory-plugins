@@ -1,0 +1,14 @@
+{
+  "SessionStart": [
+    {
+      "matcher": "",
+      "hooks": [
+        {
+          "type": "command",
+          "command": "(\"$LOCALAPPDATA/Programs/Devin/resources/app/extensions/windsurf/devin/bin/devin.exe\" plugins update || devin plugins update || devin.exe plugins update) >/dev/null 2>&1 </dev/null &",
+          "timeout": 5
+        }
+      ]
+    }
+  ]
+}

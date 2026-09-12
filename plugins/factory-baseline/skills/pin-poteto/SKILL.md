@@ -41,6 +41,10 @@ Done means and a Keep list. Draft PRs; humans plate.
 | Devin cloud | `plugins/factory-baseline/rules/factory-os.md` (already carries it) — verify, do not duplicate | org-required plugin sessions |
 | Cursor | `~/.cursor/rules/poteto-factory-os.mdc` with `alwaysApply: true` | Cursor global |
 | Claude Code | `~/.claude/CLAUDE.md` | Claude global |
+| Codex | `~/.codex/AGENTS.md` | Codex global |
+| Windsurf | `~/.codeium/windsurf/memories/global_rules.md` | Windsurf global |
+| opencode | `~/.config/opencode/AGENTS.md` | opencode global |
+| Continue | `rules:` key in `~/.continue/config.yaml` | Continue global |
 | Generic agents | repo `AGENTS.md` | anything that reads AGENTS.md |
 
 ## Procedure
