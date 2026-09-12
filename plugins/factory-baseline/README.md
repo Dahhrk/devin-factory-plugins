@@ -24,6 +24,9 @@ runs under, regardless of repo.
   Conventional Commits, imperative subjects, why-not-what bodies, ordered
   commit stories, no scratchpad history.
 - `skills/` — `factory-pass` (sweep an existing codebase to spec),
+  `factory-status` (what's open/plated across the fleet),
+  `session-retro` (mine a session for encodable lessons),
+  `pin-poteto` (make poteto-mode the ambient default on every surface),
   `draft-pr-only`, `done-means-keep-handoff`,
   `no-secrets-in-kitchen`.
 - `AGENTS.md` — house rules injected wherever the plugin is installed.

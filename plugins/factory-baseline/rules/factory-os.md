@@ -48,6 +48,14 @@ If you skip a playbook step, keep the step visible and write `skip: <reason>`.
 - Do not merge on the author agent's own verdict. Fresh verification first.
 - Draft PRs only. Humans plate.
 
+## Approvals
+
+A `go ahead` / `all of them` / `do everything` after a presented list
+authorizes the whole list — execute to completion without re-confirming
+each item. A genuine new fork still surfaces: spend, destructive ops, a
+choice no evidence settles. `merge` stays human-gated unless the human
+explicitly says to merge; when they do, that batch is authorized.
+
 ## Overnight / unattended
 
 A duration is not a finish condition. Unattended work needs: a checkable
