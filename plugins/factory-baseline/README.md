@@ -13,6 +13,9 @@ runs under, regardless of repo.
   reaches cloud sessions.)
 - `rules/close-loop.md` — kitchen ledger discipline; no-ops in repos without
   `scripts/close-loop.mjs`.
+- `rules/smallest-correct-diff.md` — the factory's default code shape:
+  fastest correct path, smallest surface, thin shims over existing
+  machinery, performance as correctness. Encoded from a proven cloud run.
 - `skills/` — `draft-pr-only`, `done-means-keep-handoff`,
   `no-secrets-in-kitchen`.
 - `AGENTS.md` — house rules injected wherever the plugin is installed.
