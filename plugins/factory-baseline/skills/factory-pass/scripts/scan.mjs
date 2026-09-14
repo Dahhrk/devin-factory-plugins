@@ -8,7 +8,7 @@ const SKIP_DIRS = new Set([
   "coverage", "out", "tmp", ".turbo", ".cache", "third_party", "external",
   "local",
 ]);
-const SRC = /\.(m?[jt]sx?|lua|py|go|rs)$/;
+const SRC = /\.(m?[jt]sx?|c|cc|cpp|cxx|h|hh|hpp|hxx|lua|py|go|rs)$/;
 const TEST_FILE = /(\.test\.|\.spec\.|__tests__|_test\.)/;
 
 const CLASSES = [
@@ -24,7 +24,7 @@ const CLASSES = [
   },
   {
     name: "debug-leftovers",
-    hit: /\b(console\.log|debugger|pdb\.set_trace|print\s*\()/,
+    hit: /\b(console\.log|debugger|pdb\.set_trace|print\s*\(|printf\s*\(|std::cout|std::cerr)/,
     why: "scratch output — delete or make it a real log",
   },
   {
