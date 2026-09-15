@@ -65,3 +65,33 @@ for (const target of targets) {
 
 console.log(`sync-factory-rules: ${wrote} written, ${unchanged} unchanged, ${removed} stale removed`);
 console.log(`rules: ${sources.join(', ')} (lane-specific skipped: ${[...LANE_SPECIFIC].join(', ')})`);
+
+// Lane-specific rules are hand-ported (Devin and Cursor editions differ on
+// purpose). Drift guard: each ported .mdc carries a
+// `ported from devin-factory-plugins@<sha>` marker; warn when the plugin
+// source moved past it so the port gets refreshed instead of silently
+// diverging.
+const CURSOR_PORT_MAP = {
+  'factory-os': { src: 'plugins/factory-baseline/rules/factory-os.md', dest: 'poteto-factory-os.mdc' },
+  'close-loop': { src: 'plugins/factory-baseline/rules/close-loop.md', dest: 'close-loop.mdc' },
+  'pstack-models': { src: 'plugins/pstack/rules/pstack-models.md', dest: 'pstack-models.mdc' },
+};
+const cursorRulesDir = join(homedir(), '.cursor', 'rules');
+for (const [rule, { src, dest: destName }] of Object.entries(CURSOR_PORT_MAP)) {
+  let srcSha = '';
+  try {
+    srcSha = execSync(`git log -1 --format=%h -- "${src}"`, { cwd: root, encoding: 'utf8' }).trim();
+  } catch {}
+  const dest = join(cursorRulesDir, destName);
+  if (!existsSync(dest)) {
+    console.log(`drift: ${destName} missing - port ${src} to Cursor`);
+    continue;
+  }
+  const marker = readFileSync(dest, 'utf8').match(/ported from devin-factory-plugins@([0-9a-f]+)/);
+  if (!srcSha) continue;
+  if (!marker) {
+    console.log(`drift: ${destName} has no port marker - add <!-- ported from devin-factory-plugins@${srcSha} ${src} --> after next port`);
+  } else if (marker[1] !== srcSha && !srcSha.startsWith(marker[1])) {
+    console.log(`drift: ${destName} ported from ${marker[1]} but ${src} is at ${srcSha} - re-port`);
+  }
+}
