@@ -102,3 +102,9 @@ Run a description-optimization loop only if the skill's trigger accuracy turns o
 - User wants a task-specific skill (not working conventions): `create-skill` alone, no mining required.
 - User wants to capture one narrow workflow (e.g. "how I write commit messages"). That's a regular skill, not a mode skill.
 
+## Reference files
+
+- The **poteto-mode** skill: example of the output shape.
+- The **unslop** skill: prose discipline for every line.
+- The `authoring-a-skill` playbook in poteto-mode: skill authoring process and writing guidelines.
+
