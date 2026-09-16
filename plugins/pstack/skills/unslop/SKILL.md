@@ -61,6 +61,7 @@ Rule numbers are stable ids that other skills cite. A removed rule leaves a gap.
 ### Communication artifacts
 
 20. **Chatbot phrases.** "I hope this helps!", "Let me know if...", "Of course!", "Certainly!", "Found the smoking gun!" Remove.
+21. **Cutoff disclaimers.** "While specific details are limited..." Find sources or remove.
 22. **Sycophantic tone.** "Great question! You're absolutely right!" Respond directly.
 
 ### Filler
