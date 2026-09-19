@@ -23,6 +23,8 @@ jobs:
         if: github.event_name == 'pull_request'
         run: node scripts/check-version-bump.mjs
       - name: Drift vs the normal factory pack
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           rm -rf /tmp/plug-factory
           git clone --depth 1 https://github.com/Dahhrk/plugins /tmp/plug-factory
