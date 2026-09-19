@@ -66,6 +66,46 @@ for (const target of targets) {
 console.log(`sync-factory-rules: ${wrote} written, ${unchanged} unchanged, ${removed} stale removed`);
 console.log(`rules: ${sources.join(', ')} (lane-specific skipped: ${[...LANE_SPECIFIC].join(', ')})`);
 
+// Skill mirrors: copies of select pack skills under ~/.claude/skills so a
+// running session picks them up on the next turn instead of waiting for a
+// plugin reload. The pack file is canonical - edit there, never the mirror.
+const SKILL_MIRRORS = [
+  'plugins/pstack/skills/poteto-prompt/SKILL.md',
+];
+const claudeSkillsDir = join(homedir(), '.claude', 'skills');
+const mirrored = new Set();
+let skillsWrote = 0;
+for (const src of SKILL_MIRRORS) {
+  const srcPath = join(root, src);
+  const name = basename(dirname(src));
+  const dest = join(claudeSkillsDir, name, 'SKILL.md');
+  if (!existsSync(srcPath)) {
+    console.log(`skill mirror: ${name} source missing (${src})`);
+    continue;
+  }
+  const body = readFileSync(srcPath, 'utf8');
+  const marker = `<!-- synced from devin-factory-plugins@${sha} ${src} - edit there, then run scripts/sync-factory-rules.mjs -->\n`;
+  const fmEnd = body.indexOf('---', body.indexOf('---') + 3);
+  const content = fmEnd > 0 ? body.slice(0, fmEnd + 3) + '\n' + marker + body.slice(fmEnd + 3) : marker + body;
+  mirrored.add(name);
+  if (!existsSync(dirname(dest))) mkdirSync(dirname(dest), { recursive: true });
+  if (!existsSync(dest) || readFileSync(dest, 'utf8') !== content) {
+    writeFileSync(dest, content);
+    skillsWrote++;
+  }
+}
+if (existsSync(claudeSkillsDir)) {
+  for (const d of readdirSync(claudeSkillsDir)) {
+    const p = join(claudeSkillsDir, d, 'SKILL.md');
+    if (mirrored.has(d) || !existsSync(p)) continue;
+    if (readFileSync(p, 'utf8').includes('synced from devin-factory-plugins')) {
+      unlinkSync(p);
+      removed++;
+    }
+  }
+}
+console.log(`skill mirrors: ${skillsWrote} written (${mirrored.size} configured)`);
+
 // Lane-specific rules are hand-ported (Devin and Cursor editions differ on
 // purpose). Drift guard: each ported .mdc carries a
 // `ported from devin-factory-plugins@<sha>` marker; warn when the plugin
