@@ -9,7 +9,7 @@ permissions:
 jobs:
   attribution:
     name: attribution
-    runs-on: [self-hosted, home-cluster]
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Refuse tracked secrets
