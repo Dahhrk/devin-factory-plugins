@@ -63,7 +63,7 @@ const pendingByRepo = (repoDir) => {
         const p = path.replace(/^plugins\//, '');
         for (const [, packName] of PACKS) {
           if (p.startsWith(`${packName}/`)) {
-            pending.set(`${packName}/${normRel(p.slice(packName.length + 1))}`, number);
+            pending.set(`${packName}/${normRel(p.slice(packName.length + 1))}`, { number, path });
           }
         }
       }
@@ -132,15 +132,25 @@ const readLines = (path) => {
   try { return readFileSync(path, 'utf8').split('\n'); } catch { return []; }
 };
 
-const headersOf = (path) => readLines(path)
+const headersOf = (lines) => lines
   .map((l) => l.match(/^(#{1,4})\s+(.*)/))
   .filter(Boolean)
   .map((m) => m[2].trim());
 
-const ruleIdsOf = (path) => readLines(path)
+const ruleIdsOf = (lines) => lines
   .map((l) => l.match(/^(\d{1,2})\.\s/))
   .filter(Boolean)
   .map((m) => m[1]);
+
+// Content-level paired-PR tolerance: when the peer repo has an open PR
+// carrying the twin file, compare against that PR's head content instead
+// of its main. Paired edits land on two mains at different times.
+const peerFileLines = (repoDir, entry) => {
+  try {
+    execSync(`git fetch --depth 1 origin pull/${entry.number}/head`, { cwd: repoDir, stdio: ['ignore', 'pipe', 'ignore'] });
+    return execSync(`git show FETCH_HEAD:${entry.path}`, { cwd: repoDir, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).split('\n');
+  } catch { return null; }
+};
 
 const tokenOverlap = (a, b) => {
   const ta = new Set(a.toLowerCase().split(/\W+/).filter((t) => t.length > 2));
@@ -169,13 +179,13 @@ for (const [packDir, packName] of PACKS) {
   for (const f of mine.keys()) {
     if (theirs.has(f) || expectedHere.has(f)) continue;
     const pr = pendingThere.get(`${packName}/${f}`);
-    if (pr) warns.push(`${packName}: only here -> ${f} (carried by other repo PR #${pr})`);
+    if (pr) warns.push(`${packName}: only here -> ${f} (carried by other repo PR #${pr.number})`);
     else fails.push(`${packName}: only here -> ${f}`);
   }
   for (const f of theirs.keys()) {
     if (mine.has(f) || expectedThere.has(f)) continue;
     const pr = pendingHere.get(`${packName}/${f}`);
-    if (pr) warns.push(`${packName}: only in other -> ${f} (carried by this repo PR #${pr})`);
+    if (pr) warns.push(`${packName}: only in other -> ${f} (carried by this repo PR #${pr.number})`);
     else fails.push(`${packName}: only in other -> ${f}`);
   }
 
@@ -191,7 +201,11 @@ for (const [packDir, packName] of PACKS) {
     const pb = readablePath(b, '.', f);
     if (!pa || !pb) continue;
 
-    const ha = headersOf(pa), hb = headersOf(pb);
+    const peer = pendingThere.get(`${packName}/${f}`);
+    const peerLines = peer ? peerFileLines(other, peer) : null;
+    const ha = headersOf(readLines(pa));
+    const hb = headersOf(peerLines ?? readLines(pb));
+    if (peerLines) warns.push(`${packName}/${f}: compared against other repo PR #${peer.number}`);
     const onlyA = ha.filter((h) => !hb.includes(h));
     const onlyB = hb.filter((h) => !ha.includes(h));
     for (const h of onlyA) {
@@ -205,7 +219,7 @@ for (const [packDir, packName] of PACKS) {
       fails.push(`${packName}/${f}: section only in other -> "${h}"`);
     }
 
-    const ra = ruleIdsOf(pa), rb = ruleIdsOf(pb);
+    const ra = ruleIdsOf(readLines(pa)), rb = ruleIdsOf(peerLines ?? readLines(pb));
     if (ra.length && rb.length) {
       const setA = new Set(ra), setB = new Set(rb);
       for (const id of setA) if (!setB.has(id)) fails.push(`${packName}/${f}: rule ${id} missing in other`);
