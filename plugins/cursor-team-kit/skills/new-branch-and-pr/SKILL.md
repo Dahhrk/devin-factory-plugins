@@ -21,6 +21,9 @@ Starting work that should be shipped through a clean branch and pull request wor
 
 - Keep branch scope focused on one change set.
 - Include verification notes before requesting review.
+- When the clone has an `upstream` remote (fork-style clones), pass
+  explicit `--repo <owner>/<repo>` and `--head <owner>:<branch>` to
+  `gh pr create` - gh infers the upstream repo as the PR target.
 
 ## Output
 
