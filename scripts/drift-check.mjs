@@ -14,6 +14,7 @@
 // WARN: a header that looks renamed (high token overlap) — review by hand.
 // Zero deps.
 
+import { execSync } from 'node:child_process';
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { basename, join, relative } from 'node:path';
@@ -41,6 +42,35 @@ if (!existsSync(other)) {
   console.error(`drift-check: other repo not found at ${other}`);
   process.exit(2);
 }
+
+// Paired-PR tolerance: a file missing on one side is a warning, not a
+// failure, when an open PR on that side's GitHub repo already carries it.
+// Mirrored changes land on two mains at different times; the gate should
+// not deadlock them. Set DRIFT_NO_PR_LOOKUP=1 to disable.
+const pendingByRepo = (repoDir) => {
+  const pending = new Map(); // "<pack>/<normRel>" -> PR number
+  if (process.env.DRIFT_NO_PR_LOOKUP) return pending;
+  try {
+    const url = execSync('git remote get-url origin', { cwd: repoDir, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
+    const m = url.match(/github\.com[:/]([^/]+\/[^/.]+)/);
+    if (!m) return pending;
+    const slug = m[1];
+    const gh = (args) => execSync(`gh ${args}`, { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
+    const prs = JSON.parse(gh(`pr list --repo ${slug} --state open --limit 50 --json number`));
+    for (const { number } of prs) {
+      const files = JSON.parse(gh(`pr view ${number} --repo ${slug} --json files`)).files || [];
+      for (const { path } of files) {
+        const p = path.replace(/^plugins\//, '');
+        for (const [, packName] of PACKS) {
+          if (p.startsWith(`${packName}/`)) {
+            pending.set(`${packName}/${normRel(p.slice(packName.length + 1))}`, number);
+          }
+        }
+      }
+    }
+  } catch { /* no gh, no remote, or private peer - strict mode */ }
+  return pending;
+};
 
 // Files/dirs that legitimately exist on only one side.
 const EXPECTED_DEVIN_ONLY = new Set([
@@ -134,13 +164,19 @@ for (const [packDir, packName] of PACKS) {
 
   const expectedHere = isDevinRepo ? EXPECTED_DEVIN_ONLY : EXPECTED_NORMAL_ONLY;
   const expectedThere = isDevinRepo ? EXPECTED_NORMAL_ONLY : EXPECTED_DEVIN_ONLY;
+  const pendingHere = pendingByRepo(here);
+  const pendingThere = pendingByRepo(other);
   for (const f of mine.keys()) {
     if (theirs.has(f) || expectedHere.has(f)) continue;
-    fails.push(`${packName}: only here -> ${f}`);
+    const pr = pendingThere.get(`${packName}/${f}`);
+    if (pr) warns.push(`${packName}: only here -> ${f} (carried by other repo PR #${pr})`);
+    else fails.push(`${packName}: only here -> ${f}`);
   }
   for (const f of theirs.keys()) {
     if (mine.has(f) || expectedThere.has(f)) continue;
-    fails.push(`${packName}: only in other -> ${f}`);
+    const pr = pendingHere.get(`${packName}/${f}`);
+    if (pr) warns.push(`${packName}: only in other -> ${f} (carried by this repo PR #${pr})`);
+    else fails.push(`${packName}: only in other -> ${f}`);
   }
 
   // Content checks on shared markdown: section headers and numbered rule ids.
