@@ -33,6 +33,8 @@ blocked. Default repo set: `Dahhrk/plugins`, `Dahhrk/devin-factory-plugins`,
 - Never merge a PR with failing checks or an unresolved conflict.
 - A PR with no checks at all gets listed, not landed - never merge on the
   author agent's own verdict.
+- Deleting a stacked PR's base branch auto-closes its child PRs - land
+  children first or retarget them before sweeping bases.
 - Invocation is the merge authorization. Do not run this sweep because a
   PR "looks done".
 - `--delete-branch` only on merge; never delete branches for unmerged PRs.

@@ -18,6 +18,12 @@ jobs:
             echo ".env must not be tracked"
             exit 1
           fi
+      - name: Fail on .sh files that lost their exec bit
+        run: |
+          if git ls-files -s '*.sh' | grep -vE '^100755'; then
+            echo "::error::tracked .sh file missing mode 100755 - fix: git update-index --chmod=+x <file>"
+            exit 1
+          fi
       - name: Fail on mojibake in tracked text files
         run: |
           if git grep -nE 'Ã.|Î.|Â.|â€' -- '*.md' '*.mdc' '*.txt' '*.markdown'; then
