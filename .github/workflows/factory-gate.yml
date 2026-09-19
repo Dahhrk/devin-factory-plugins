@@ -18,6 +18,12 @@ jobs:
             echo ".env must not be tracked"
             exit 1
           fi
+      - name: Fail on mojibake in tracked text files
+        run: |
+          if git grep -nE 'Ã.|Î.|Â.|â€' -- '*.md' '*.mdc' '*.txt' '*.markdown'; then
+            echo "::error::double-encoded UTF-8 (mojibake) in tracked files"
+            exit 1
+          fi
       - name: Refuse AI or tool attribution in PR title, body, and tip commit
         env:
           PR_TITLE: ${{ github.event.pull_request.title }}
@@ -37,5 +43,9 @@ jobs:
           fi
           if git log -1 --format='%s%n%b' | strip | grep -iE "$pattern"; then
             echo "commit messages must not carry AI or tool attribution"
+            exit 1
+          fi
+          if printf '%s\n%s\n' "$PR_TITLE" "$PR_BODY" | grep -F '—' || git log -1 --format='%s%n%b' | grep -F '—'; then
+            echo "em dash in PR title, body, or commit - use a regular hyphen"
             exit 1
           fi
