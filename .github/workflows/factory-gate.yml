@@ -23,7 +23,7 @@ jobs:
           PR_TITLE: ${{ github.event.pull_request.title }}
           PR_BODY: ${{ github.event.pull_request.body }}
         run: |
-          strip() { sed -E '/<!-- CURSOR_SUMMARY -->/,/<!-- \/CURSOR_SUMMARY -->/d' | sed -E 's/\.devin|devin-factory-plugins|\.cursor|cursor-team-kit|\.codeium|\.windsurf|@Devin//g'; }
+          strip() { sed -E '/<!-- CURSOR_SUMMARY -->/,/<!-- \/CURSOR_SUMMARY -->/d' | sed -E 's/\.devin|devin-factory-plugins|\.cursor|cursor-team-kit|\.codeium|\.windsurf|\.claude|@Devin//g'; }
           attribution='co-authored-by|generated (with|by)|ai-assisted|(built|written|created|authored|powered|made) (with|by|using|via) (devin|cursor|codeium|windsurf|claude|anthropic|openai|copilot|chatgpt|gpt|swe)[a-z0-9-]*'
           models='\b(claude|anthropic|openai|copilot|chatgpt|gpt-?[0-9]|devin-?ai)\b'
           pattern="$attribution|$models"
