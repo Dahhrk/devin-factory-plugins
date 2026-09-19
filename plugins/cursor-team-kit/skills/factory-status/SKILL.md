@@ -24,9 +24,12 @@ state. Default repo set: `Dahhrk/plugins`, `Dahhrk/devin-factory-plugins`,
    `kubectl -n gha-runners get pods -o wide` - expect `1/1 Running` and
    the intended node; `gh api repos/<slug>/actions/runners` for the
    GitHub-side `status`.
-5. Emit one table: repo, open PRs, non-main branches (with ahead counts),
+5. Kitchen ledger: `git status --porcelain audit/smells.tsv` in the
+   dark-factory clone - dirty rows are orphaned lessons that never
+   shipped with their unit.
+6. Emit one table: repo, open PRs, non-main branches (with ahead counts),
    local tree state. Then a short anomaly list - dirty trees, stale
-   branches, offline runners, drift warnings.
+   branches, offline runners, drift warnings, uncommitted ledger rows.
 
 ## Guardrails
 
