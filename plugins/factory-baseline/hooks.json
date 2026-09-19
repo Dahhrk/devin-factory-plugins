@@ -5,7 +5,7 @@
       "hooks": [
         {
           "type": "command",
-          "command": "(\"$LOCALAPPDATA/Programs/Devin/resources/app/extensions/windsurf/devin/bin/devin.exe\" plugins update || devin plugins update || true; node \"$HOME/Projects/devin-factory-plugins/scripts/sync-plugin-cache.mjs\" || node \"${DEVIN_FACTORY_REPO}/scripts/sync-plugin-cache.mjs\" || true) >/dev/null 2>&1 </dev/null &",
+          "command": "(\"$LOCALAPPDATA/Programs/Devin/resources/app/extensions/windsurf/devin/bin/devin.exe\" plugins update || devin plugins update || true; node \"$HOME/Projects/devin-factory-plugins/scripts/sync-plugin-cache.mjs\" || node \"${DEVIN_FACTORY_REPO}/scripts/sync-plugin-cache.mjs\" || true; node \"$HOME/Projects/devin-factory-plugins/scripts/sync-factory-rules.mjs\" || node \"${DEVIN_FACTORY_REPO}/scripts/sync-factory-rules.mjs\" || true) >/dev/null 2>&1 </dev/null &",
           "timeout": 5
         },
         {
