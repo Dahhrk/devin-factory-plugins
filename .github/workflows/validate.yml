@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   validate:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, home-cluster]
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
@@ -24,5 +24,6 @@ jobs:
         run: node scripts/check-version-bump.mjs
       - name: Drift vs the normal factory pack
         run: |
+          rm -rf /tmp/plug-factory
           git clone --depth 1 https://github.com/Dahhrk/plugins /tmp/plug-factory
           node scripts/drift-check.mjs /tmp/plug-factory
