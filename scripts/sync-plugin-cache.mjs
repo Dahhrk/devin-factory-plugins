@@ -19,6 +19,20 @@ if (!manifestOf(repo) || !existsSync(cacheRoot)) process.exit(0);
 try {
 	execSync("git pull --ff-only", { cwd: repo, stdio: "ignore", timeout: 15000 });
 } catch {}
+
+// Keep sibling factory clones fresh too - working trees that stay
+// ff-only clean pull silently; dirty or diverged clones are skipped.
+const siblings = [
+	["PLUG_FACTORY_REPO", "plug-factory"],
+	["DARK_FACTORY_REPO", "dark-factory"],
+	["HAUNT_REPO", "haunt"],
+];
+for (const [env, dir] of siblings) {
+	const path = process.env[env] || join(homedir(), "Projects", dir);
+	try {
+		execSync("git pull --ff-only", { cwd: path, stdio: "ignore", timeout: 15000 });
+	} catch {}
+}
 const sha = execSync("git rev-parse HEAD", { cwd: repo, encoding: "utf8" }).trim();
 
 const versionOf = (dir) => JSON.parse(readFileSync(manifestOf(dir), "utf8")).version;
