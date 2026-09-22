@@ -7,7 +7,7 @@ description: Merge every mergeable open PR across the factory repos and clean up
 
 Sweep the factory's open PRs, land what is green, and report what is
 blocked. Default repo set: `Dahhrk/plugins`, `Dahhrk/devin-factory-plugins`,
-`Dahhrk/dark-factory`, `Dahhrk/haunt` - or the repos the human names.
+`Dahhrk/dark-factory`, `Dahhrk/open-bot` - or the repos the human names.
 
 ## Workflow
 

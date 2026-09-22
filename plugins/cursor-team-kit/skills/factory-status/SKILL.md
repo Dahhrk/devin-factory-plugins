@@ -7,7 +7,7 @@ description: One-table health sweep across the factory repos and runners. Use fo
 
 Answer "where do we stand" with a fresh sweep instead of a remembered
 state. Default repo set: `Dahhrk/plugins`, `Dahhrk/devin-factory-plugins`,
-`Dahhrk/dark-factory`, `Dahhrk/haunt`. Local clones live under
+`Dahhrk/dark-factory`, `Dahhrk/open-bot`. Local clones live under
 `~/Projects/` (plug-factory maps to `plugins`).
 
 ## Workflow
