@@ -25,7 +25,7 @@ try {
 const siblings = [
 	["PLUG_FACTORY_REPO", "plug-factory"],
 	["DARK_FACTORY_REPO", "dark-factory"],
-	["HAUNT_REPO", "haunt"],
+	["OPEN_BOT_REPO", "open-bot"],
 ];
 for (const [env, dir] of siblings) {
 	const path = process.env[env] || join(homedir(), "Projects", dir);
