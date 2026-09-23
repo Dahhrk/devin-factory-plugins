@@ -44,3 +44,6 @@ repo-local pieces.
 8. Report what landed, what was merged back from pre-existing files, and
    the first suggested run (`/factory-baseline:factory-pass` to audit the
    existing code against the contract).
+
+The ambient shipping bar is `rules/code-quality-bar.md`: smallest-correct-diff;
+`/no-comments` and `/deslop` before ready.

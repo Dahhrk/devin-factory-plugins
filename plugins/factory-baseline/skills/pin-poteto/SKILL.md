@@ -33,9 +33,10 @@ confirms it is an entry point.
 Short form (surfaces with the plugin):
 
 ```
-Non-trivial engineering work starts in `/pstack:poteto-mode` — observe,
+Non-trivial engineering work starts in `/pstack:poteto-mode`. Observe,
 name the data shape, smallest correct diff, verify against the real
-artifact, hand off with Done means + Keep.
+artifact, hand off with Done means + Keep. Before ready: `/no-comments`
+and `/deslop` (see `rules/code-quality-bar.md`).
 ```
 
 Long form (no plugin — paste this instead so the contract still holds):

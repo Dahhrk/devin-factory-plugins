@@ -47,6 +47,14 @@ wins, then mirror that choice.
 - Put secrets in the kitchen.
 - Invent evidence.
 
+## CI secret
+
+Devin CI prefers private `Dahhrk/plug-factory` when
+`secrets.PLUG_FACTORY_TOKEN` (or `PLUG_FACTORY_READ_TOKEN`) is set. When
+unset, validate drifts against public `Dahhrk/plugins` and prints a
+warning so the job stays green. Add the read token on the Devin pack repo
+when private-twin drift should be the hard path.
+
 ## Pointer
 
 Language rules and the mirror contract live in
