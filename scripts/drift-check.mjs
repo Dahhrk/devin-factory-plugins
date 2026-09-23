@@ -2,11 +2,16 @@
 // Cross-factory drift check: compares a pack in this repo against its twin
 // in the other factory, normalizing platform-format differences.
 //
-//   node scripts/drift-check.mjs [other-repo-path]
+//   node scripts/drift-check.mjs [other-repo-path] [--content]
 //
 // Default other-repo: $PLUG_FACTORY_REPO or ~/Projects/plug-factory when run
 // from devin-factory-plugins, $DEVIN_FACTORY_REPO or
 // ~/Projects/devin-factory-plugins when run from plug-factory.
+//
+// --content: advisory pass. Prose differs between editions by design, but
+// fenced commands and operational backtick tokens (paths, flags, env
+// assignments, file extensions) should match; asymmetries are reported as
+// warnings for human review.
 //
 // FAIL: file/dir missing in either direction (after normalization), a
 // section header present on one side and absent on the other with no close
@@ -161,6 +166,44 @@ const tokenOverlap = (a, b) => {
   return hit / Math.max(ta.size, tb.size);
 };
 
+// --content mode: prose intentionally differs between the platform
+// editions, but operational invariants should not. Extract fenced
+// command lines plus backtick tokens that look operational (paths,
+// flags, env assignments, file extensions), normalize platform
+// spellings, then set-diff per twin file.
+const contentMode = process.argv.includes('--content');
+
+const PLATFORM_EQUIV = [
+  [/\.cursor-plugin/g, '.plugin'],
+  [/\.devin-plugin/g, '.plugin'],
+  [/\.mdc\b/g, '.md'],
+  [/\bpstack:/g, ''],
+  [/\b(devin|cursor)\.exe\b/g, 'TOOL'],
+  [/\b(plug-factory|devin-factory-plugins)\b/g, 'FACTORY_REPO'],
+];
+
+const OPERATIONAL = /[/\\=]|^-|\.(mjs|cjs|sh|tsx?|jsx?|json|ya?ml|toml|md|ps1)\b/;
+
+const invariantsOf = (lines) => {
+  const out = new Set();
+  let fence = false;
+  for (const raw of lines) {
+    if (raw.trim().startsWith('```')) { fence = !fence; continue; }
+    if (fence) {
+      const l = raw.trim();
+      if (l && !l.startsWith('#')) out.add(`fence:${l}`);
+      continue;
+    }
+    for (const m of raw.matchAll(/`([^`\n]+)`/g)) {
+      let t = m[1].trim();
+      if (!OPERATIONAL.test(t)) continue;
+      for (const [re, rep] of PLATFORM_EQUIV) t = t.replace(re, rep);
+      out.add(`tick:${t}`);
+    }
+  }
+  return out;
+};
+
 const fails = [];
 const warns = [];
 
@@ -224,6 +267,18 @@ for (const [packDir, packName] of PACKS) {
       const setA = new Set(ra), setB = new Set(rb);
       for (const id of setA) if (!setB.has(id)) fails.push(`${packName}/${f}: rule ${id} missing in other`);
       for (const id of setB) if (!setA.has(id)) fails.push(`${packName}/${f}: rule ${id} missing here`);
+    }
+
+    if (contentMode) {
+      const ta = invariantsOf(readLines(pa));
+      const tb = invariantsOf(peerLines ?? readLines(pb));
+      const onlyHere = [...ta].filter((t) => !tb.has(t));
+      const onlyThere = [...tb].filter((t) => !ta.has(t));
+      if (onlyHere.length || onlyThere.length) {
+        const fmt = (xs) => xs.slice(0, 4).map((t) => t.slice(6)).join(' | ')
+          + (xs.length > 4 ? ` | +${xs.length - 4}` : '');
+        warns.push(`${packName}/${f}: invariant drift - only here: ${fmt(onlyHere) || 'none'} || only other: ${fmt(onlyThere) || 'none'}`);
+      }
     }
   }
 }
