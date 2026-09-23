@@ -7,6 +7,9 @@ description: Bring an existing codebase up to factory spec. Surveys the repo aga
 
 Available as `/factory-baseline:factory-pass`.
 
+Shipping bar: `rules/code-quality-bar.md` (smallest-correct-diff;
+`/no-comments` + `/deslop` before ready; thermo for gnarly maintainability).
+
 Convert an existing codebase to the factory contract. Audit first, fix
 second — a report with no findings is a valid result, not a failure.
 
