@@ -28,29 +28,23 @@ When in doubt, take the simple path.
 
 Decompose the question into 2 to 4 exploration angles, each a distinct slice of the subsystem. Spawn all explorers in a single message:
 
-- `subagent_type`: `generalPurpose`
-- `model`: your configured how-explorer model (default `grok-4.6-fast-xhigh`)
-- `readonly`: `true`
+- `profile`: `subagent_explore` (read-only; resolves to the org default subagent model — the how-explorer role)
 
 Each explorer gets the prompt in `references/explorer-prompt.md` with its angle filled in. Then go to Step 3.
 
 ## Step 2b. Direct Explain (simple questions)
 
-Spawn one Task subagent that explores and explains in one pass:
+Spawn one `run_subagent` subagent that explores and explains in one pass:
 
-- `subagent_type`: `generalPurpose`
-- `model`: your configured how-explainer model (default `claude-fable-5-1-thinking-max`)
-- `readonly`: `true`
+- `profile`: `pstack:panelist-claude` (the how-explainer default `claude-fable-5-1-high`), or `subagent_general` to inherit the parent model
 
 Build its prompt from `references/explainer-prompt.md` without the explorer-findings section. Go to Step 4.
 
 ## Step 3. Synthesize (complex questions only)
 
-Once all explorers have returned, spawn one Task subagent to synthesize their findings into one explanation:
+Once all explorers have returned, spawn one `run_subagent` subagent to synthesize their findings into one explanation:
 
-- `subagent_type`: `generalPurpose`
-- `model`: your configured how-explainer model (default `claude-fable-5-1-thinking-max`)
-- `readonly`: `true`
+- `profile`: `pstack:panelist-claude` (the how-explainer default `claude-fable-5-1-high`), or `subagent_general` to inherit the parent model
 
 Build its prompt from `references/explainer-prompt.md` with every explorer's findings filled in.
 
@@ -76,9 +70,7 @@ After the explanation is complete, spawn one architectural critic per entry in t
 
 For each critic:
 
-- `subagent_type`: `generalPurpose`
-- `model`: one entry from the configured how-critics list. These are minimum reasoning levels. Escalate a model when the architecture warrants deeper analysis.
-- `readonly`: `true`
+- `profile`: the `panelist-*` profile for one entry in the configured `how critics` list (one per family). These are minimum reasoning levels. Escalate when the architecture warrants deeper analysis.
 
 Read `references/critic-prompt.md` for the prompt template. Each critic gets:
 

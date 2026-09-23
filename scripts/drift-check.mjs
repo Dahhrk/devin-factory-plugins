@@ -13,9 +13,15 @@
 // assignments, file extensions) should match; asymmetries are reported as
 // warnings for human review.
 //
+// Platform-leak gate (always on): each edition must use its own mechanics.
+// The Devin pack may not carry Cursor API surfaces or Cursor-only model
+// slugs, and the Cursor pack may not carry run_subagent profiles or
+// Devin-only slugs. Host-specific prose ("Cursor workspaces keep
+// agent-transcripts") is fine — the gate scans mechanics, not words.
+//
 // FAIL: file/dir missing in either direction (after normalization), a
 // section header present on one side and absent on the other with no close
-// match, or a numbered rule id missing on one side.
+// match, a numbered rule id missing on one side, or a platform leak.
 // WARN: a header that looks renamed (high token overlap) — review by hand.
 // Zero deps.
 
@@ -137,10 +143,17 @@ const readLines = (path) => {
   try { return readFileSync(path, 'utf8').split('\n'); } catch { return []; }
 };
 
-const headersOf = (lines) => lines
-  .map((l) => l.match(/^(#{1,4})\s+(.*)/))
-  .filter(Boolean)
-  .map((m) => m[2].trim());
+const headersOf = (lines) => {
+  const out = [];
+  let fence = false;
+  for (const l of lines) {
+    if (l.trim().startsWith('```')) { fence = !fence; continue; }
+    if (fence) continue;
+    const m = l.match(/^(#{1,4})\s+(.*)/);
+    if (m) out.push(m[2].trim());
+  }
+  return out;
+};
 
 const ruleIdsOf = (lines) => lines
   .map((l) => l.match(/^(\d{1,2})\.\s/))
@@ -174,8 +187,15 @@ const tokenOverlap = (a, b) => {
 const contentMode = process.argv.includes('--content');
 
 const PLATFORM_EQUIV = [
+  // Specific equivalences first — generic path folds run after.
+  [/~\/.cursor\/rules\/pstack-models\.mdc?/g, 'MODELMAP'],
+  [/\brules\/pstack-models\.md\b/g, 'MODELMAP'],
   [/\.cursor-plugin/g, '.plugin'],
   [/\.devin-plugin/g, '.plugin'],
+  [/~\/.cursor\//g, '~/PLAT/'],
+  [/~\/.config\/devin\//g, '~/PLAT/'],
+  [/\.cursor\//g, '.plat/'],
+  [/\.devin\//g, '.plat/'],
   [/\.mdc\b/g, '.md'],
   [/\bpstack:/g, ''],
   [/\b(devin|cursor)\.exe\b/g, 'TOOL'],
@@ -202,6 +222,39 @@ const invariantsOf = (lines) => {
     }
   }
   return out;
+};
+
+// Platform-leak gate: the Devin edition must not carry Cursor-only API
+// mechanics or model slugs, and vice versa. Prose mentions of the other
+// host are legitimate; these patterns only match mechanics. Exempt paths
+// legitimately name the other platform (upstream automation sources, the
+// model map explaining the translation).
+const LEAK_RULES = {
+  devin: {
+    exempt: /automations\/benny\/|rules\/pstack-models\.md$/,
+    patterns: [
+      [/\bsubagent_type\b/, 'subagent_type (Cursor API; use run_subagent profile)'],
+      [/\brun_in_background\b/, 'run_in_background (use is_background)'],
+      [/\benvironment:\s*"?(cloud|local)"?/, 'environment: cloud|local (in-session subagent or separate cloud session)'],
+      [/\bcloud_base_branch\b/, 'cloud_base_branch (name the base branch in the brief)'],
+      [/\bAskQuestion\b/, 'AskQuestion (use ask_user_question)'],
+      [/claude-fable-5-1-thinking|gpt-5\.6-sol|grok-4\.6|claude-opus-5|cursor-grok/, 'Cursor-only model slug'],
+    ],
+  },
+  normal: {
+    exempt: null,
+    // Optional third element: path regex the pattern does not apply to.
+    // Agent frontmatter keys (is_background) are pack metadata the Devin
+    // loader reads; Cursor ignores unknown frontmatter. Not a leak there.
+    patterns: [
+      [/\brun_subagent\b/, 'run_subagent (Devin API; use Task subagent)'],
+      [/\bis_background\b/, 'is_background (use run_in_background)', /^agents\//],
+      [/\bsubagent_(general|explore)\b/, 'Devin subagent profile (use generalPurpose)'],
+      [/\bpanelist-(claude|gpt|swe|gemini)\b/, 'Devin panelist profile'],
+      [/\bask_user_question\b/, 'ask_user_question (use AskQuestion)'],
+      [/swe-2-max|claude-fable-5-1-high|gpt-5-6-sol-xhigh|gemini-3-8-flash-high/, 'Devin-only model slug'],
+    ],
+  },
 };
 
 const fails = [];
@@ -279,6 +332,23 @@ for (const [packDir, packName] of PACKS) {
           + (xs.length > 4 ? ` | +${xs.length - 4}` : '');
         warns.push(`${packName}/${f}: invariant drift - only here: ${fmt(onlyHere) || 'none'} || only other: ${fmt(onlyThere) || 'none'}`);
       }
+    }
+  }
+}
+
+// Platform-leak gate on this repo's packs. Norm keys are extension- and
+// format-normalized, so scan the real relative path instead.
+const leakSpec = isDevinRepo ? LEAK_RULES.devin : LEAK_RULES.normal;
+for (const [packDir, packName] of PACKS) {
+  const base = join(here, packDir);
+  for (const e of listTree(here, packDir)) {
+    const rel = relative(base, e.real).replace(/\\/g, '/');
+    if (leakSpec.exempt?.test(rel) || !/\.(md|mdc|mjs|cjs|ts|sh|ya?ml|json)$/.test(rel)) continue;
+    let text;
+    try { text = readFileSync(e.real, 'utf8'); } catch { continue; }
+    for (const [re, why, skipPath] of leakSpec.patterns) {
+      if (skipPath?.test(rel)) continue;
+      if (re.test(text)) fails.push(`${packName}/${rel}: platform leak - ${why}`);
     }
   }
 }
