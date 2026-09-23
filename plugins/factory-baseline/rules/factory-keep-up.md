@@ -1,11 +1,13 @@
 # Factory keep-up
 
-Standing routine that keeps the two factory repos aligned.
+Standing routine that keeps the factory repos aligned.
 
 ## Twins
 
 - Kitchen: `Dahhrk/dark-factory`.
 - Devin plugin pack: `Dahhrk/devin-factory-plugins` (this repo).
+- Cursor pack twin: `Dahhrk/plug-factory` (private). Packs live at repo root:
+  `pstack/`, `cursor-team-kit/`.
 
 The twins carry shared conventions and overlapping packs, skills, and rules.
 They stay mirrored.
@@ -15,20 +17,20 @@ DevinGo stays `Dahhrk/devin-go` only (not the kitchen, not this pack).
 
 ## Cadence
 
-Weekdays, 10:30 AM Europe/London. Silent when clean: no report when both
+Weekdays, 10:30 AM Europe/London. Silent when clean: no report when the
 twins agree and no drift is found.
 
 ## What runs
 
-1. Refresh both mains from GitHub.
+1. Refresh all three mains from GitHub, including `Dahhrk/plug-factory`.
 2. Compare convention mirrors. At minimum
    `plugins/factory-baseline/rules/language-conventions.md` in this pack
    against `docs/language-conventions.md` in the kitchen.
-3. When a Cursor pack twin checkout exists (`PLUG_FACTORY_REPO` or a sibling
-   `plug-factory` directory), run `scripts/drift-check.mjs` from this repo in
-   hard-fail mode. The advisory `--content` pass alone never opens a PR. If no
-   Cursor pack twin is seated, skip that script. That is expected until the
-   twin exists.
+3. Run `scripts/drift-check.mjs` from this repo against the Cursor pack twin
+   checkout in hard-fail mode, every run. The checkout is `PLUG_FACTORY_REPO`
+   or `~/Projects/plug-factory`; that naming stays valid. A missing checkout
+   is a setup failure to fix, not a step to skip. The advisory `--content`
+   pass alone never opens a PR.
 
 ## On unexplained drift
 
