@@ -31,4 +31,9 @@ No em dashes. Use periods, commas, or parentheses.
 ## Keep
 
 Autopilot stays gated until TRUST-NEXT is green. No product secrets in the kitchen.
+
+## Anti-drift
+
 Kitchen (Dahhrk/dark-factory) and this Devin plugin pack stay mirrored for shared conventions. DevinGo app remains Dahhrk/devin-go only.
+
+The keep-up routine that checks this mirror is described in [factory-keep-up.md](factory-keep-up.md).
