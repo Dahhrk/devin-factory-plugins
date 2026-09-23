@@ -22,7 +22,9 @@ Do not use role titles.
 
 Prefer: foundation, increment, PR, milestone, backlog.
 
-Do not label work as Phase N, Slice N, or Section N.
+Do not label work as Phase N, Slice N, Section N, Wave N, Wave A/B/C, or any similar sequencing letter/number scheme.
+
+In chat, docs, PR titles, and commit titles: use plain work descriptions (what changed), not wave/phase/slice/section labels.
 
 ## Punctuation
 

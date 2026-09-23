@@ -12,6 +12,9 @@ no-AI-references ban live in `human-authorship` — this rule is the craft.
 - 72 chars max. If it needs more, the commit is probably two commits.
 - Banned subjects: "wip", "updates", "changes", "fix stuff", "more", "final",
   "asdf", "checkpoint", empty or pasted-error subjects.
+- No sequencing labels (Wave N, Wave A/B/C, Phase N, Slice N, Section N) in
+  commit subjects or PR titles. Prefer foundation, increment, PR, milestone,
+  backlog, or a plain description of the change.
 
 ## Body
 
