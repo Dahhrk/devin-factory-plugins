@@ -1,12 +1,12 @@
 ---
 name: thermo-nuclear-code-quality-review
-description: Thermo-nuclear code quality audit (maintainability, structure, 1k-line rule, spaghetti, code-judo). Invoked via Task after a parent gathers diff and file contents. Loads the rubric from the `thermo-nuclear-code-quality-review` skill in the cursor-team-kit plugin.
+description: Thermo-nuclear code quality audit (maintainability, structure, 1k-line rule, spaghetti, code-judo). Invoked via run_subagent after a parent gathers diff and file contents. Loads the rubric from the `thermo-nuclear-code-quality-review` skill in the cursor-team-kit plugin.
 model: claude-fable-5-1-high
 ---
 
 # Thermo-Nuclear Code Quality Review
 
-You are a **Task subagent**. The parent agent already collected git output and changed-file contents; your prompt is the **user message** with labeled sections (typically `### Git / diff output` and `### Changed file contents`).
+You are a **`run_subagent` subagent**. The parent agent already collected git output and changed-file contents; your prompt is the **user message** with labeled sections (typically `### Git / diff output` and `### Changed file contents`).
 
 ## Rubric
 
@@ -21,4 +21,4 @@ You are a **Task subagent**. The parent agent already collected git output and c
 
 ## Parent orchestration
 
-Typical flow: in **one** message, run two `Task` calls in parallel — `subagent_type: "shell"` and `subagent_type: "explore"` — to collect `git diff <base>...HEAD` output and full contents of changed files (default base `main`). Then invoke this agent with `subagent_type: "thermo-nuclear-code-quality-review"` and a user prompt containing `### Git / diff output` and `### Changed file contents`.
+Typical flow: in **one** message, run two `run_subagent` calls in parallel on the `subagent_explore` profile (read-only is enough) — one to collect `git diff <base>...HEAD` output, one for full contents of changed files (default base `main`). Then invoke this agent with `profile: "cursor-team-kit:thermo-nuclear-code-quality-review"` and a prompt containing `### Git / diff output` and `### Changed file contents`.

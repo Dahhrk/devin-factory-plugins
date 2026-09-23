@@ -99,9 +99,8 @@ Aim for a complete **coverage map**, not a minimal one. Document the null, don't
 Launch all matching investigators in a single message so they run concurrently. Don't ask one agent to cover multiple MCPs.
 
 Subagent config (each):
-- `subagent_type`: `generalPurpose`
-- `model`: your configured why-investigators model (default `grok-4.6-fast-xhigh`)
-- `readonly`: `false` (agent mode). **Do not use readonly/Ask mode.** It strips MCP access, which disables MCP-backed investigators entirely. Investigators still shouldn't write anything.
+- `profile`: `subagent_general` (full access — `subagent_explore` is read-only and strips write tools and MCP-dependent lookups). The why-investigators role defaults to `swe-2-max`; spawn `pstack:panelist-swe` to pin it.
+- Investigators still shouldn't write anything.
 
 Each investigator gets:
 1. The base prompt from `references/investigator-prompt.md`
@@ -143,9 +142,8 @@ If your scope assessment suggests a single-commit trivial target where the PR de
 
 Spawn one synthesizer subagent:
 
-- `subagent_type`: `generalPurpose`
-- `model`: your configured why-synthesizer model (default `claude-fable-5-1-thinking-max`)
-- `readonly`: `false` (agent mode). The synthesizer's quality check spot-verifies citations, which can require MCP access. Readonly/Ask mode strips MCPs and defeats that.
+- `profile`: `pstack:panelist-claude` (the why-synthesizer default `claude-fable-5-1-high`), or `subagent_general` to inherit the parent model
+- Full access — the synthesizer's quality check spot-verifies citations, which can require MCP access; read-only profiles strip MCPs and defeat that.
 
 The synthesizer gets:
 1. The investigator findings, including any null results and any categories skipped with justification
@@ -160,7 +158,7 @@ Take the synthesizer's output and present it to the user. You may lightly edit f
 
 ## Output Format
 
-The output structure is the one in `references/synthesizer-prompt.md`: The Question, The Code in Question, What We Found, What We Can Reasonably Infer, Competing Hypotheses, What We Don't Know, Sources Consulted, Confidence Summary. Adapt as needed, but keep the confidence separation intact, and keep Sources Consulted as one line per investigator, including the ones that returned nothing or were skipped, with the reason.
+The output structure is the one in `references/synthesizer-prompt.md`: The Question, The Code in Question, What We Found, What We Can Reasonably Infer, Competing Hypotheses, What We Don't Know, Sources Consulted, Confidence Summary. Adapt as needed, but keep the confidence separation intact, and keep Sources Consulted as one line per investigator, including the ones that returned nothing or were skipped, with the reason. Format each line as: `- <Source>: <what was searched>. <what was found, or "no relevant results," or "skipped. reason">.`
 
 After the Sources Consulted block, if the user's `why` question is a precursor to actually changing this code, convert the lineage findings into a Preserve / Change / Avoid / Risk constraint set suitable for planning the change.
 

@@ -22,7 +22,8 @@ prs=$(mktemp)
 gh pr list --author "@me" --state all --limit 1000 \
 	--json number,state,headRefName 2>/dev/null > "$prs" || echo "[]" > "$prs"
 
-# Transcripts dir: ~/.cursor/projects/<slugified-repo-path>/agent-transcripts.
+# Transcripts dir (Cursor workspaces only): ~/.cursor/projects/<slugified-repo-path>/agent-transcripts.
+# Absent on other hosts — LAST_CHAT then reports "-" and verify-recent-chat falls to review.
 slug=$(printf '%s' "$main_wt" | sed 's#^/##; s#/#-#g')
 transcripts="$HOME/.cursor/projects/$slug/agent-transcripts"
 now=$(date +%s)
