@@ -10,7 +10,7 @@ permissions:
 jobs:
   attribution:
     name: attribution
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, x64, devin-plugins]
     steps:
       - uses: actions/checkout@v4
       - name: Refuse tracked secrets
