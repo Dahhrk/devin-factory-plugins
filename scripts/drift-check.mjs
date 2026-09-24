@@ -362,7 +362,7 @@ for (const [packDir, packName] of PACKS) {
 }
 
 // ZCode pack twin (Dahhrk/zcode-factory): structural check only. The twin
-// is thin — .zcode-plugin manifest, conventions mirrors, flat skills set —
+// is thin (.zcode-plugin manifest, conventions mirrors, flat skills set),
 // not a pack mirror, so it gets its own required-file check instead of the
 // tree comparison above. Resolve order: --zcode <path> flag,
 // $ZCODE_FACTORY_REPO, ~/Projects/zcode-factory. A flag or env pointing at
