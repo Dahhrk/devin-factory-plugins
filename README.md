@@ -62,6 +62,31 @@ node scripts/validate-plugins.mjs
 
 CI runs the same script on every PR.
 
+## Twin drift checks
+
+`scripts/drift-check.mjs` compares the packs here against the Cursor pack
+twin (`Dahhrk/plug-factory`, or public `Dahhrk/plugins` as a fallback):
+
+```bash
+node scripts/drift-check.mjs [plug-factory-path] [--content]
+```
+
+It also runs a structural check on the ZCode pack twin
+(`Dahhrk/zcode-factory`): plugin manifest, conventions mirrors, and the
+required skill set, plus a section-header comparison of
+`conventions/language-conventions.md` against
+`plugins/factory-baseline/rules/language-conventions.md`. Point it at a
+checkout with `ZCODE_FACTORY_REPO` or the `--zcode <path>` flag; unset, it
+falls back to `~/Projects/zcode-factory`. A flag or env pointing at a
+missing checkout is a setup failure (exit 2), not a skip; with neither
+set, the check warns and skips.
+
+CI (`validate.yml`) clones `plug-factory` with `PLUG_FACTORY_TOKEN` /
+`PLUG_FACTORY_READ_TOKEN` and `zcode-factory` with `ZCODE_FACTORY_TOKEN` /
+`ZCODE_FACTORY_READ_TOKEN`. Both twins are private; without a token the
+job warns and falls back (Cursor) or skips (ZCode), so wire the secrets to
+make the checks enforce.
+
 ## Attribution
 
 `pstack` and `cursor-team-kit` are **inspired-by conversions**
