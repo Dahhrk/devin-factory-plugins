@@ -22,20 +22,29 @@ jobs:
       - name: Version bump on content changes
         if: github.event_name == 'pull_request'
         run: node scripts/check-version-bump.mjs
-      - name: Drift vs Cursor pack twin
+      - name: Drift vs Cursor and ZCode pack twins
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PLUG_FACTORY_TOKEN: ${{ secrets.PLUG_FACTORY_TOKEN }}
           PLUG_FACTORY_READ_TOKEN: ${{ secrets.PLUG_FACTORY_READ_TOKEN }}
+          ZCODE_FACTORY_TOKEN: ${{ secrets.ZCODE_FACTORY_TOKEN }}
+          ZCODE_FACTORY_READ_TOKEN: ${{ secrets.ZCODE_FACTORY_READ_TOKEN }}
         run: |
           set -euo pipefail
-          rm -rf /tmp/plug-factory
+          rm -rf /tmp/plug-factory /tmp/zcode-factory
           TOKEN="${PLUG_FACTORY_TOKEN:-${PLUG_FACTORY_READ_TOKEN:-}}"
           if [ -n "$TOKEN" ]; then
             git clone --depth 1 "https://x-access-token:${TOKEN}@github.com/Dahhrk/plug-factory.git" /tmp/plug-factory
           else
             echo "::warning::PLUG_FACTORY_TOKEN unset; drifting against public Dahhrk/plugins"
             git clone --depth 1 https://github.com/Dahhrk/plugins /tmp/plug-factory
+          fi
+          ZTOKEN="${ZCODE_FACTORY_TOKEN:-${ZCODE_FACTORY_READ_TOKEN:-}}"
+          if [ -n "$ZTOKEN" ]; then
+            git clone --depth 1 "https://x-access-token:${ZTOKEN}@github.com/Dahhrk/zcode-factory.git" /tmp/zcode-factory
+            export ZCODE_FACTORY_REPO=/tmp/zcode-factory
+          else
+            echo "::warning::ZCODE_FACTORY_TOKEN unset; zcode twin check skipped (a missing checkout is a setup failure, not a skip, so wire the secret to enforce it)"
           fi
           node scripts/drift-check.mjs /tmp/plug-factory
           node scripts/drift-check.mjs /tmp/plug-factory --content || true

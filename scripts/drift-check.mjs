@@ -8,6 +8,11 @@
 // from devin-factory-plugins, $DEVIN_FACTORY_REPO or
 // ~/Projects/devin-factory-plugins when run from plug-factory.
 //
+// --zcode <path>: also run the structural check on the ZCode pack twin
+// (Dahhrk/zcode-factory). Same effect as setting $ZCODE_FACTORY_REPO; a
+// missing checkout is a setup failure, not a skip. See the ZCode section
+// at the bottom of this file for what it verifies.
+//
 // --content: advisory pass. Prose differs between editions by design, but
 // fenced commands and operational backtick tokens (paths, flags, env
 // assignments, file extensions) should match; asymmetries are reported as
@@ -36,7 +41,10 @@ const PACKS = isDevinRepo
   ? [['plugins/pstack', 'pstack'], ['plugins/cursor-team-kit', 'cursor-team-kit']]
   : [['pstack', 'pstack'], ['cursor-team-kit', 'cursor-team-kit']];
 
-const other = process.argv[2]
+const args = process.argv.slice(2);
+const zcodeFlagIdx = args.indexOf('--zcode');
+const positional = args.find((a, i) => !a.startsWith('--') && (zcodeFlagIdx === -1 || i !== zcodeFlagIdx + 1));
+const other = positional
   || process.env[isDevinRepo ? 'PLUG_FACTORY_REPO' : 'DEVIN_FACTORY_REPO']
   || join(homedir(), 'Projects', isDevinRepo ? 'plug-factory' : 'devin-factory-plugins');
 
@@ -351,6 +359,60 @@ for (const [packDir, packName] of PACKS) {
       if (re.test(text)) fails.push(`${packName}/${rel}: platform leak - ${why}`);
     }
   }
+}
+
+// ZCode pack twin (Dahhrk/zcode-factory): structural check only. The twin
+// is thin — .zcode-plugin manifest, conventions mirrors, flat skills set —
+// not a pack mirror, so it gets its own required-file check instead of the
+// tree comparison above. Resolve order: --zcode <path> flag,
+// $ZCODE_FACTORY_REPO, ~/Projects/zcode-factory. A flag or env pointing at
+// a missing checkout is a setup failure (exit 2), not a skip; with neither
+// set the check warns and skips so bare local runs stay usable.
+const zcodeFlag = process.argv.indexOf('--zcode');
+const zcodeExplicit = zcodeFlag !== -1 ? process.argv[zcodeFlag + 1] : null;
+const zcodeRoot = zcodeExplicit
+  || process.env.ZCODE_FACTORY_REPO
+  || join(homedir(), 'Projects', 'zcode-factory');
+
+if ((zcodeExplicit || process.env.ZCODE_FACTORY_REPO) && !existsSync(zcodeRoot)) {
+  console.error(`drift-check: zcode twin not found at ${zcodeRoot} (missing checkout is a setup failure, not a skip)`);
+  process.exit(2);
+}
+
+const ZCODE_REQUIRED_FILES = [
+  '.zcode-plugin/plugin.json',
+  'AGENTS.md',
+  'conventions/language-conventions.md',
+  'conventions/factory-code-defaults.md',
+];
+const ZCODE_REQUIRED_SKILLS = ['language-conventions', 'smallest-correct-diff', 'deslop'];
+
+if (existsSync(zcodeRoot)) {
+  for (const f of ZCODE_REQUIRED_FILES) {
+    if (!existsSync(join(zcodeRoot, f))) fails.push(`zcode-factory: missing required file -> ${f}`);
+  }
+  for (const s of ZCODE_REQUIRED_SKILLS) {
+    const p = join(zcodeRoot, 'skills', s, 'SKILL.md');
+    if (!existsSync(p)) { fails.push(`zcode-factory: missing skill -> skills/${s}/SKILL.md`); continue; }
+    if (!/^---\n[\s\S]*?name:\s*\S+[\s\S]*?description:[\s\S]*?---/.test(readFileSync(p, 'utf8'))) {
+      fails.push(`zcode-factory: skills/${s}/SKILL.md missing frontmatter name/description`);
+    }
+  }
+  // conventions mirror: section headers must track the kitchen doc.
+  const kitchenDoc = join(here, 'plugins', 'factory-baseline', 'rules', 'language-conventions.md');
+  if (existsSync(kitchenDoc)) {
+    const upstream = new Set(headersOf(readLines(kitchenDoc)).filter((h) => h !== 'Anti-drift'));
+    const mirror = headersOf(readLines(join(zcodeRoot, 'conventions', 'language-conventions.md')));
+    for (const h of mirror) {
+      if (h === 'Anti-drift') continue; // twin lists differ by design (self row)
+      if (!upstream.has(h)) fails.push(`zcode-factory: conventions/language-conventions.md section not upstream -> "${h}"`);
+    }
+    for (const h of upstream) {
+      if (!mirror.includes(h)) fails.push(`zcode-factory: conventions/language-conventions.md upstream section missing -> "${h}"`);
+    }
+  }
+} else {
+  warns.push(`zcode twin not checked out at ${zcodeRoot}; set ZCODE_FACTORY_REPO to run its structural check`);
 }
 
 for (const w of warns) console.log(`warn: ${w}`);
