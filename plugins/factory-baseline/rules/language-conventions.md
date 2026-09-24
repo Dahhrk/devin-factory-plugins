@@ -36,11 +36,12 @@ Autopilot stays gated until TRUST-NEXT is green. No product secrets in the kitch
 
 ## Anti-drift
 
-Three seated twins stay mirrored for shared conventions and overlapping packs:
+Four seated twins stay mirrored for shared conventions and overlapping packs:
 
 - Kitchen: `Dahhrk/dark-factory`
 - Devin plugin pack: `Dahhrk/devin-factory-plugins` (this repo)
 - Cursor pack twin: `Dahhrk/plug-factory` (private; packs at repo root)
+- ZCode pack twin: `Dahhrk/zcode-factory` (private; thin plugin at repo root)
 
 DevinGo app remains `Dahhrk/devin-go` only (not kitchen, not a pack twin).
 

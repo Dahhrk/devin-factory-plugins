@@ -8,6 +8,10 @@ Standing routine that keeps the factory repos aligned.
 - Devin plugin pack: `Dahhrk/devin-factory-plugins` (this repo).
 - Cursor pack twin: `Dahhrk/plug-factory` (private). Packs live at repo root:
   `pstack/`, `cursor-team-kit/`.
+- ZCode pack twin: `Dahhrk/zcode-factory` (private). Thin ZCode/GLM-5.3
+  plugin: `.zcode-plugin/plugin.json`, `AGENTS.md`, `conventions/`, flat
+  `skills/<name>/SKILL.md`. Carries the conventions mirrors and a small
+  factory skill set, not the full packs.
 
 The twins carry shared conventions and overlapping packs, skills, and rules.
 They stay mirrored.
@@ -22,7 +26,8 @@ twins agree and no drift is found.
 
 ## What runs
 
-1. Refresh all three mains from GitHub, including `Dahhrk/plug-factory`.
+1. Refresh all four mains from GitHub, including `Dahhrk/plug-factory` and
+   `Dahhrk/zcode-factory`.
 2. Compare convention mirrors. At minimum
    `plugins/factory-baseline/rules/language-conventions.md` in this pack
    against `docs/language-conventions.md` in the kitchen.
@@ -31,6 +36,10 @@ twins agree and no drift is found.
    or `~/Projects/plug-factory`; that naming stays valid. A missing checkout
    is a setup failure to fix, not a step to skip. The advisory `--content`
    pass alone never opens a PR.
+4. Run the ZCode twin's structural check from this repo with
+   `ZCODE_FACTORY_REPO` (or `--zcode`) pointing at the checkout, or run
+   `node scripts/drift-check.mjs` inside `Dahhrk/zcode-factory`. Missing
+   checkout is a setup failure, not a skip.
 
 ## On unexplained drift
 
@@ -54,6 +63,10 @@ Devin CI prefers private `Dahhrk/plug-factory` when
 unset, validate drifts against public `Dahhrk/plugins` and prints a
 warning so the job stays green. Add the read token on the Devin pack repo
 when private-twin drift should be the hard path.
+
+Private `Dahhrk/zcode-factory` uses `secrets.ZCODE_FACTORY_TOKEN` (or
+`ZCODE_FACTORY_READ_TOKEN`). Without that token, validate warns and skips
+the ZCode twin check; wire the secret to enforce it.
 
 ## Pointer
 
