@@ -1,0 +1,19 @@
+---
+description: PowerShell PSR + poteto bar for product .ps1/.psm1
+globs: "**/*.{ps1,psm1,PS1,PSM1}"
+alwaysApply: false
+---
+
+# PowerShell
+
+Follow skills **powershell** and **poteto-powershell** when applicable.
+
+- **PSScriptAnalyzer** required in product wiring (`PSScriptAnalyzerSettings.psd1` / settings / CI `Invoke-ScriptAnalyzer`)
+- Settings must keep **PSAvoidUsingInvokeExpression** and **PSAvoidUsingWriteHost** enabled (not excluded / severity none)
+- No `Invoke-Expression` / `iex` without `ps-rg-allow` + rationale; prefer `&` call operator / splatting
+- No `Write-Host` in modules (`.psm1`) without `ps-rg-allow` + rationale; prefer `Write-Output` / information stream / structured logging
+- No unquoted path cmdlet args (`Test-Path $p`, `Get-Content $p`, `Set-Location $p`, …) without `ps-rg-allow` + rationale; quote `"$path"`
+- Required product gates: `ps-rg-gate` + `ps-hotpath-gate` + `ps-pssa-gate`. Do not disable checks to force green.
+- Prove behaviour with Pester / integration checks where product needs them, not "lint pass" alone
+
+Repeated review smell twice on a PowerShell product: encode into lint/CI/skill, not more prose.

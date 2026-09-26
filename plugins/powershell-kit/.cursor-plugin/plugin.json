@@ -1,0 +1,7 @@
+{
+  "name": "powershell-kit",
+  "version": "0.1.0",
+  "description": "PowerShell poteto bar: PSR PowerShell encode. PSScriptAnalyzer lint, no Invoke-Expression, no Write-Host in modules, no unquoted paths. Tier 0 single-walk rg + hotpath budget + PSScriptAnalyzer wiring. Requires ripgrep.",
+  "skills": "./skills",
+  "rules": "./rules"
+}
