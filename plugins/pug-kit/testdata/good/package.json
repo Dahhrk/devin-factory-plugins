@@ -1,0 +1,10 @@
+{
+  "name": "pug-kit-good-fixture",
+  "private": true,
+  "dependencies": {
+    "pug": "^3.0.0"
+  },
+  "scripts": {
+    "build": "pug views -o dist"
+  }
+}

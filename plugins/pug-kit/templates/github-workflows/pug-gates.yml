@@ -1,0 +1,19 @@
+# Copy into product .github/workflows/ or merge steps into existing ci.yml.
+name: pug-gates
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  pug-gates:
+    name: pug-kit gates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tier 0 pug-rg-gate
+        run: bash scripts/pug-rg-gate.sh .
+      - name: Tier 0.5 pug-hotpath-gate
+        run: bash scripts/pug-hotpath-gate.sh .
+      - name: Tier 1 pug-pug-gate
+        run: bash scripts/pug-pug-gate.sh .

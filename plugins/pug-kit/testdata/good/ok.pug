@@ -1,0 +1,16 @@
+//- Documented intentional seam; keep allow on the smell line.
+- var title = 'Hello'
+- var legacyHtml = '<b>ok</b>'
+
+mixin card(title)
+  .card
+    h2= title
+
+html
+  head
+    include includes/head.pug
+  body
+    p= title
+    p #{title}
+    +card(title)
+    div!= legacyHtml // pug-rg-allow: fixture documents allow marker for intentional trusted-CMS HTML seam
