@@ -1,0 +1,7 @@
+{
+  "name": "csharp-kit",
+  "version": "0.1.0",
+  "description": "C# poteto bar: PSR C# encode. dotnet format, Roslyn analyzers, nullable enable, SQL/string-concat and Console.WriteLine-in-libs smells, plus blocking-on-async. Tier 0 single-walk rg + hotpath budget + fmt + analyzers + nullable. Requires ripgrep.",
+  "skills": "./skills",
+  "rules": "./rules"
+}

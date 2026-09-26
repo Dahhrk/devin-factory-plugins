@@ -1,0 +1,20 @@
+---
+description: C# PSR + poteto bar for product .cs
+globs: "**/*.{cs,csproj,props,targets,sln}"
+alwaysApply: false
+---
+
+# C#
+
+Follow skills **csharp** and **poteto-csharp** when applicable.
+
+- Formatter clean (`dotnet format` / `.editorconfig` csharp style)
+- Roslyn analyzers / `EnableNETAnalyzers` / `AnalysisLevel` wired where practical
+- Nullable reference analysis enabled (`<Nullable>enable</Nullable>` or `#nullable enable`)
+- No `Console.Write` / `Console.WriteLine` / `Console.Error.Write` in libraries without `csharp-rg-allow` + rationale; prefer `ILogger` / `ILogger<T>`
+- No SQL/string concat without `csharp-rg-allow` + rationale; prefer parameterized commands (`SqlParameter` / Dapper params)
+- No blocking on async (`.Result` / `.Wait(` / `GetAwaiter().GetResult()`) without `csharp-rg-allow` + rationale
+- Required product gates: `csharp-rg-gate` + `csharp-hotpath-gate` + `csharp-fmt-gate` + `csharp-analyzers-gate` + `csharp-nullable-gate`. Do not disable checks to force green.
+- Prove runtime behaviour with tests / analyzers / `dotnet format`, not "fmt pass" alone
+
+Repeated review smell twice on a C# product: encode into lint/CI/skill, not more prose.
