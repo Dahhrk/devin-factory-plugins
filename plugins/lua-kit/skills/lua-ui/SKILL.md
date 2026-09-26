@@ -8,7 +8,7 @@ paths: ["**/vgui/**/*.lua", "**/modules/**/*.lua", "**/*hud*.lua", "**/*derma*.l
 
 - **Build once.** Open via `Obsidian.Open(id, builder)` singleton. Do not recreate the tree every frame or net tick.
 - **Server opens via empty net.** Server signals "open X"; client runs local builder. Do not network panel source.
-- **Paint budget.** HUDPaint and Derma `Paint`: cache labels and ring opts (`EmptyRingOpts` / panel `_ringOpts`). No inline `{...}` args to `Paint*Ring`. No ` .. ` / `string.format` on `SimpleText` lines. Progress percent via SetFraction cache. Throttle with `Obsidian.Optim.Throttle` when full 60 FPS paint is unnecessary. Hot-path alloc bans: skill **lua** + `lua-hotpath-gate.sh`.
+- **Paint budget.** HUDPaint and Derma `Paint`: cache labels and ring opts (`EmptyRingOpts` / panel `_ringOpts`). No inline `{...}` args to `Paint*Ring`. No ` .. ` / `string.format` / `tostring` / `string.upper|lower|sub` on `SimpleText` lines. Progress percent via SetFraction cache. Throttle with `Obsidian.Optim.Throttle` when full 60 FPS paint is unnecessary. Hot-path alloc bans: skill **lua** + `lua-hotpath-gate.sh`.
 - **No layout thrash.** Avoid `InvalidateLayout(true)` storms; debounce rebuilds with `Obsidian.Optim.Debounce`.
 - **Theme tokens.** Soft Dark Glass via `Obsidian.Theme` / `GetToken`. No cyan (`#4AACFC`), no one-off magic colors. Gate: rg + hotpath cyan check.
 - **Reserved domains.** Empty module stubs must not claim `ready=true`. Use `ready=false` or delete the file from the load list.
