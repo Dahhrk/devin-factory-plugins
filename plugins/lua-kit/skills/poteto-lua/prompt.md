@@ -1,4 +1,4 @@
-# Poteto prompt templates — GMod Lua
+# Poteto prompt templates (GMod Lua)
 
 ## Generic addon change
 
@@ -12,7 +12,7 @@ Keep Lua 5.1/bit.*; no AddCSLuaFile of server-only; Obsidian public API stable; 
 
 ```
 /poteto-mode harden SERVER net.Receive for <message> against hostile clients
-Done means every BRANCH validates ply + permission + ranges; rg gate bans WriteTable and WriteEntity(LocalPlayer()); hostile forged message rejected in a manual or automated receive fixture; EXIT PREDICATE 1-4,7
+Done means every BRANCH validates ply + permission + ranges; rg gate bans WriteTable and WriteEntity(LocalPlayer()); hostile forged message rejected in a receive fixture; EXIT PREDICATE 1-4,7
 Keep message name/prefix; rate limit behavior; clientside UX unchanged
 ```
 
