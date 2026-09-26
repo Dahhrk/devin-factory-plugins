@@ -1,0 +1,20 @@
+---
+description: Just PSR + poteto bar for product justfiles and *.just modules
+globs: "**/justfile,**/Justfile,**/.justfile,**/*.just"
+alwaysApply: false
+---
+
+# Just
+
+Follow skills **just** and **poteto-just** when applicable.
+
+- **just** wiring required (`justfile` / `*.just` / CI `just`). Do not claim Just product green without wiring.
+- No unchecked `[script]` / shebang recipes (`#!/` under a recipe) without `just-rg-allow` + rationale.
+- No dotenv secrets in recipes (`set dotenv-load` / `dotenv-path` / `dotenv-filename` / `dotenv-command` / `dotenv-required` / `dotenv-override`) without allow.
+- No `export` of secret-named vars / `[env(SECRET,...)]` without allow.
+- No `import` / `mod` of untrusted / interpolated / `~/` / absolute path without allow; prefer static relative `import 'rules.just'`.
+- No `curl|bash` / `wget|sh` recipes without allow.
+- Required product gates: `just-rg-gate` + `just-hotpath-gate` + `just-just-gate`. Do not disable checks to force green.
+- Prove `just` run where product needs it, not "wiring pass" alone
+
+Repeated review smell twice on a Just product: encode into lint/CI/skill, not more prose.

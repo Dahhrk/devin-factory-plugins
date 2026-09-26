@@ -1,0 +1,8 @@
+# Good fixture: line recipes, no dotenv, no secret export, static import, no curl|bash.
+import 'ok.just'
+build:
+  cc -o app main.c
+test:
+  ./app --self-test
+clean:
+  rm -f app
