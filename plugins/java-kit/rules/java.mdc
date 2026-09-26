@@ -1,0 +1,21 @@
+---
+description: Java PSR + poteto bar for product .java
+globs: "**/*.{java,gradle,kts}"
+alwaysApply: false
+---
+
+# Java
+
+Follow skills **java** and **poteto-java** when applicable.
+
+- Formatter clean (google-java-format or Spotless; spring-javaformat accepted)
+- Checkstyle or Error Prone wired where practical
+- Nullability contracts (jspecify / NullMarked / NullAway / Checker / Spring Nullable)
+- No `System.out` / `System.err` print without `java-rg-allow` + rationale; prefer a logger
+- No `printStackTrace` without `java-rg-allow` + rationale; prefer a logger
+- No SQL/string concat without `java-rg-allow` + rationale; prefer `PreparedStatement`
+- No `catch (NullPointerException` without `java-rg-allow` + rationale; fix nullable contracts
+- Required product gates: `java-rg-gate` + `java-hotpath-gate` + `java-fmt-gate` + `java-checkstyle-ci-gate` + `java-nullability-gate`. Do not disable checks to force green.
+- Prove runtime behaviour with tests / Checkstyle / Error Prone, not "fmt pass" alone
+
+Repeated review smell twice on a Java product: encode into lint/CI/skill, not more prose.
