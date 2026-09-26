@@ -1,4 +1,5 @@
 # Copy into product .github/workflows/ or merge steps into existing ci.yml.
+# Pair with templates/oxlintrc.json at product root as .oxlintrc.json.
 name: ts-gates
 
 on:
@@ -15,10 +16,23 @@ jobs:
         run: bash scripts/ts-rg-gate.sh .
       - name: Tier 0.5 ts-strict-gate
         run: bash scripts/ts-strict-gate.sh .
+      - name: Tier 0.5 ts-runtime-gate
+        run: bash scripts/ts-runtime-gate.sh .
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
           cache: npm
       - run: npm ci
       - run: npm run typecheck
+      - name: oxlint (product template)
+        run: |
+          if [ ! -f .oxlintrc.json ] && [ ! -f oxlint.json ]; then
+            echo "Missing .oxlintrc.json - copy from typescript-kit/templates/oxlintrc.json"
+            exit 1
+          fi
+          cfg=.oxlintrc.json
+          if [ -f oxlint.json ] && [ ! -f .oxlintrc.json ]; then cfg=oxlint.json; fi
+          npx --yes oxlint@latest -c "$cfg" .
       - run: npm run lint
+      - name: Runtime / drive proof
+        run: npm test
