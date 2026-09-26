@@ -1,17 +1,14 @@
--- GMod / GLua Lua 5.1 .luacheckrc template (lua-kit Tier 1)
--- Copy to product repo root as .luacheckrc and add your addon root table to globals.
+-- lua-kit Tier 1. Copy to product root as .luacheckrc; add your addon root table to globals.
 
 std = "lua51"
 max_line_length = 120
 
 globals = {
-  -- Realm / engine
   "SERVER",
   "CLIENT",
   "GAME_DLL",
   "CLIENT_DLL",
   "MENU_DLL",
-  -- Types / constructors
   "Color",
   "Vector",
   "Angle",
@@ -23,7 +20,6 @@ globals = {
   "Vehicle",
   "Material",
   "CreateMaterial",
-  -- Common libs
   "hook",
   "net",
   "util",
@@ -40,7 +36,6 @@ globals = {
   "team",
   "bit",
   "jit",
-  -- Client UI / render
   "surface",
   "draw",
   "vgui",
@@ -52,7 +47,6 @@ globals = {
   "halo",
   "killicon",
   "notification",
-  -- Helpers
   "IsValid",
   "LocalPlayer",
   "CurTime",
@@ -75,7 +69,6 @@ globals = {
   "isvector",
   "isangle",
   "ismatrix",
-  -- Metatable stubs often treated as globals in checks
   "PLAYER",
   "ENTITY",
   "WEAPON",

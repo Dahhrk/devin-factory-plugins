@@ -1,7 +1,5 @@
-# Product CI skeleton from lua-kit.
-# Copy to .github/workflows/lua-gates.yml in the product repo.
-# Expects scripts/lua-rg-gate.sh (and optionally .luacheckrc) in the product tree.
-# Pilot: Obsidian Framework.
+# Copy to .github/workflows/lua-gates.yml. Needs scripts/lua-rg-gate.sh and .luacheckrc in the product.
+# Pilot: Obsidian Framework. Tier 2 stays commented; enable when glualint.json + binary are pinned.
 
 name: lua-gates
 
@@ -48,7 +46,7 @@ jobs:
       - name: Ensure .luacheckrc
         run: |
           if [ ! -f .luacheckrc ]; then
-            echo "Missing .luacheckrc — copy from lua-kit/templates/luacheckrc"
+            echo "Missing .luacheckrc - copy from lua-kit/templates/luacheckrc"
             exit 1
           fi
       - name: Run luacheck
@@ -59,23 +57,16 @@ jobs:
             luacheck .
           fi
 
-  # Tier 2 glualint (optional). Enable when the product adopts glualint.json
-  # and a glualint binary (see FPtje/GLuaFixer). Until then this job is
-  # commented out so CI stays green on Tier 0 + Tier 1 only.
-  #
+  # Tier 2 (optional). Uncomment when product has glualint.json + a pinned glualint binary (FPtje/GLuaFixer).
   # tier2-glualint:
   #   name: Tier 2 glualint
   #   runs-on: ubuntu-latest
   #   needs: tier1-luacheck
-  #   # continue-on-error: true   # use while rolling out; remove when required
   #   steps:
   #     - uses: actions/checkout@v4
   #     - name: Install glualint
   #       run: |
   #         # Pin a release from https://github.com/FPtje/GLuaFixer/releases
-  #         # or use: uses: FPtje/GLuaFixer/.github/workflows/glualint.yml@master
-  #         echo "Install glualint binary for your runner, then:"
-  #         echo "  glualint lint ."
   #         exit 1
   #     - name: Run glualint
   #       run: glualint lint .
