@@ -1,0 +1,7 @@
+{
+  "name": "kit-weak-fixture-mdxish",
+  "private": true,
+  "devDependencies": {
+    "vite": "^5.0.0"
+  }
+}
