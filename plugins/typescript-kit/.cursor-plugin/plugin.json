@@ -1,7 +1,7 @@
 {
   "name": "typescript-kit",
-  "version": "0.5.0",
-  "description": "TypeScript poteto bar: PSR handbook + strict (extends-aware), global-fetch/URL/env + JSON/DOM rg boundaries (method .fetch allowed), portable bare @ts-expect-error, env-schema + typed-parse templates, oxlint adoption gate, runtime/drive proof, product-vs-library .d.ts policy, parallel rg/selfcheck, typecheck aliases, selfcheck fixtures.",
+  "version": "0.6.0",
+  "description": "TypeScript poteto bar: PSR handbook + strict (extends-aware), global-fetch/URL/env + JSON/DOM rg boundaries (method .fetch allowed), portable bare @ts-expect-error, env-schema + typed-parse templates, oxlint adoption gate with pinned offline-capable live run (never floating-latest), runtime/drive proof, product-vs-library .d.ts policy, parallel rg/selfcheck, typecheck aliases, selfcheck fixtures.",
   "skills": "./skills",
   "rules": "./rules"
 }

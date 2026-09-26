@@ -23,7 +23,7 @@ All must be true. Do not claim done on prose.
 1. `bash scripts/ts-rg-gate.sh <product-root>` exits 0 (product copy of pack script; scans `src`, else `lib`/`app`; override with `TS_RG_SRC`). Product mode scans `.d.ts`. Global `fetch` only (method `.fetch` allowed); whole-object `process.env` to a schema is OK.
 2. `bash scripts/ts-strict-gate.sh <product-root>` exits 0 (strict via extends; typecheck aliases accepted).
 3. `bash scripts/ts-runtime-gate.sh <product-root>` exits 0 (runtime/drive proof script present).
-4. `bash scripts/ts-oxlint-gate.sh <product-root>` exits 0 (`.oxlintrc.json` encodes factory rules; live oxlint unless `TS_OXLINT_CONFIG_ONLY=1`).
+4. `bash scripts/ts-oxlint-gate.sh <product-root>` exits 0 (`.oxlintrc.json` encodes factory rules; live oxlint pinned / offline-capable unless `TS_OXLINT_CONFIG_ONLY=1`).
 5. Product `npm run typecheck` and `npm run lint` exit 0 when those scripts exist. Product oxlint matches `templates/oxlintrc.json` bar (`no-explicit-any`, `no-non-null-assertion`, `switch-exhaustiveness-check`).
 6. Diff adds no narration comments that restate the next statement. Survivors only for non-obvious external constraints (or required SAFETY markers for remaining assertions).
 7. Smallest correct change: prefer deletion; no new helper with one caller; no invent fake handlers for score.

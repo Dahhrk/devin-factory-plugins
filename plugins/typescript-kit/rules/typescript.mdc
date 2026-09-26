@@ -15,7 +15,7 @@ Follow skills **typescript** and **poteto-typescript** when applicable. Prefer p
 - Prefer `unknown` at the parse site; `satisfies` over widening `as`
 - Exhaustive `switch` with `never` default on discriminated unions (oxlint `switch-exhaustiveness-check`)
 - Product public `.d.ts` must not expose `: any`; library host research may use `TS_RG_SKIP_DTS=1`
-- Required product gates: `ts-rg-gate` + `ts-strict-gate` + `ts-runtime-gate` + `ts-oxlint-gate` + product lint/typecheck. Do not disable checks to force green.
+- Required product gates: `ts-rg-gate` + `ts-strict-gate` + `ts-runtime-gate` + `ts-oxlint-gate` (pinned oxlint; offline via `TS_OXLINT_BIN` / local install) + product lint/typecheck. Do not disable checks to force green.
 - Prove emitted/runtime behaviour (drive smoke, unit, or playwright), not "types pass" alone
 
 Repeated review smell twice on Control-Glass or other TS products: encode into lint/CI/skill, not more prose.

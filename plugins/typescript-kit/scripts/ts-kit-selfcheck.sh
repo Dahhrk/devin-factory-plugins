@@ -157,5 +157,70 @@ else
   echo "ok: bare @ts-expect-error discriminated"
 fi
 
+# Oxlint pin: never @latest; version stamp + gate default agree; offline refuses npx
+OXLINT_GATE="$HERE/ts-oxlint-gate.sh"
+PIN_FILE="$ROOT/templates/oxlint.version"
+if [[ ! -f "$PIN_FILE" ]]; then
+  echo "FAIL selfcheck: missing templates/oxlint.version"
+  fail=1
+else
+  PIN="$(tr -d '[:space:]' <"$PIN_FILE")"
+  if [[ -z "$PIN" ]]; then
+    echo "FAIL selfcheck: empty oxlint.version"
+    fail=1
+  elif ! grep -Fq "$PIN" "$OXLINT_GATE"; then
+    echo "FAIL selfcheck: oxlint gate missing pin $PIN"
+    fail=1
+  else
+    echo "ok: oxlint gate pins $PIN"
+  fi
+  if grep -F -q 'oxlint@latest' "$OXLINT_GATE"; then
+    echo "FAIL selfcheck: oxlint gate still invokes @latest"
+    fail=1
+  elif ! grep -F -q 'oxlint@${TS_OXLINT_VERSION}' "$OXLINT_GATE"; then
+    echo "FAIL selfcheck: oxlint gate missing pinned npx oxlint@\${TS_OXLINT_VERSION}"
+    fail=1
+  else
+    echo "ok: oxlint gate avoids @latest (uses pin)"
+  fi
+  if ! grep -q 'TS_OXLINT_OFFLINE' "$OXLINT_GATE" \
+    || ! grep -q 'TS_OXLINT_BIN' "$OXLINT_GATE"; then
+    echo "FAIL selfcheck: oxlint gate missing TS_OXLINT_OFFLINE / TS_OXLINT_BIN"
+    fail=1
+  else
+    echo "ok: oxlint gate encodes OFFLINE + BIN overrides"
+  fi
+fi
+
+# Offline mode must fail clearly when no local binary (do not fall through to npx)
+OFF_OUT="$WORKDIR/oxlint-offline.out"
+OFF_RC=0
+env -u TS_OXLINT_BIN -u TS_OXLINT_CONFIG_ONLY PATH="/usr/bin:/bin" \
+  TS_OXLINT_OFFLINE=1 bash "$OXLINT_GATE" "$ROOT/testdata/good" >"$OFF_OUT" 2>&1 || OFF_RC=$?
+if [[ "$OFF_RC" -eq 0 ]]; then
+  echo "FAIL selfcheck: TS_OXLINT_OFFLINE=1 unexpectedly passed without local oxlint"
+  cat "$OFF_OUT"
+  fail=1
+elif ! grep -q 'offline oxlint required' "$OFF_OUT"; then
+  echo "FAIL selfcheck: offline miss missing clear FAIL message"
+  cat "$OFF_OUT"
+  fail=1
+else
+  echo "ok: offline oxlint refuses network/npx fallback"
+fi
+
+# Optional live proof when a local binary exists (PATH or TS_OXLINT_BIN)
+if command -v oxlint >/dev/null 2>&1 || [[ -n "${TS_OXLINT_BIN:-}" ]]; then
+  if TS_OXLINT_OFFLINE=1 bash "$OXLINT_GATE" "$ROOT/testdata/good" >"$WORKDIR/oxlint-live.out" 2>&1; then
+    echo "ok: live oxlint offline path works with local binary"
+  else
+    echo "FAIL selfcheck: local oxlint live run failed"
+    cat "$WORKDIR/oxlint-live.out"
+    fail=1
+  fi
+else
+  echo "ok: skip live oxlint (no local binary; pin+offline proven)"
+fi
+
 if [[ "$fail" -ne 0 ]]; then exit 1; fi
 echo "PASS ts-kit-selfcheck"
