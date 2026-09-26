@@ -1,0 +1,8 @@
+<!-- Intentional smells: arbitrary-value sprawl + purge footgun dynamic class concat -->
+<div class="w-[137px] h-[89px] mt-[13px] bg-[#1a2b3c] text-[15px]">Arbitrary</div>
+<div class="[color:#ff00aa] [font-size:17px]">Arbitrary prop</div>
+<script>
+  const color = 'red-500';
+  const el = document.createElement('div');
+  el.className = 'bg-' + color;
+</script>

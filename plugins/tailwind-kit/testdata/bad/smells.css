@@ -1,0 +1,7 @@
+/* Intentional smells for tailwind-rg-gate discrimination (not product code). */
+.btn {
+  @apply px-4 py-2 bg-blue-500 text-white rounded;
+}
+.card {
+  @apply flex flex-col gap-2 p-4 shadow-lg;
+}
