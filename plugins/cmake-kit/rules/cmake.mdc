@@ -1,0 +1,20 @@
+---
+description: CMake PSR + poteto bar for product CMakeLists.txt and modules
+globs: "**/CMakeLists.txt,**/*.cmake,**/*.cmake.in"
+alwaysApply: false
+---
+
+# CMake
+
+Follow skills **cmake** and **poteto-cmake** when applicable.
+
+- **cmake** wiring required (`CMakeLists.txt` / `*.cmake` / CI `cmake`). Do not claim CMake product green without wiring.
+- No `file(DOWNLOAD ...)` without `EXPECTED_HASH` / `EXPECTED_MD5` on the same physical line without `cmake-rg-allow` + rationale.
+- No unchecked `execute_process` (missing `RESULT_VARIABLE` / `RESULTS_VARIABLE` / `COMMAND_ERROR_IS_FATAL` on the same line) without allow.
+- No `file(GLOB|GLOB_RECURSE)` for source extensions without allow; prefer explicit lists (Kitware Help note).
+- No `set(... CACHE ... FORCE)` without allow; prefer CACHE without FORCE or `option()`.
+- No `include(${...})` variable / untrusted path without allow; prefer static `include(ModuleName)`.
+- Required product gates: `cmake-rg-gate` + `cmake-hotpath-gate` + `cmake-cmake-gate`. Do not disable checks to force green.
+- Prove `cmake` configure / build where product needs it, not "wiring pass" alone
+
+Repeated review smell twice on a CMake product: encode into lint/CI/skill, not more prose.

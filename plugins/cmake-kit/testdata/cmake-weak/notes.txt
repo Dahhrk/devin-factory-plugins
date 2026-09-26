@@ -1,0 +1,2 @@
+# placeholder named without cmake instructions
+mention cmake in a comment only: cmake is cool
