@@ -1,0 +1,16 @@
+---
+import DOMPurify from 'isomorphic-dompurify';
+import Counter from './Counter.tsx';
+const raw = Astro.props.html ?? '';
+const uid = Astro.props.id ?? '';
+---
+<Counter client:visible />
+<p>{Astro.props.text}</p>
+<div set:html={DOMPurify.sanitize(raw)} />
+{/* Documented intentional seam; keep allow on the smell line. */}
+<LegacyHydrate client:load /> <!-- astro-rg-allow: fixture documents allow marker for intentional client:load seam -->
+<div id="feature" data-id={uid}></div>
+<script>
+  const el = document.getElementById('feature');
+  console.debug(el?.dataset.id);
+</script>
