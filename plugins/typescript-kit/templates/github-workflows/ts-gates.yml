@@ -18,21 +18,16 @@ jobs:
         run: bash scripts/ts-strict-gate.sh .
       - name: Tier 0.5 ts-runtime-gate
         run: bash scripts/ts-runtime-gate.sh .
+      - name: Tier 0.5 ts-oxlint-gate (config)
+        run: TS_OXLINT_CONFIG_ONLY=1 bash scripts/ts-oxlint-gate.sh .
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
           cache: npm
       - run: npm ci
       - run: npm run typecheck
-      - name: oxlint (product template)
-        run: |
-          if [ ! -f .oxlintrc.json ] && [ ! -f oxlint.json ]; then
-            echo "Missing .oxlintrc.json - copy from typescript-kit/templates/oxlintrc.json"
-            exit 1
-          fi
-          cfg=.oxlintrc.json
-          if [ -f oxlint.json ] && [ ! -f .oxlintrc.json ]; then cfg=oxlint.json; fi
-          npx --yes oxlint@latest -c "$cfg" .
+      - name: oxlint (live)
+        run: bash scripts/ts-oxlint-gate.sh .
       - run: npm run lint
       - name: Runtime / drive proof
         run: npm test

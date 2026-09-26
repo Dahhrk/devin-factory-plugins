@@ -1,7 +1,7 @@
 {
   "name": "typescript-kit",
-  "version": "0.3.0",
-  "description": "TypeScript poteto bar: PSR handbook + strict (extends-aware), oxlint template (no-explicit-any, no-non-null-assertion, switch-exhaustiveness), runtime/drive proof gate, product-vs-library .d.ts policy, no unexplained any/assertions/double-assertion, described @ts-expect-error, typecheck aliases, selfcheck fixtures.",
+  "version": "0.4.0",
+  "description": "TypeScript poteto bar: PSR handbook + strict (extends-aware), fetch/URL/env + JSON/DOM rg boundaries, oxlint adoption gate (config + factory rules + live run), runtime/drive proof, product-vs-library .d.ts policy, no unexplained any/assertions/double-assertion, described @ts-expect-error, typecheck aliases, selfcheck fixtures.",
   "skills": "./skills",
   "rules": "./rules"
 }

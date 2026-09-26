@@ -11,3 +11,6 @@ export const d = 1 as unknown as string
 export const el = document.getElementById('x')!
 export const q = document.querySelector('.x')!
 export const raw = JSON.parse('{}')
+export const res = fetch('/api')
+export const loc = new URL('https://example.com')
+export const port = process.env.PORT

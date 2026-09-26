@@ -33,3 +33,21 @@ export function handle(ev: Ev): string {
       return assertNever(ev)
   }
 }
+
+export async function loadJson(url: string): Promise<unknown> {
+  const res = await fetch(url) // ts-rg-allow named fetch boundary
+  if (!res.ok) throw new Error(`HTTP ${res.status}`)
+  return res.json()
+}
+
+export function parseHref(href: string): URL {
+  return new URL(href) // ts-rg-allow named URL boundary
+}
+
+export function readPort(fallback = 3000): number {
+  const raw = process.env.PORT // ts-rg-allow named env boundary
+  if (raw === undefined || raw === '') return fallback
+  const n = Number(raw)
+  if (!Number.isFinite(n)) throw new Error('invalid PORT')
+  return n
+}

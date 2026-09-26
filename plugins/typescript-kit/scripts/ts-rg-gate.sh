@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Tier 0: Programming Standards Reference TypeScript smells (any/assertions,
-# DOM non-null, bare JSON.parse, double assertion, bare @ts-expect-error).
+# DOM non-null, bare JSON.parse, fetch/URL/env boundaries, double assertion,
+# bare @ts-expect-error).
 # Product oxlint/tsc remain authoritative for typed depth; this gate is the
 # portable regex bar.
 #
@@ -107,8 +108,12 @@ check '@ts-expect-error(?!\s+\S)' '@ts-expect-error requires a trailing descript
 check 'getElementById\s*\([^)]*\)\s*!' 'DOM non-null: getElementById(...)! banned; check null then use narrowed node'
 check 'querySelector(All)?\s*\([^)]*\)\s*!' 'DOM non-null: querySelector*(...)! banned; check null then use narrowed node'
 
-# PSR: validate external data at runtime (bare parse is a boundary smell)
+# PSR: validate external data at runtime (bare parse / net / env is a boundary smell)
 check '\bJSON\.parse\s*\(' 'JSON.parse in src banned without a typed parse boundary (move behind a named parser or schema; ts-rg-allow on the parser line if needed)'
+check '\bfetch\s*\(' 'fetch in src banned without a named boundary (parse Response into a domain type; ts-rg-allow on the boundary line)'
+check '\bnew\s+URL\s*\(' 'new URL in src banned without a named boundary (validate input; ts-rg-allow on the boundary line)'
+# Accessor form avoids prose/docs that only mention the identifier
+check '\bprocess\.env(?:\.\w+|\[)' 'process.env in src banned without a named env parse boundary (ts-rg-allow on the parser line)'
 
 if [[ "$fail" -ne 0 ]]; then exit 1; fi
 mode="product"

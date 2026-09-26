@@ -1,0 +1,8 @@
+{
+  "name": "ts-kit-oxlint-missing",
+  "private": true,
+  "scripts": {
+    "typecheck": "tsc -b",
+    "test": "node --test"
+  }
+}
