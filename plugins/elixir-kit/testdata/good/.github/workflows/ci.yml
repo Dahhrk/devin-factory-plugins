@@ -1,0 +1,9 @@
+name: ci
+on: [push]
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - run: mix format --check-formatted
+      - run: mix credo
+      - run: mix dialyzer

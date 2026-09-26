@@ -1,0 +1,7 @@
+{
+  "name": "elixir-kit",
+  "version": "0.1.0",
+  "description": "Elixir poteto bar: PSR Elixir encode. mix format, Credo, dialyzer wiring, String.to_atom on input, SQL concat, Process.sleep on hot paths. Tier 0 single-walk rg + hotpath budget + mix format + Credo + dialyzer wiring. Requires ripgrep.",
+  "skills": "./skills",
+  "rules": "./rules"
+}
