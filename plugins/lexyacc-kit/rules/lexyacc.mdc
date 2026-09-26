@@ -1,0 +1,19 @@
+---
+description: Lex/Yacc PSR + poteto bar for product *.l / *.y / *.lex / *.yacc / *.ll / *.yy
+globs: "**/*.l,**/*.y,**/*.lex,**/*.yacc,**/*.ll,**/*.yy"
+alwaysApply: false
+---
+
+# Lex/Yacc
+
+Follow skills **lexyacc** and **poteto-lexyacc** when applicable.
+
+- **flex/bison/lex/yacc** wiring required (`*.l` / `*.y` / `*.lex` / `*.yacc` / `*.ll` / `*.yy` / CI). Do not claim Lex/Yacc product green without wiring.
+- No untrusted `%include` / `#include` paths (absolute / URL / `../` / `$VAR`) without `lexyacc-rg-allow` + rationale.
+- No silent `yyerror` (empty body / discard-only) without allow.
+- No unbounded `strcpy` / `sprintf` / `strcat` of `yytext` without allow.
+- No generated action C that walks `yytext` pointers without `yyleng` bounds without allow.
+- Required product gates: `lexyacc-rg-gate` + `lexyacc-hotpath-gate` + `lexyacc-tool-gate`. Do not disable checks to force green.
+- Prove `flex` / `bison` / CI where product needs it, not "wiring pass" alone
+
+Repeated review smell twice on a Lex/Yacc product: encode into lint/CI/skill, not more prose.
