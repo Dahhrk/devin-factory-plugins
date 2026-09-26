@@ -1,0 +1,7 @@
+{
+  "name": "react-kit",
+  "version": "0.1.0",
+  "description": "React poteto bar: PSR React encode. react wiring, no dangerouslySetInnerHTML without sanitize, no findDOMNode, no ReactDOM.render (prefer createRoot). Tier 0 single-walk rg + hotpath budget + react wiring. Requires ripgrep.",
+  "skills": "./skills",
+  "rules": "./rules"
+}
