@@ -1,0 +1,19 @@
+# Copy into product .github/workflows/ or merge steps into existing ci.yml.
+name: just-gates
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  just-gates:
+    name: just-kit gates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tier 0 just-rg-gate
+        run: bash scripts/just-rg-gate.sh .
+      - name: Tier 0.5 just-hotpath-gate
+        run: bash scripts/just-hotpath-gate.sh .
+      - name: Tier 1 just-just-gate
+        run: bash scripts/just-just-gate.sh .
