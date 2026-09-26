@@ -1,0 +1,8 @@
+//- Intentional smells for pug-rg-gate discrimination (not product code).
+- var userHtml = '<img src=x onerror=alert(1)>'
+- var userPath = 'user.pug'
+- var mixinName = 'render'
+
+p!= userHtml
+include #{userPath}
++#{mixinName}(userHtml)

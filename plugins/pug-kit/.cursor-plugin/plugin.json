@@ -1,0 +1,7 @@
+{
+  "name": "pug-kit",
+  "version": "0.1.0",
+  "description": "Pug poteto bar: PSR Pug encode. pug wiring, no unescaped buffered XSS (!= / !{}), no include of untrusted interpolated paths, no mixin injection (+#{name}). Tier 0 single-walk rg + hotpath budget + pug wiring. Requires ripgrep.",
+  "skills": "./skills",
+  "rules": "./rules"
+}
