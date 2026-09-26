@@ -1,0 +1,22 @@
+---
+description: Rust PSR + poteto bar for product .rs
+globs: "**/*.rs"
+alwaysApply: false
+---
+
+# Rust
+
+Follow skills **rust** and **poteto-rust** when applicable.
+
+- `rustfmt` clean (`rustfmt.toml` + `cargo fmt --check` in CI)
+- Clippy wired (`[lints.clippy]` / clippy.toml / `cargo clippy` in CI); prefer `-D warnings` in product CI
+- `cargo test` wired in Makefile or CI; prove behaviour with tests, not fmt alone
+- Document SAFETY invariants on every `unsafe` block/fn; prefer safe wrappers
+- Document FFI (`extern "C"`, `#[no_mangle]`) ownership, ABI, and thread-safety
+- No `mem::transmute` / `transmute_copy` without `rust-rg-allow` + rationale
+- No `todo!` / `unimplemented!` in recoverable product paths
+- Choose Cargo.lock policy deliberately (commit for bins/apps; usually omit for pure libs)
+- Required product gates: `rust-rg-gate` + `rust-hotpath-gate` + `rust-fmt-gate` + `rust-clippy-gate` + `rust-test-ci-gate`. Do not disable checks to force green.
+- Prove runtime behaviour with `cargo test`, not "fmt pass" alone
+
+Repeated review smell twice on a Rust product: encode into lint/CI/skill, not more prose.

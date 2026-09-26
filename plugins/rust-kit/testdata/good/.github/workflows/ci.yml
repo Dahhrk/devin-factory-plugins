@@ -1,0 +1,10 @@
+name: ci
+on: [push]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: cargo test
+      - run: cargo clippy --all-targets -- -D warnings
+      - run: cargo fmt --all --check
