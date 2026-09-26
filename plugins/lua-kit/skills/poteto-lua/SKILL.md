@@ -49,6 +49,33 @@ Stricter product gates (`verify-*`, `control-*`) override when present.
 
 Load skills **lua**, **lua-net**, **lua-ui** as needed. Second smell → lint/CI/skill (encode-lessons), not more prose.
 
+## Standing scorecard (Lua / GMod only)
+
+Weighted product pass sheet. Score each dim 0-10, then overall = sum(weight * score).
+
+| Dimension | Weight |
+|-----------|--------|
+| 1. EXIT catch | 25% |
+| 2. AI-slop | 10% |
+| 3. Hot-path | 15% |
+| 4. Net trust | 15% |
+| 5. Pack encode | 10% |
+| 6. Residual | 5% |
+| 7. Code amount | 10% |
+| 8. Code quality | 5% |
+| 9. Optimisations | 5% |
+
+Standing extras (list separately; do not fold into the 100% weighted overall unless the pass asks):
+
+| Extra | /10 | Prove |
+|-------|-----|-------|
+| Facepunch alignment | checklist: locals, no hot alloc, event>Think, iterators, realm/AddCSLuaFile, never trust client, no SendLua, SysTime before micro-opt, unique hooks |
+| CI green | `lua-rg-gate` + `lua-hotpath-gate` PASS on the artifact; if GitHub Actions cannot run, note billing / runner and still prove local gate exit 0 |
+
+Also report Quality / Opts / Amount narrative + LOC (+/− / net) and compare history across passes.
+
+**Board-wide:** Facepunch alignment is Lua / GMod only. Other stacks score CI green, trust boundary, and size without a Facepunch extra. TS/UI uses existing Control-Glass gates. Kitchen docs stay docs-only.
+
 ## Reply shape
 
 Short sentences. Cite which Keep / EXIT item you proved and the command or path that proved it. No em dash. No mid-sentence colon connectors.

@@ -15,3 +15,5 @@ GMod Lua bar for the dark factory Cursor lane.
 Copy gates/templates into the product. Pilot: Obsidian Framework. Compose with `/poteto-mode`; does not replace pstack poteto-mode.
 
 Write home: this repo. Mirrors: `Dahhrk/devin-factory-plugins` (`plugins/lua-kit`), `Dahhrk/zcode-factory` (`skills/lua-kit-*`). Research stays in lua-factory draft, not kitchen twins.
+
+Standing scorecard (weighted dims + Facepunch / CI green extras): `skills/poteto-lua` (Lua/GMod only; other stacks skip Facepunch).
