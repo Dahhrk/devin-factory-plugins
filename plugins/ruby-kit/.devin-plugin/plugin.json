@@ -1,0 +1,17 @@
+{
+  "name": "ruby-kit",
+  "version": "0.1.0",
+  "description": "Ruby poteto bar: PSR Ruby encode. RuboCop, rubocop-performance, SQL string interpolate in where/order/select, eval/send smells. Tier 0 single-walk rg + hotpath budget + rubocop fmt + rubocop-performance. Requires ripgrep. Twin of plug-factory ruby-kit. Packaged for the Devin coding lane.",
+  "author": {
+    "name": "Dark factory"
+  },
+  "license": "MIT",
+  "keywords": [
+    "devin",
+    "plugin",
+    "ruby",
+    "poteto",
+    "psr",
+    "rubocop"
+  ]
+}

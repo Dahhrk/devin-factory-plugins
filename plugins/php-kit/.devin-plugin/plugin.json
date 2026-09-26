@@ -1,0 +1,16 @@
+{
+  "name": "php-kit",
+  "version": "0.1.0",
+  "description": "PHP poteto bar: PSR PHP encode. php-cs-fixer/pint, phpstan/psalm, SQL concat, eval, unserialize smells. Tier 0 single-walk rg + hotpath budget + fmt + phpstan/psalm wiring. Requires ripgrep. Twin of plug-factory php-kit. Packaged for the Devin coding lane.",
+  "author": {
+    "name": "Dark factory"
+  },
+  "license": "MIT",
+  "keywords": [
+    "devin",
+    "plugin",
+    "php",
+    "poteto",
+    "psr"
+  ]
+}

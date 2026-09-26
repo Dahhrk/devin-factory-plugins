@@ -1,0 +1,18 @@
+{
+  "name": "rust-kit",
+  "version": "0.1.0",
+  "description": "Rust poteto bar: PSR Rust encode. rustfmt, Clippy, cargo test, document unsafe invariants and FFI, avoid unchecked external-boundary assumptions, deliberate app vs library lockfile policy. Tier 0 single-walk rg (unsafe, transmute, extern C, todo/unimplemented, no_mangle) + hotpath budget + fmt/clippy + test-CI. Requires ripgrep. Twin of plug-factory rust-kit. Packaged for the Devin coding lane.",
+  "author": {
+    "name": "Dark factory"
+  },
+  "license": "MIT",
+  "keywords": [
+    "devin",
+    "plugin",
+    "rust",
+    "poteto",
+    "psr",
+    "cargo",
+    "clippy"
+  ]
+}

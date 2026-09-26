@@ -1,0 +1,17 @@
+{
+  "name": "just-kit",
+  "version": "0.1.0",
+  "description": "Just poteto bar: PSR Just encode. No unchecked [script]/shebang recipes, no dotenv secrets in recipes, no export of secrets, no include of untrusted path, no curl|bash recipes. Tier 0 single-walk rg + hotpath budget + just wiring. Requires ripgrep. Twin of plug-factory just-kit. Packaged for the Devin coding lane.",
+  "author": {
+    "name": "Dark factory"
+  },
+  "license": "MIT",
+  "keywords": [
+    "devin",
+    "plugin",
+    "just",
+    "poteto",
+    "psr",
+    "justfile"
+  ]
+}

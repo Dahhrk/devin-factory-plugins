@@ -1,0 +1,17 @@
+{
+  "name": "makefile-kit",
+  "version": "0.1.0",
+  "description": "Makefile poteto bar: PSR Makefile encode. No recursive make without .PHONY, no tab/space mix, no unchecked $(shell), no include of untrusted path, no .ONESHELL abuse / curl|bash recipes. Tier 0 single-walk rg + hotpath budget + make wiring. Requires ripgrep. Twin of plug-factory makefile-kit. Packaged for the Devin coding lane.",
+  "author": {
+    "name": "Dark factory"
+  },
+  "license": "MIT",
+  "keywords": [
+    "devin",
+    "plugin",
+    "makefile",
+    "poteto",
+    "psr",
+    "make"
+  ]
+}

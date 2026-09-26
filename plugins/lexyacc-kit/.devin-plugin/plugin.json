@@ -1,0 +1,19 @@
+{
+  "name": "lexyacc-kit",
+  "version": "0.1.0",
+  "description": "Lex/Yacc (Flex/Bison) poteto bar: PSR Lex/Yacc encode. No untrusted %include/#include paths, no yyerror silence, no unbounded yytext buffers, no generated C without bounds-checked yytext pointers. Tier 0 single-walk rg + hotpath budget + tool wiring. Requires ripgrep. Twin of plug-factory lexyacc-kit. Packaged for the Devin coding lane.",
+  "author": {
+    "name": "Dark factory"
+  },
+  "license": "MIT",
+  "keywords": [
+    "devin",
+    "plugin",
+    "lexyacc",
+    "poteto",
+    "psr",
+    "lex",
+    "yacc",
+    "bison"
+  ]
+}

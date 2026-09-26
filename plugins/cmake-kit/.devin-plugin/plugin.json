@@ -1,0 +1,17 @@
+{
+  "name": "cmake-kit",
+  "version": "0.1.0",
+  "description": "CMake poteto bar: PSR CMake encode. No file(DOWNLOAD) without hash, no unchecked execute_process, no GLOB for sources, no CACHE FORCE abuse, no include of untrusted path. Tier 0 single-walk rg + hotpath budget + cmake wiring. Requires ripgrep. Twin of plug-factory cmake-kit. Packaged for the Devin coding lane.",
+  "author": {
+    "name": "Dark factory"
+  },
+  "license": "MIT",
+  "keywords": [
+    "devin",
+    "plugin",
+    "cmake",
+    "poteto",
+    "psr",
+    "build"
+  ]
+}
