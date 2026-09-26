@@ -1,0 +1,19 @@
+---
+description: Kotlin PSR + poteto bar for product .kt / .kts
+globs: "**/*.{kt,kts}"
+alwaysApply: false
+---
+
+# Kotlin
+
+Follow skills **kotlin** and **poteto-kotlin** when applicable.
+
+- Formatter clean (ktlint / agreed `.editorconfig` ktlint rules)
+- **detekt** required in product wiring
+- No `!!` force unwrap without `kotlin-rg-allow` + rationale; prefer `?.` / `?:` / `requireNotNull` / smart casts
+- No `runBlocking` on request / hot paths without `kotlin-rg-allow` + rationale; prefer `suspend` / `coroutineScope` / structured concurrency
+- No SQL string concat without `kotlin-rg-allow` + rationale; prefer prepared statements / named params
+- Required product gates: `kotlin-rg-gate` + `kotlin-hotpath-gate` + `kotlin-fmt-gate` + `kotlin-detekt-gate`. Do not disable checks to force green.
+- Prove runtime behaviour with tests / detekt, not "fmt pass" alone
+
+Repeated review smell twice on a Kotlin product: encode into lint/CI/skill, not more prose.
