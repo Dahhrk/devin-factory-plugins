@@ -1,6 +1,6 @@
 ---
 name: typescript
-description: TypeScript PSR bar. Strict checking (extends-aware), oxlint adoption gate, global-fetch/URL/env + JSON/DOM rg boundaries (method .fetch allowed), env-schema + typed-parse templates, runtime/drive proof, product-vs-library .d.ts policy, no unexplained any/assertions/double-assertion, described @ts-expect-error, typecheck aliases. Use when reading or editing any .ts or .tsx in a factory product.
+description: TypeScript PSR bar. Strict checking (extends-aware), oxlint adoption gate (pinned offline-capable live run), global-fetch/URL/env + JSON/DOM rg boundaries (method .fetch allowed), env-schema + typed-parse templates, runtime/drive proof, product-vs-library .d.ts policy, no unexplained any/assertions/double-assertion, described @ts-expect-error, typecheck aliases. Use when reading or editing any .ts or .tsx in a factory product.
 paths: ["**/*.ts", "**/*.tsx", "**/tsconfig*.json", "**/.oxlintrc.json"]
 ---
 
@@ -18,7 +18,7 @@ Apply pstack **principle-type-system-discipline** and **typescript-best-practice
 6. **Test emitted/runtime behaviour** - drive smoke, playwright, vitest/jest, or `node --test` against the running artifact. Types alone are not Done. Gate: `scripts/ts-runtime-gate.sh`.
 7. **Exhaustive unions** - discriminated unions + `never` default. Oxlint `typescript/switch-exhaustiveness-check` in the product template; rule `typescript-exhaustive-switch`.
 8. **`.d.ts` product vs library** - product public types must not expose `: any` (default rg scan includes `.d.ts`). Library host/plugin research may set `TS_RG_SKIP_DTS=1` or a single-line `ts-rg-allow`.
-9. **Oxlint adoption** - product must ship `.oxlintrc.json` (or `oxlint.json`) encoding the four factory rules. Gate: `scripts/ts-oxlint-gate.sh` (config-only via `TS_OXLINT_CONFIG_ONLY=1`; live run by default).
+9. **Oxlint adoption** - product must ship `.oxlintrc.json` (or `oxlint.json`) encoding the four factory rules. Gate: `scripts/ts-oxlint-gate.sh` (config-only via `TS_OXLINT_CONFIG_ONLY=1`; live run pinned to `templates/oxlint.version` / `TS_OXLINT_VERSION`; `TS_OXLINT_BIN` / PATH / `node_modules/.bin` before `npx oxlint@$pin`; `TS_OXLINT_OFFLINE=1` refuses npx).
 
 ## Rules
 
