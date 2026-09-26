@@ -1,0 +1,7 @@
+{
+  "name": "java-kit",
+  "version": "0.1.0",
+  "description": "Java poteto bar: PSR Java encode. google-java-format or spotless (or spring-javaformat), Checkstyle/Error Prone where practical, nullability contracts, SQL/string-concat and System.out smells. Tier 0 single-walk rg + hotpath budget + fmt + checkstyle-CI + nullability. Requires ripgrep.",
+  "skills": "./skills",
+  "rules": "./rules"
+}

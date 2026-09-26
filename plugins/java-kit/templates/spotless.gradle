@@ -1,0 +1,15 @@
+// Copy into product build.gradle (or apply from spotless.gradle).
+// PSR Java: agreed formatter via Spotless + google-java-format.
+plugins {
+  id 'com.diffplug.spotless' version '6.25.0'
+}
+
+spotless {
+  java {
+    target 'src/**/*.java'
+    googleJavaFormat('1.22.0')
+    removeUnusedImports()
+    trimTrailingWhitespace()
+    endWithNewline()
+  }
+}
