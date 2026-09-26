@@ -1,0 +1,19 @@
+# Copy into product .github/workflows/ or merge steps into existing ci.yml.
+name: html-gates
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  html-gates:
+    name: html-kit gates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tier 0 html-rg-gate
+        run: bash scripts/html-rg-gate.sh .
+      - name: Tier 0.5 html-hotpath-gate
+        run: bash scripts/html-hotpath-gate.sh .
+      - name: Tier 1 html-htmlhint-gate
+        run: bash scripts/html-htmlhint-gate.sh .
