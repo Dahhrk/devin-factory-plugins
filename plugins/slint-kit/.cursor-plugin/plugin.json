@@ -1,0 +1,7 @@
+{
+  "name": "slint-kit",
+  "version": "0.1.0",
+  "description": "Slint poteto bar: PSR Slint encode. .slint debug() hygiene banned, clone_strong callback capture banned, unsafe blocks in .on_ callback hosts banned. Tier 0 single-walk rg + hotpath budget + slint/Cargo wiring. Requires ripgrep.",
+  "skills": "./skills",
+  "rules": "./rules"
+}
