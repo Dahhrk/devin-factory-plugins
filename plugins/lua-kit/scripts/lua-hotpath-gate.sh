@@ -46,5 +46,15 @@ if search '4[Aa][Aa][Cc][Ff][Cc]|Color\(\s*74\s*,\s*172\s*,\s*252' . 2>/dev/null
   fi
 fi
 
+
+# No fresh table literal as Paint*Ring opts (cache on panel / EmptyRingOpts)
+if search 'Paint(Avatar|Occupancy)Ring\([^)]*\{' . 2>/dev/null | grep -v 'hotpath-allow' >"$tmp" || true; then
+  if [[ -s "$tmp" ]]; then
+    echo "FAIL: inline table opts to Paint*Ring (cache on panel or EmptyRingOpts)"
+    cat "$tmp"
+    fail=1
+  fi
+fi
+
 if [[ "$fail" -ne 0 ]]; then exit 1; fi
 echo "PASS lua-hotpath-gate ($ROOT)"

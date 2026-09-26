@@ -17,7 +17,7 @@ Net / `AddCSLuaFile`: skill **lua-net**. VGUI / HUD: skill **lua-ui**. Gates: pa
 - **No alloc in hot hooks.** No `Color`, `Vector`, `Angle`, `Material(...)`, fresh tables, or closures inside Think/Tick/HUDPaint/Move. Cache at file scope; mutate owned vectors with `:Add`/`:Set`.
 - **Iterators.** Prefer `player.Iterator()` / `ents.Iterator()` over `GetAll()` (no new table). Dense arrays: `for i = 1, #t do` over `ipairs`/`pairs` in hot loops. Gate: `scripts/lua-hotpath-gate.sh` (annotate `hotpath-allow` only for legacy fallbacks).
 - **Table reuse.** Scratch tables; clear-and-reuse. Append with `t[#t + 1] = v`. Prefer `Obsidian.Optim.Throttle` / `Debounce` over perpetual Think.
-- **Strings.** `string.format` for structured; `table.concat` for loops. No `a .. b .. c` per frame / per player. Cache HUD labels on SetData / dirty, not inside HUDPaint.
+- **Strings.** `string.format` for structured; `table.concat` for loops. No `a .. b .. c` per frame / per player. Cache HUD and Derma paint labels on SetData / rebuild / dirty, not inside Paint/HUDPaint.
 - **Bitwise.** `bit.band` / `bit.bor` / `bit.lshift`. No `x & y` / `x << y`.
 - **Hooks.** Event hooks (`PlayerDeath`, net) over perpetual Think. Unique IDs: `Addon.Feature`.
 - **File layout.** `autorun` / `lua/<addon>/`; server includes shared; `AddCSLuaFile` only client+shared (see **lua-net**).

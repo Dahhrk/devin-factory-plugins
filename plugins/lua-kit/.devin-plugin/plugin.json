@@ -1,8 +1,19 @@
 {
   "name": "lua-kit",
-  "version": "0.2.2",
-  "description": "GMod Lua bar: poteto EXIT PREDICATE, net trust, Derma/HUD, rg + hotpath + luacheck, optional glualint. Twin of plug-factory lua-kit.",
-  "author": { "name": "Dark factory" },
+  "version": "0.2.3",
+  "description": "GMod Lua bar: poteto EXIT PREDICATE, net trust, Derma/HUD, rg + hotpath (GetAll/alloc/cyan/ring-opts) + luacheck, optional glualint. Twin of plug-factory lua-kit.",
+  "author": {
+    "name": "Dark factory"
+  },
   "license": "MIT",
-  "keywords": ["devin", "plugin", "gmod", "lua", "glua", "net", "derma", "luacheck"]
+  "keywords": [
+    "devin",
+    "plugin",
+    "gmod",
+    "lua",
+    "glua",
+    "net",
+    "derma",
+    "luacheck"
+  ]
 }
