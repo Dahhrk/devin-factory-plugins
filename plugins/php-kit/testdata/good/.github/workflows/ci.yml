@@ -1,0 +1,8 @@
+name: ci
+on: [push, pull_request]
+jobs:
+  pint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: vendor/bin/pint --test
