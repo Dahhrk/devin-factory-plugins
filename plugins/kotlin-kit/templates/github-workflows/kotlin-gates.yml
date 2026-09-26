@@ -1,0 +1,21 @@
+# Copy into product .github/workflows/ or merge steps into existing ci.yml.
+name: kotlin-gates
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  kotlin-gates:
+    name: kotlin-kit gates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tier 0 kotlin-rg-gate
+        run: bash scripts/kotlin-rg-gate.sh .
+      - name: Tier 0.5 kotlin-hotpath-gate
+        run: bash scripts/kotlin-hotpath-gate.sh .
+      - name: Tier 0.5 kotlin-fmt-gate
+        run: bash scripts/kotlin-fmt-gate.sh .
+      - name: Tier 1 kotlin-detekt-gate
+        run: bash scripts/kotlin-detekt-gate.sh .
