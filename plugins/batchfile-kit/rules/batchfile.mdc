@@ -1,0 +1,20 @@
+---
+description: Batchfile PSR + poteto bar for product *.bat / *.cmd
+globs: "**/*.bat,**/*.cmd"
+alwaysApply: false
+---
+
+# Batchfile
+
+Follow skills **batchfile** and **poteto-batchfile** when applicable.
+
+- **batch** wiring required (`*.bat` / `*.cmd` / CI `cmd` / BatchScript). Do not claim Batchfile product green without wiring.
+- No unquoted `%VAR%` in path/command contexts (`cd` / `call` / `if exist` / `copy` / …) without `bat-rg-allow` + rationale.
+- No `EnableDelayedExpansion` footguns (`call !cmd!` / enabling delayed expansion for untrusted expansion) without allow.
+- No `call` of untrusted `%VAR%` / absolute drive / UNC paths without allow.
+- No `curl|powershell` / `iex DownloadString` download-exec without allow.
+- No secrets in `set PASSWORD=` / `set SECRET=` / `set TOKEN=` / `set API_KEY=` without allow.
+- Required product gates: `bat-rg-gate` + `bat-hotpath-gate` + `bat-batch-gate`. Do not disable checks to force green.
+- Prove `cmd /c` / CI BatchScript where product needs it, not "wiring pass" alone
+
+Repeated review smell twice on a Batchfile product: encode into lint/CI/skill, not more prose.
