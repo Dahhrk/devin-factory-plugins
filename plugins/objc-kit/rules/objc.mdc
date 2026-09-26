@@ -1,0 +1,18 @@
+---
+description: Objective-C PSR + poteto bar for product .m/.h/.mm
+globs: "**/*.{m,h,mm}"
+alwaysApply: false
+---
+
+# Objective-C
+
+Follow skills **objc** and **poteto-objc** when applicable.
+
+- No **NSLog** in library / product shared code without `objc-rg-allow` + rationale (prefer os_log / injected logger)
+- No **performSelector:** family without `objc-rg-allow` + rationale (prefer typed IMP / blocks / NSInvocation with proven signature)
+- No manual **retain** / **release** / **autorelease** message sends under ARC without `objc-rg-allow` + rationale (prefer ARC; CFRetain/CFRelease only at CF bridge boundaries)
+- Product **clang-format** wiring: `.clang-format` at root (or CI clang-format), live dry-run when tool present
+- Required product gates: `objc-rg-gate` + `objc-hotpath-gate` + `objc-fmt-gate`. Do not disable checks to force green.
+- Prove behaviour with xcodebuild / clang where product needs them, not "lint pass" alone
+
+Repeated review smell twice on an ObjC product: encode into lint/CI/skill, not more prose.
