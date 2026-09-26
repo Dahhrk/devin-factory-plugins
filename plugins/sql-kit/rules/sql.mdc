@@ -1,0 +1,19 @@
+---
+description: SQL PSR + poteto bar for product .sql
+globs: "**/*.{sql,SQL}"
+alwaysApply: false
+---
+
+# SQL
+
+Follow skills **sql** and **poteto-sql** when applicable.
+
+- **sqlfluff** required in product wiring (`.sqlfluff` / `[sqlfluff]` / `[tool.sqlfluff]` / CI `sqlfluff lint`)
+- sqlfluff rules must keep **AM04** (or ambiguous group covering SELECT *) enabled
+- No `SELECT *` / `table.*` without `sql-rg-allow` + rationale; prefer explicit column lists
+- No SQL string concat / interpolation of untrusted values without `sql-rg-allow` + rationale; prefer bound parameters / prepared statements
+- No unsafe dynamic SQL (`EXECUTE IMMEDIATE`, `EXEC(@…)`, `sp_executesql` with concat) without `sql-rg-allow` + rationale
+- Required product gates: `sql-rg-gate` + `sql-hotpath-gate` + `sql-sqlfluff-gate`. Do not disable checks to force green.
+- Prove runtime behaviour with dialect tests / migration dry-runs, not "lint pass" alone
+
+Repeated review smell twice on a SQL product: encode into lint/CI/skill, not more prose.

@@ -1,0 +1,10 @@
+# Starter sqlfluff config (PSR SQL). Copy to product root as .sqlfluff.
+# Keeps AM04 (SELECT *) in the ambiguous group enabled.
+
+[sqlfluff]
+dialect = ansi
+# Explicit rules encode: include ambiguous (AM04) + core layout/convention.
+rules = AM04,CP01,CP02,LT01,LT02,LT12
+
+[sqlfluff:rules:ambiguous.AM04]
+# Query produces an unknown number of result columns (SELECT *).
