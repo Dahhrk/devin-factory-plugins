@@ -1,0 +1,7 @@
+{
+  "name": "ts-kit-good-fixture",
+  "private": true,
+  "scripts": {
+    "typecheck": "tsc -b"
+  }
+}

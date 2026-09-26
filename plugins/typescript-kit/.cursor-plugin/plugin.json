@@ -1,7 +1,7 @@
 {
   "name": "typescript-kit",
-  "version": "0.1.0",
-  "description": "TypeScript poteto bar: PSR handbook + strict checking, no unexplained any/assertions, runtime boundary validation, typecheck in CI, emitted/runtime tests. Tier 0 rg + Tier 0.5 strict-config + product oxlint/tsc.",
+  "version": "0.2.0",
+  "description": "TypeScript poteto bar: PSR handbook + strict checking (extends-aware), no unexplained any/assertions/double-assertion, described @ts-expect-error, runtime boundary validation, typecheck aliases, emitted/runtime tests. Tier 0 rg + Tier 0.5 strict-config + selfcheck fixtures + product oxlint/tsc.",
   "skills": "./skills",
   "rules": "./rules"
 }

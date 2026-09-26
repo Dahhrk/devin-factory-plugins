@@ -1,0 +1,7 @@
+{
+  "name": "ts-kit-strict-missing",
+  "private": true,
+  "scripts": {
+    "build": "echo hi"
+  }
+}
