@@ -21,25 +21,28 @@ Keep <2-4 invariants>
 All must be true. Do not claim done on prose.
 
 1. `bash scripts/lua-rg-gate.sh <addon-lua-root>` and `bash scripts/lua-hotpath-gate.sh <addon-lua-root>` exit 0 (product copies of pack scripts).
-2. Diff adds no narration comments (`--` that restates the next statement). Survivors only for non-obvious external constraints.
-3. Smallest correct change: no new helper with one caller; no parallel net/UI toolkit beside Obsidian.* when in Obsidian; empty domain modules stay `ready=false` (or deleted), never `ready=true` stubs.
-4. If `net.Receive` / `util.AddNetworkString` touched: every SERVER receiver validates `IsValid(ply)`, permission, typed ranges; no WriteTable / client-written identity.
-5. If Think / Tick / HUDPaint / CreateMove touched: no `Color`/`Material`/`Vector(`/`Angle(`/table/`function(` alloc in the hook body.
-6. If Obsidian UI touched: `bash scripts/check-coverage.sh` exits 0 from Obsidian root when that script exists.
-7. Prove on the real artifact (load path, concommand, or net round-trip), not "lints clean" alone.
+2. `bash scripts/lua-luacheck-gate.sh <root>` (or `luacheck .` with product `.luacheckrc`) exits 0.
+3. `bash scripts/lua-glualint-gate.sh <root>` (or `glualint lint .` with product `glualint.json`) exits 0.
+4. Diff adds no narration comments (`--` that restates the next statement). Survivors only for non-obvious external constraints.
+5. Smallest correct change: no new helper with one caller; no parallel net/UI toolkit beside Obsidian.* when in Obsidian; empty domain modules stay `ready=false` (or deleted), never `ready=true` stubs.
+6. If `net.Receive` / `util.AddNetworkString` touched: every SERVER receiver validates `IsValid(ply)`, permission, typed ranges; no WriteTable / client-written identity.
+7. If Think / Tick / HUDPaint / CreateMove touched: no `Color`/`Material`/`Vector(`/`Angle(`/table/`function(` alloc in the hook body.
+8. If Obsidian UI touched: `bash scripts/check-coverage.sh` exits 0 from Obsidian root when that script exists.
+9. Prove on the real artifact (load path, concommand, or net round-trip), not "lints clean" alone.
+10. Do not disable, skip, or weaken gates / expectations merely to make a build pass (PSR AI rule 11). Record what was tested and what remains uncertain.
 
 Stricter product gates (`verify-*`, `control-*`) override when present.
 
 ## Keep (default)
 
-- Lua 5.1 / LuaJIT bitops only (`bit.*`; no `//` `&` `|` bitwise syntax)
-- Server authority stays server-side; no new `AddCSLuaFile` of `sv_*` or secret paths
+- Lua 5.1 / LuaJIT bitops only (`bit.*`; no `//` `&` `|` bitwise syntax; no `goto` / `_ENV`)
+- Server authority stays server-side; no new `AddCSLuaFile` of `sv_*` or secret paths; no `RunString` / `CompileString`
 - Public Obsidian API names unchanged unless the goal is an API break
 - Soft Dark Glass tokens; no cyan accent
 
 ## Ranked bar
 
-1. Trust boundary (net / realm) before micro-opts
+1. Trust boundary (net / realm / host) before micro-opts
 2. Delete dead path before adding
 3. Cache / reuse before localizing globals
 4. Event hook before Think
@@ -79,7 +82,7 @@ Standing extras (list separately; do not fold into the 100% weighted overall unl
 | Extra | /10 | Prove |
 |-------|-----|-------|
 | Facepunch alignment | checklist: locals, no hot alloc, event>Think, iterators, realm/AddCSLuaFile, never trust client, no SendLua, SysTime before micro-opt, unique hooks |
-| CI green | `lua-rg-gate` + `lua-hotpath-gate` PASS on the artifact; if GitHub Actions cannot run, note billing / runner and still prove local gate exit 0 |
+| CI green | `lua-rg-gate` + `lua-hotpath-gate` + `luacheck` + `glualint` PASS on the artifact; if GitHub Actions cannot run, note billing / runner and still prove local gate exit 0 |
 
 Also report Quality / Opts / Amount narrative + LOC (+/− / net) and compare history across runs (`R1`–`Rn` or dates internally; descriptive titles user-facing).
 

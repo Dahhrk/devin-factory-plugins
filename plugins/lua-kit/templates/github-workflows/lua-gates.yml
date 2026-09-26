@@ -1,5 +1,6 @@
-# Copy to .github/workflows/lua-gates.yml. Needs scripts/lua-rg-gate.sh and .luacheckrc in the product.
-# Pilot: Obsidian Framework. Tier 2 stays commented; enable when glualint.json + binary are pinned.
+# Copy to .github/workflows/lua-gates.yml.
+# Needs scripts/lua-rg-gate.sh, lua-hotpath-gate.sh, .luacheckrc, glualint.json in the product.
+# Pilot: Obsidian Framework. Tier 2 glualint required (PSR Lua ch.4 formatter/linter).
 
 name: lua-gates
 
@@ -8,20 +9,23 @@ on:
     paths:
       - "**/*.lua"
       - ".luacheckrc"
+      - "glualint.json"
       - "scripts/lua-rg-gate.sh"
       - "scripts/lua-hotpath-gate.sh"
       - "scripts/lua-luacheck-gate.sh"
-      - "glualint.json"
+      - "scripts/lua-glualint-gate.sh"
       - ".github/workflows/lua-gates.yml"
   pull_request:
     paths:
       - "**/*.lua"
       - ".luacheckrc"
+      - "glualint.json"
       - "scripts/lua-rg-gate.sh"
       - "scripts/lua-hotpath-gate.sh"
       - "scripts/lua-luacheck-gate.sh"
-      - "glualint.json"
+      - "scripts/lua-glualint-gate.sh"
       - ".github/workflows/lua-gates.yml"
+  workflow_dispatch:
 
 jobs:
   tier0-rg:
@@ -70,16 +74,30 @@ jobs:
             luacheck .
           fi
 
-  # Tier 2 (optional). Uncomment when product has glualint.json + a pinned glualint binary (FPtje/GLuaFixer).
-  # tier2-glualint:
-  #   name: Tier 2 glualint
-  #   runs-on: ubuntu-latest
-  #   needs: tier1-luacheck
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - name: Install glualint
-  #       run: |
-  #         # Pin a release from https://github.com/FPtje/GLuaFixer/releases
-  #         exit 1
-  #     - name: Run glualint
-  #       run: glualint lint .
+  tier2-glualint:
+    name: Tier 2 glualint
+    runs-on: ubuntu-latest
+    needs: tier1-luacheck
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install glualint 1.30.0
+        run: |
+          set -euo pipefail
+          curl -sL -o /tmp/glualint.zip \
+            "https://github.com/FPtje/GLuaFixer/releases/download/1.30.0/glualint-1.30.0-x86_64-linux.zip"
+          sudo unzip -o /tmp/glualint.zip -d /usr/local/bin
+          sudo chmod +x /usr/local/bin/glualint
+          glualint version
+      - name: Ensure glualint.json
+        run: |
+          if [ ! -f glualint.json ] && [ ! -f .glualint.json ]; then
+            echo "Missing glualint.json - copy from lua-kit/templates/glualint.json"
+            exit 1
+          fi
+      - name: Run glualint
+        run: |
+          if [ -x scripts/lua-glualint-gate.sh ]; then
+            bash scripts/lua-glualint-gate.sh .
+          else
+            glualint lint .
+          fi

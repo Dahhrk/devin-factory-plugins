@@ -1,11 +1,23 @@
 -- lua-kit Tier 1. Copy to product root as .luacheckrc; add your addon root table to globals.
+-- PSR Lua ch.4: chosen linter required. Explicit scope via unused/undefined analysis.
 
 std = "lua51"
-max_line_length = 120
+max_line_length = 160
+codes = true
+self = false
+
+ignore = {
+  "212", -- unused argument
+  "213", -- unused loop variable
+}
 
 globals = {
+  "Obsidian",
+  "DarkUI",
   "SERVER",
   "CLIENT",
+  "MENU",
+  "GAME",
   "GAME_DLL",
   "CLIENT_DLL",
   "MENU_DLL",
@@ -20,6 +32,7 @@ globals = {
   "Vehicle",
   "Material",
   "CreateMaterial",
+  "NULL",
   "hook",
   "net",
   "util",
@@ -47,46 +60,103 @@ globals = {
   "halo",
   "killicon",
   "notification",
+  "chat",
+  "sound",
   "IsValid",
   "LocalPlayer",
   "CurTime",
   "SysTime",
   "RealTime",
   "FrameTime",
+  "FrameNumber",
+  "ScrW",
+  "ScrH",
   "Lerp",
   "LerpVector",
   "LerpAngle",
   "include",
   "AddCSLuaFile",
+  "CompileFile",
   "FindMetaTable",
-  "TypeID",
-  "istable",
-  "isstring",
-  "isnumber",
+  "AccessorFunc",
+  "Either",
   "isbool",
+  "isnumber",
+  "isstring",
+  "istable",
   "isfunction",
   "isentity",
   "isvector",
   "isangle",
   "ismatrix",
-  "PLAYER",
-  "ENTITY",
-  "WEAPON",
-  "VEHICLE",
-}
-
-read_globals = {
+  "ispanel",
+  "tobool",
+  "Msg",
+  "MsgN",
+  "MsgC",
+  "ErrorNoHalt",
+  "ErrorNoHaltWithStack",
+  "RunConsoleCommand",
+  "CreateConVar",
+  "CreateClientConVar",
+  "GetConVar",
+  "ConVarExists",
+  "derma",
+  "DarkRP",
   "GAMEMODE",
   "GM",
-  "DarkRP",
-  "CAMI",
-  "ulx",
-  "ULib",
-  "SAM",
-  "sAdmin",
+  "ENT",
+  "SWEP",
+  "TOOL",
+  "EFFECT",
+  -- Dock / align / input enums (GMod host)
+  "TOP",
+  "BOTTOM",
+  "LEFT",
+  "RIGHT",
+  "FILL",
+  "TEXT_ALIGN_LEFT",
+  "TEXT_ALIGN_CENTER",
+  "TEXT_ALIGN_RIGHT",
+  "TEXT_ALIGN_TOP",
+  "TEXT_ALIGN_BOTTOM",
+  "MOUSE_LEFT",
+  "MOUSE_RIGHT",
+  "MOUSE_MIDDLE",
+  "KEY_ESCAPE",
+  "KEY_ENTER",
+  "KEY_SPACE",
+  "FORCE_BOOL",
+  "FORCE_NUMBER",
+  "FORCE_STRING",
+  "FCVAR_ARCHIVE",
+  "FCVAR_REPLICATED",
+  "FCVAR_NOTIFY",
+  "FCVAR_PROTECTED",
+  "DButton",
+  "Derma_DrawBackgroundBlur",
+  "Derma_Anim",
+  "Derma_Hook",
+  "Derma_Query",
+  "Derma_StringRequest",
 }
 
--- Hook callbacks often leave unused args (ply, len, etc.)
-ignore = {
-  "212",
+-- GMod math extensions + Derma helpers (host differences vs PUC 5.1)
+read_globals = {
+  math = {
+    fields = {
+      Clamp = {},
+      Round = {},
+      Approach = {},
+      TimeFraction = {},
+      EaseInOut = {},
+      Remap = {},
+      Truncate = {},
+    }
+  },
+  Derma_DrawBackgroundBlur = {},
+  Derma_Anim = {},
+  Derma_Hook = {},
+  Derma_Query = {},
+  Derma_StringRequest = {},
 }
