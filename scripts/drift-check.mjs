@@ -38,8 +38,8 @@ import { basename, join, relative } from 'node:path';
 const here = process.cwd();
 const isDevinRepo = existsSync(join(here, 'plugins', 'pstack')) && existsSync(join(here, 'plugins', 'factory-baseline'));
 const PACKS = isDevinRepo
-  ? [['plugins/pstack', 'pstack'], ['plugins/cursor-team-kit', 'cursor-team-kit'], ['plugins/lua-kit', 'lua-kit']]
-  : [['pstack', 'pstack'], ['cursor-team-kit', 'cursor-team-kit'], ['lua-kit', 'lua-kit']];
+  ? [['plugins/pstack', 'pstack'], ['plugins/cursor-team-kit', 'cursor-team-kit'], ['plugins/lua-kit', 'lua-kit'], ['plugins/typescript-kit', 'typescript-kit']]
+  : [['pstack', 'pstack'], ['cursor-team-kit', 'cursor-team-kit'], ['lua-kit', 'lua-kit'], ['typescript-kit', 'typescript-kit']];
 
 const args = process.argv.slice(2);
 const zcodeFlagIdx = args.indexOf('--zcode');

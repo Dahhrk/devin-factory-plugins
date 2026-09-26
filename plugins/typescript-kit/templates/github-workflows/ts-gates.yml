@@ -1,0 +1,24 @@
+# Copy into product .github/workflows/ or merge steps into existing ci.yml.
+name: ts-gates
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  ts-gates:
+    name: typescript-kit gates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tier 0 ts-rg-gate
+        run: bash scripts/ts-rg-gate.sh .
+      - name: Tier 0.5 ts-strict-gate
+        run: bash scripts/ts-strict-gate.sh .
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run lint
