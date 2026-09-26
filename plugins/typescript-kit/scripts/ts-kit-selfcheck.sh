@@ -1,116 +1,71 @@
 #!/usr/bin/env bash
 # Prove typescript-kit gates discriminate fixtures (pack maturity).
+# Hot-path: independent probes run concurrently; aggregate rc files.
 set -euo pipefail
 HERE="$(cd "$(dirname "$0")" && pwd)"
 ROOT="$(cd "$HERE/.." && pwd)"
+WORKDIR="$(mktemp -d)"
+trap 'rm -rf "$WORKDIR"' EXIT
 fail=0
 
-# bad must FAIL rg
-if bash "$HERE/ts-rg-gate.sh" "$ROOT/testdata/bad" >/tmp/ts-kit-selfcheck-bad.txt 2>&1; then
-  echo "FAIL selfcheck: expected ts-rg-gate FAIL on testdata/bad"
-  cat /tmp/ts-kit-selfcheck-bad.txt
-  fail=1
-else
-  echo "ok: rg fails on bad"
-fi
+probe() {
+  local id="$1"
+  shift
+  local out="$WORKDIR/$id.out" rc="$WORKDIR/$id.rc"
+  if "$@" >"$out" 2>&1; then
+    echo 0 >"$rc"
+  else
+    echo 1 >"$rc"
+  fi
+}
 
-# good must PASS rg
-if ! bash "$HERE/ts-rg-gate.sh" "$ROOT/testdata/good" >/tmp/ts-kit-selfcheck-good-rg.txt 2>&1; then
-  echo "FAIL selfcheck: expected ts-rg-gate PASS on testdata/good"
-  cat /tmp/ts-kit-selfcheck-good-rg.txt
-  fail=1
-else
-  echo "ok: rg passes on good"
-fi
+expect_fail() {
+  local id="$1" label="$2"
+  shift 2
+  probe "$id" "$@"
+  if [[ "$(cat "$WORKDIR/$id.rc")" -eq 0 ]]; then
+    echo "FAIL selfcheck: expected $label"
+    cat "$WORKDIR/$id.out"
+    echo 1 >"$WORKDIR/$id.expect"
+  else
+    echo "ok: $label"
+    echo 0 >"$WORKDIR/$id.expect"
+  fi
+}
 
-# good must PASS strict
-if ! bash "$HERE/ts-strict-gate.sh" "$ROOT/testdata/good" >/tmp/ts-kit-selfcheck-good-strict.txt 2>&1; then
-  echo "FAIL selfcheck: expected ts-strict-gate PASS on testdata/good"
-  cat /tmp/ts-kit-selfcheck-good-strict.txt
-  fail=1
-else
-  echo "ok: strict passes on good"
-fi
+expect_pass() {
+  local id="$1" label="$2"
+  shift 2
+  probe "$id" "$@"
+  if [[ "$(cat "$WORKDIR/$id.rc")" -ne 0 ]]; then
+    echo "FAIL selfcheck: expected $label"
+    cat "$WORKDIR/$id.out"
+    echo 1 >"$WORKDIR/$id.expect"
+  else
+    echo "ok: $label"
+    echo 0 >"$WORKDIR/$id.expect"
+  fi
+}
 
-# good must PASS runtime
-if ! bash "$HERE/ts-runtime-gate.sh" "$ROOT/testdata/good" >/tmp/ts-kit-selfcheck-good-runtime.txt 2>&1; then
-  echo "FAIL selfcheck: expected ts-runtime-gate PASS on testdata/good"
-  cat /tmp/ts-kit-selfcheck-good-runtime.txt
-  fail=1
-else
-  echo "ok: runtime passes on good"
-fi
+# Launch independent gate probes in parallel
+expect_fail bad-rg "rg fails on bad" bash "$HERE/ts-rg-gate.sh" "$ROOT/testdata/bad" &
+expect_pass good-rg "rg passes on good" bash "$HERE/ts-rg-gate.sh" "$ROOT/testdata/good" &
+expect_pass good-strict "strict passes on good" bash "$HERE/ts-strict-gate.sh" "$ROOT/testdata/good" &
+expect_pass good-runtime "runtime passes on good" bash "$HERE/ts-runtime-gate.sh" "$ROOT/testdata/good" &
+expect_pass good-oxlint "oxlint passes on good" env TS_OXLINT_CONFIG_ONLY=1 bash "$HERE/ts-oxlint-gate.sh" "$ROOT/testdata/good" &
+expect_pass extends-ok "strict walks extends" bash "$HERE/ts-strict-gate.sh" "$ROOT/testdata/extends-ok" &
+expect_fail strict-missing "strict fails when missing" bash "$HERE/ts-strict-gate.sh" "$ROOT/testdata/strict-missing" &
+expect_fail runtime-missing "runtime fails when missing" bash "$HERE/ts-runtime-gate.sh" "$ROOT/testdata/runtime-missing" &
+expect_fail oxlint-missing "oxlint fails when config missing" env TS_OXLINT_CONFIG_ONLY=1 bash "$HERE/ts-oxlint-gate.sh" "$ROOT/testdata/oxlint-missing" &
+expect_fail oxlint-weak "oxlint fails when factory rules missing" env TS_OXLINT_CONFIG_ONLY=1 bash "$HERE/ts-oxlint-gate.sh" "$ROOT/testdata/oxlint-weak" &
+expect_fail lib-product "product mode flags .d.ts any" bash "$HERE/ts-rg-gate.sh" "$ROOT/testdata/library-dts" &
+expect_pass lib-skip "library mode skips .d.ts any" env TS_RG_SKIP_DTS=1 bash "$HERE/ts-rg-gate.sh" "$ROOT/testdata/library-dts" &
+wait
 
-# good must PASS oxlint (config-only in selfcheck so CI without network still works)
-if ! TS_OXLINT_CONFIG_ONLY=1 bash "$HERE/ts-oxlint-gate.sh" "$ROOT/testdata/good" >/tmp/ts-kit-selfcheck-good-oxlint.txt 2>&1; then
-  echo "FAIL selfcheck: expected ts-oxlint-gate PASS on testdata/good"
-  cat /tmp/ts-kit-selfcheck-good-oxlint.txt
-  fail=1
-else
-  echo "ok: oxlint passes on good"
-fi
-
-# extends chain must PASS strict (strict only on base)
-if ! bash "$HERE/ts-strict-gate.sh" "$ROOT/testdata/extends-ok" >/tmp/ts-kit-selfcheck-extends.txt 2>&1; then
-  echo "FAIL selfcheck: expected ts-strict-gate PASS on testdata/extends-ok"
-  cat /tmp/ts-kit-selfcheck-extends.txt
-  fail=1
-else
-  echo "ok: strict walks extends"
-fi
-
-# missing strict / typecheck must FAIL
-if bash "$HERE/ts-strict-gate.sh" "$ROOT/testdata/strict-missing" >/tmp/ts-kit-selfcheck-strict-missing.txt 2>&1; then
-  echo "FAIL selfcheck: expected ts-strict-gate FAIL on testdata/strict-missing"
-  cat /tmp/ts-kit-selfcheck-strict-missing.txt
-  fail=1
-else
-  echo "ok: strict fails when missing"
-fi
-
-# missing runtime proof must FAIL
-if bash "$HERE/ts-runtime-gate.sh" "$ROOT/testdata/runtime-missing" >/tmp/ts-kit-selfcheck-runtime-missing.txt 2>&1; then
-  echo "FAIL selfcheck: expected ts-runtime-gate FAIL on testdata/runtime-missing"
-  cat /tmp/ts-kit-selfcheck-runtime-missing.txt
-  fail=1
-else
-  echo "ok: runtime fails when missing"
-fi
-
-# missing oxlint config must FAIL
-if TS_OXLINT_CONFIG_ONLY=1 bash "$HERE/ts-oxlint-gate.sh" "$ROOT/testdata/oxlint-missing" >/tmp/ts-kit-selfcheck-oxlint-missing.txt 2>&1; then
-  echo "FAIL selfcheck: expected ts-oxlint-gate FAIL on testdata/oxlint-missing"
-  cat /tmp/ts-kit-selfcheck-oxlint-missing.txt
-  fail=1
-else
-  echo "ok: oxlint fails when config missing"
-fi
-
-# weak oxlint config (missing factory keys) must FAIL
-if TS_OXLINT_CONFIG_ONLY=1 bash "$HERE/ts-oxlint-gate.sh" "$ROOT/testdata/oxlint-weak" >/tmp/ts-kit-selfcheck-oxlint-weak.txt 2>&1; then
-  echo "FAIL selfcheck: expected ts-oxlint-gate FAIL on testdata/oxlint-weak"
-  cat /tmp/ts-kit-selfcheck-oxlint-weak.txt
-  fail=1
-else
-  echo "ok: oxlint fails when factory rules missing"
-fi
-
-# library .d.ts any: product mode FAIL, library skip PASS
-if bash "$HERE/ts-rg-gate.sh" "$ROOT/testdata/library-dts" >/tmp/ts-kit-selfcheck-lib-product.txt 2>&1; then
-  echo "FAIL selfcheck: expected ts-rg-gate FAIL on library-dts in product mode"
-  cat /tmp/ts-kit-selfcheck-lib-product.txt
-  fail=1
-else
-  echo "ok: product mode flags .d.ts any"
-fi
-
-if ! TS_RG_SKIP_DTS=1 bash "$HERE/ts-rg-gate.sh" "$ROOT/testdata/library-dts" >/tmp/ts-kit-selfcheck-lib-skip.txt 2>&1; then
-  echo "FAIL selfcheck: expected ts-rg-gate PASS on library-dts with TS_RG_SKIP_DTS=1"
-  cat /tmp/ts-kit-selfcheck-lib-skip.txt
-  fail=1
-else
-  echo "ok: library mode skips .d.ts any"
-fi
+shopt -s nullglob
+for f in "$WORKDIR"/*.expect; do
+  if [[ "$(cat "$f")" != "0" ]]; then fail=1; fi
+done
 
 # oxlint template must exist and name the factory-wide rules
 OXLINT="$ROOT/templates/oxlintrc.json"
@@ -132,7 +87,31 @@ else
   fi
 fi
 
-# bad fixture must mention the new boundary smells (prove encode substance)
+# schema / typed-parse templates (encode from repeating product env/JSON smells)
+for tmpl in env-schema.ts typed-parse.ts; do
+  if [[ ! -f "$ROOT/templates/$tmpl" ]]; then
+    echo "FAIL selfcheck: missing templates/$tmpl"
+    fail=1
+  else
+    echo "ok: template $tmpl present"
+  fi
+done
+if ! grep -q 'parseEnv' "$ROOT/templates/env-schema.ts" \
+  || ! grep -q 'process.env' "$ROOT/templates/env-schema.ts"; then
+  echo "FAIL selfcheck: env-schema template missing parseEnv / process.env"
+  fail=1
+else
+  echo "ok: env-schema template encodes named parseEnv"
+fi
+if ! grep -q 'JSON.parse' "$ROOT/templates/typed-parse.ts" \
+  || ! grep -q 'ts-rg-allow' "$ROOT/templates/typed-parse.ts"; then
+  echo "FAIL selfcheck: typed-parse template missing JSON.parse / ts-rg-allow"
+  fail=1
+else
+  echo "ok: typed-parse template encodes named JSON boundary"
+fi
+
+# bad fixture must mention the boundary smells (prove encode substance)
 if ! grep -q 'fetch(' "$ROOT/testdata/bad/src/smell.ts" \
   || ! grep -q 'new URL' "$ROOT/testdata/bad/src/smell.ts" \
   || ! grep -q 'process.env' "$ROOT/testdata/bad/src/smell.ts"; then
@@ -140,6 +119,42 @@ if ! grep -q 'fetch(' "$ROOT/testdata/bad/src/smell.ts" \
   fail=1
 else
   echo "ok: bad fixture encodes fetch/URL/env"
+fi
+
+# good fixture must include method .fetch true-negative and whole-object env parse
+if ! grep -q 'q.fetch()' "$ROOT/testdata/good/src/ok.ts"; then
+  echo "FAIL selfcheck: good fixture missing method .fetch true-negative"
+  fail=1
+else
+  echo "ok: good fixture encodes method .fetch true-negative"
+fi
+if ! grep -q 'parseAppEnv' "$ROOT/testdata/good/src/ok.ts" \
+  || ! grep -q 'process.env' "$ROOT/testdata/good/src/ok.ts"; then
+  echo "FAIL selfcheck: good fixture missing whole-object env parse"
+  fail=1
+else
+  echo "ok: good fixture encodes whole-object env parse"
+fi
+
+# Prove bare @ts-expect-error is actually caught (portable filter, not broken PCRE2 lookahead)
+if ! grep -q 'ts-expect-error' "$WORKDIR/bad-rg.out" 2>/dev/null \
+  && ! rg -q 'ts-expect-error' "$WORKDIR/bad-rg.out" 2>/dev/null; then
+  # bad-rg.out should contain FAIL lines; check smell.ts still has bare form and gate failed
+  if [[ "$(cat "$WORKDIR/bad-rg.rc")" -eq 0 ]]; then
+    echo "FAIL selfcheck: bad rg unexpectedly passed"
+    fail=1
+  else
+    # Explicitly re-scan bad for bare expect-error message
+    if ! bash "$HERE/ts-rg-gate.sh" "$ROOT/testdata/bad" 2>&1 | tee "$WORKDIR/bad-rg-retry.out" | grep -q 'ts-expect-error requires'; then
+      echo "FAIL selfcheck: bare @ts-expect-error not reported"
+      cat "$WORKDIR/bad-rg-retry.out"
+      fail=1
+    else
+      echo "ok: bare @ts-expect-error discriminated"
+    fi
+  fi
+else
+  echo "ok: bare @ts-expect-error discriminated"
 fi
 
 if [[ "$fail" -ne 0 ]]; then exit 1; fi
