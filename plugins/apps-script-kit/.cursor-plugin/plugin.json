@@ -1,0 +1,7 @@
+{
+  "name": "apps-script-kit",
+  "version": "0.1.0",
+  "description": "Google Apps Script poteto bar: PSR Apps Script encode. eval/new Function banned, Logger.log in libs banned, SpreadsheetApp.getUi (and siblings) in doGet/doPost banned, concurrent sheet writes without LockService banned when gateable. Tier 0 single-walk rg + hotpath budget + clasp wiring. Requires ripgrep.",
+  "skills": "./skills",
+  "rules": "./rules"
+}
