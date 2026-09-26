@@ -1,0 +1,7 @@
+{
+  "name": "my-vite-app-name-only",
+  "private": true,
+  "dependencies": {
+    "preact": "^10.0.0"
+  }
+}

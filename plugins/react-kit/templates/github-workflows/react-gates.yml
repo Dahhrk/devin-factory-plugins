@@ -1,0 +1,19 @@
+# Copy into product .github/workflows/ or merge steps into existing ci.yml.
+name: react-gates
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  react-gates:
+    name: react-kit gates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tier 0 react-rg-gate
+        run: bash scripts/react-rg-gate.sh .
+      - name: Tier 0.5 react-hotpath-gate
+        run: bash scripts/react-hotpath-gate.sh .
+      - name: Tier 1 react-react-gate
+        run: bash scripts/react-react-gate.sh .

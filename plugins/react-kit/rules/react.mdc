@@ -1,0 +1,18 @@
+---
+description: React PSR + poteto bar for product JSX/TSX
+globs: "**/*.{jsx,tsx}"
+alwaysApply: false
+---
+
+# React
+
+Follow skills **react** and **poteto-react** when applicable.
+
+- **react** / **react-dom** required in product wiring (`package.json` / `@vitejs/plugin-react` / CI)
+- No `dangerouslySetInnerHTML` without sanitize on the same line (`DOMPurify.sanitize` / `sanitizeHtml` / `.sanitize(`) or `react-rg-allow`; prefer JSX children
+- No `findDOMNode` without `react-rg-allow` + rationale; prefer refs
+- No `ReactDOM.render(` without `react-rg-allow` + rationale; prefer `createRoot`
+- Required product gates: `react-rg-gate` + `react-hotpath-gate` + `react-react-gate`. Do not disable checks to force green.
+- Prove build / test where product needs it, not "wiring pass" alone
+
+Repeated review smell twice on a React product: encode into lint/CI/skill, not more prose.

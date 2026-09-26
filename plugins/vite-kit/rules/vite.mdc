@@ -1,0 +1,18 @@
+---
+description: Vite PSR + poteto bar for product vite.config
+globs: "**/vite.config.*"
+alwaysApply: false
+---
+
+# Vite
+
+Follow skills **vite** and **poteto-vite** when applicable.
+
+- **vite** required in product wiring (`package.json` `"vite":` / `vite.config.*` / CI `vite build|dev|preview`)
+- No `server.fs.strict: false` without `vite-rg-allow` + rationale; keep default strict
+- No `server.fs.allow: ['..']` without `vite-rg-allow` + rationale; prefer `searchForWorkspaceRoot` / explicit dirs
+- No `loadEnv(mode, dir, '')` empty third arg without `vite-rg-allow` + rationale; prefer default `VITE_` prefix filter
+- Required product gates: `vite-rg-gate` + `vite-hotpath-gate` + `vite-vite-gate`. Do not disable checks to force green.
+- Prove `vite build` / preview where product needs it, not "wiring pass" alone
+
+Repeated review smell twice on a Vite product: encode into lint/CI/skill, not more prose.
