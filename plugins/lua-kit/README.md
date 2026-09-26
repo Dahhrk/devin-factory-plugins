@@ -7,7 +7,7 @@ GMod Lua bar for the dark factory Cursor lane.
 | Skills | `skills/lua`, `lua-net`, `lua-ui`, `poteto-lua` |
 | Rule | `rules/lua.mdc` (`**/*.lua`, not alwaysApply) |
 | Tier 0 | `scripts/lua-rg-gate.sh` |
-| Tier 0.5 | `scripts/lua-hotpath-gate.sh` (GetAll, post-hook alloc, cyan, Paint*Ring inline opts) |
+| Tier 0.5 | `scripts/lua-hotpath-gate.sh` (GetAll, post-hook alloc, cyan, Paint*Ring inline opts, SimpleText concat/format) |
 | Tier 1 | `scripts/lua-luacheck-gate.sh` + `templates/luacheckrc` |
 | Tier 2 (optional) | `templates/glualint.json` (FPtje/GLuaFixer) |
 | Product CI | `templates/github-workflows/lua-gates.yml` (Tier 0+0.5+1; Tier 2 commented with enable note) |
