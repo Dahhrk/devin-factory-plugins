@@ -1,0 +1,19 @@
+---
+description: Google Apps Script PSR + poteto bar for product .gs / clasp / appsscript wiring
+globs: "**/*.{gs,js,mjs,cjs,json,yml,yaml}"
+alwaysApply: false
+---
+
+# Google Apps Script
+
+Follow skills **apps-script** and **poteto-apps-script** when applicable.
+
+- No **eval** / **new Function** without `apps-script-rg-allow` + rationale
+- No **Logger.log** in library / product modules (prefer return values or structured `console` sparingly; `apps-script-rg-allow` when intentional probe)
+- No **SpreadsheetApp.getUi** / **DocumentApp.getUi** / **FormApp.getUi** / **SlidesApp.getUi** in the same file as `doGet` / `doPost` (web-app wrong context; use HtmlService / container `onOpen` instead)
+- Concurrent sheet writes (`appendRow` / `setValues` / `setValue`) in `doPost` / `onFormSubmit` files require **LockService** somewhere in that file (or allow)
+- Product **clasp** wiring: `appsscript.json` / `.clasp.json` / package.json or CI mentioning `clasp`
+- Required product gates: `apps-script-rg-gate` + `apps-script-hotpath-gate` + `apps-script-clasp-gate`. Do not disable checks to force green.
+- Prove behaviour with clasp push/dry-run / Apps Script unit tests where product needs them, not "lint pass" alone
+
+Repeated review smell twice on an Apps Script product: encode into lint/CI/skill, not more prose.
