@@ -1,0 +1,17 @@
+{
+  "name": "css-kit",
+  "version": "0.1.0",
+  "description": "CSS poteto bar: PSR CSS encode. stylelint lint, no !important abuse, no universal selector hotpath, no expression()/behavior IE smells. Tier 0 single-walk rg + hotpath budget + stylelint wiring. Requires ripgrep. Twin of plug-factory css-kit. Packaged for the Devin coding lane.",
+  "author": {
+    "name": "Dark factory"
+  },
+  "license": "MIT",
+  "keywords": [
+    "devin",
+    "plugin",
+    "css",
+    "poteto",
+    "psr",
+    "styles"
+  ]
+}

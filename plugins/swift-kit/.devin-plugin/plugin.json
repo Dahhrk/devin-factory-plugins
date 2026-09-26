@@ -1,0 +1,17 @@
+{
+  "name": "swift-kit",
+  "version": "0.1.0",
+  "description": "Swift poteto bar: PSR Swift encode. swift-format, SwiftLint, force unwrap, try!, unsafe pointers. Tier 0 single-walk rg + hotpath budget + fmt + SwiftLint wiring. Requires ripgrep. Twin of plug-factory swift-kit. Packaged for the Devin coding lane.",
+  "author": {
+    "name": "Dark factory"
+  },
+  "license": "MIT",
+  "keywords": [
+    "devin",
+    "plugin",
+    "swift",
+    "poteto",
+    "psr",
+    "apple"
+  ]
+}

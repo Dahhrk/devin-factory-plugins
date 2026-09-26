@@ -1,0 +1,18 @@
+{
+  "name": "shell-kit",
+  "version": "0.1.0",
+  "description": "Shell poteto bar: PSR Shell encode. ShellCheck, shfmt, quote expansions, set -euo pipefail, safe temps (mktemp+trap), tests for filenames/signals/empty. Tier 0 single-walk rg (eval, unsafe /tmp/$$, unquoted for/cd/rm, curl|sh) + hotpath budget + ShellCheck + shfmt + strict-set + test presence. Requires ripgrep. Twin of plug-factory shell-kit. Packaged for the Devin coding lane.",
+  "author": {
+    "name": "Dark factory"
+  },
+  "license": "MIT",
+  "keywords": [
+    "devin",
+    "plugin",
+    "shell",
+    "poteto",
+    "psr",
+    "bash",
+    "shellcheck"
+  ]
+}

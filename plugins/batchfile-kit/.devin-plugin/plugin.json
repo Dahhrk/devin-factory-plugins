@@ -1,0 +1,19 @@
+{
+  "name": "batchfile-kit",
+  "version": "0.1.0",
+  "description": "Batchfile poteto bar: PSR Batchfile encode. No unquoted %VAR% expansion, no delayedExpansion footguns, no call of untrusted paths, no curl|powershell download-exec, no secrets in set. Tier 0 single-walk rg + hotpath budget + batch wiring. Requires ripgrep. Twin of plug-factory batchfile-kit. Packaged for the Devin coding lane.",
+  "author": {
+    "name": "Dark factory"
+  },
+  "license": "MIT",
+  "keywords": [
+    "devin",
+    "plugin",
+    "batchfile",
+    "poteto",
+    "psr",
+    "batch",
+    "cmd",
+    "windows"
+  ]
+}

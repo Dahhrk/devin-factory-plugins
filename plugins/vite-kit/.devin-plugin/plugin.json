@@ -1,0 +1,17 @@
+{
+  "name": "vite-kit",
+  "version": "0.1.0",
+  "description": "Vite poteto bar: PSR Vite encode. vite wiring, no server.fs.strict:false, no parent-escape server.fs.allow, no loadEnv empty-prefix all-env dump. Tier 0 single-walk rg + hotpath budget + vite wiring. Requires ripgrep. Twin of plug-factory vite-kit. Packaged for the Devin coding lane.",
+  "author": {
+    "name": "Dark factory"
+  },
+  "license": "MIT",
+  "keywords": [
+    "devin",
+    "plugin",
+    "vite",
+    "poteto",
+    "psr",
+    "bundler"
+  ]
+}
