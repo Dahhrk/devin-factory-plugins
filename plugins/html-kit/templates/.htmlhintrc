@@ -1,0 +1,13 @@
+{
+  "alt-require": true,
+  "inline-script-disabled": true,
+  "inline-style-disabled": true,
+  "attr-no-duplication": true,
+  "attr-value-double-quotes": true,
+  "doctype-html5": true,
+  "html-lang-require": true,
+  "id-unique": true,
+  "src-not-empty": true,
+  "tagname-lowercase": true,
+  "title-require": true
+}

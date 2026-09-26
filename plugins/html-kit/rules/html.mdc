@@ -1,0 +1,19 @@
+---
+description: HTML PSR + poteto bar for product .html
+globs: "**/*.{html,htm,HTML,HTM}"
+alwaysApply: false
+---
+
+# HTML
+
+Follow skills **html** and **poteto-html** when applicable.
+
+- **htmlhint** required in product wiring (`.htmlhintrc` / `.htmlhint.json` / package.json `htmlhint` / CI `htmlhint`)
+- htmlhint rules must keep **alt-require**, **inline-script-disabled**, and **inline-style-disabled** enabled (`true`)
+- No missing `alt` on `<img>` without `html-rg-allow` + rationale; prefer `alt=` or decorative `aria-hidden="true"`
+- No inline JS/CSS smells (`style=`, `on*` handlers, `javascript:` URLs, inline `<script>` / `<style>`) without `html-rg-allow` + rationale
+- No external `<script src="https?://…">` without `integrity=` (SRI) where relevant, without `html-rg-allow` + rationale
+- Required product gates: `html-rg-gate` + `html-hotpath-gate` + `html-htmlhint-gate`. Do not disable checks to force green.
+- Prove runtime behaviour with a11y / visual checks where product needs them, not "lint pass" alone
+
+Repeated review smell twice on an HTML product: encode into lint/CI/skill, not more prose.
