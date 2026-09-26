@@ -1,0 +1,19 @@
+---
+description: C PSR + poteto bar for product .c/.h
+globs: "**/*.{c,h}"
+alwaysApply: false
+---
+
+# C
+
+Follow skills **c** and **poteto-c** when applicable.
+
+- `clang-format` clean (`.clang-format` + dry-run in CI)
+- Compiler diagnostics: `-Wall` and `-Wextra` wired in CMake/Make/meson/CI
+- Sanitizers where practical: ASAN/UBSAN/TSAN or `-fsanitize=` in CMake options or CI
+- No `strcpy` / `strcat` / `sprintf` / `gets` without `c-rg-allow` + rationale; prefer `snprintf` / bounded helpers
+- Every `malloc` / `calloc` / `realloc` NULL-checked within a short window (or `c-rg-allow` with rationale)
+- Required product gates: `c-rg-gate` + `c-hotpath-gate` + `c-fmt-gate` + `c-warn-gate` + `c-san-ci-gate` + `c-malloc-gate`. Do not disable checks to force green.
+- Prove runtime behaviour with tests / sanitizer builds, not "fmt pass" alone
+
+Repeated review smell twice on a C product: encode into lint/CI/skill, not more prose.

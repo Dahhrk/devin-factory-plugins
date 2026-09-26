@@ -1,0 +1,7 @@
+{
+  "name": "c-kit",
+  "version": "0.1.0",
+  "description": "C poteto bar: PSR C encode. clang-format, -Wall -Wextra, sanitizers where practical, buffer/unsafe string smells (strcpy/strcat/sprintf/gets), malloc NULL checks. Tier 0 single-walk rg + hotpath budget + fmt/warn + san-CI + malloc. Requires ripgrep.",
+  "skills": "./skills",
+  "rules": "./rules"
+}
