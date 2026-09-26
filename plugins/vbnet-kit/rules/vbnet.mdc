@@ -1,0 +1,18 @@
+---
+description: Visual Basic .NET PSR + poteto bar for product .vb / .vbproj
+globs: "**/*.{vb,vbproj,VB,VBPROJ}"
+alwaysApply: false
+---
+
+# Visual Basic .NET
+
+Follow skills **vbnet** and **poteto-vbnet** when applicable.
+
+- No **On Error Resume Next** without `vbnet-rg-allow` + rationale (prefer Try / Catch / structured error handling)
+- No **Option Strict Off** (file or `<OptionStrict>Off</OptionStrict>` in `.vbproj`) without allow (prefer Option Strict On)
+- **Console.Write / WriteLine** banned in library `.vb` (prefer ILogger / Trace / Debug); CLI `Program.vb` / `Module Main` may Console with allow when intentional
+- Product **dotnet** / `.vbproj` wiring: project file / CI mentioning `dotnet` build or restore
+- Required product gates: `vbnet-rg-gate` + `vbnet-hotpath-gate` + `vbnet-dotnet-gate`. Do not disable checks to force green.
+- Prove behaviour with `dotnet build` / smoke where product needs them, not "lint pass" alone
+
+Repeated review smell twice on a VB.NET product: encode into lint/CI/skill, not more prose.

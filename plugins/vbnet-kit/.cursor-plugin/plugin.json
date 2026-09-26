@@ -1,0 +1,7 @@
+{
+  "name": "vbnet-kit",
+  "version": "0.1.0",
+  "description": "Visual Basic .NET poteto bar: PSR VB.NET encode. On Error Resume Next banned, Option Strict Off banned, Console.WriteLine banned in libs. Tier 0 single-walk rg + hotpath budget + dotnet/vbproj wiring. Requires ripgrep.",
+  "skills": "./skills",
+  "rules": "./rules"
+}
