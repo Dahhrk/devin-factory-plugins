@@ -1,0 +1,7 @@
+{
+  "name": "gotemplate-kit",
+  "version": "0.1.0",
+  "description": "Go Template poteto bar: PSR Go Template encode. html/template over text/template for HTML (XSS), no Execute without context / discarded err, no missing FuncMap escaping (template.HTML / raw), no nested template include of untrusted names. Tier 0 single-walk rg + hotpath budget + html/template wiring. Requires ripgrep.",
+  "skills": "./skills",
+  "rules": "./rules"
+}
