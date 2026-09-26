@@ -1,0 +1,7 @@
+{
+  "name": "python-kit",
+  "version": "0.1.0",
+  "description": "Python poteto bar: PSR PEP 8 / PEP 257 / typing / PyPA encode. One formatter (Ruff format); Ruff lint (E/F/B); mypy or Pyright config; isolate env; test exceptions/I/O/runtime validation. Tier 0 single-walk rg (bare except, bare type:ignore/noqa, mutable defaults, shell=True, eval/exec, pickle/yaml.load, bare os.environ/json.loads) + hotpath budget + ruff config/live + typing + test presence. Requires ripgrep.",
+  "skills": "./skills",
+  "rules": "./rules"
+}
