@@ -1,0 +1,23 @@
+/* Intentional indented-syntax smells (.sass). */
+.toast
+  color: red !important
+
+%base
+  color: #111
+.btn
+  @extend %base
+.card
+  @extend %base
+
+.panel
+  /deep/ .inner
+    color: blue
+  >>> .slot
+    margin: 0
+
+.a
+  .b
+    .c
+      .d
+        .e
+          color: #000

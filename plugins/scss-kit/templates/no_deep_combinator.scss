@@ -1,0 +1,12 @@
+/* Named boundary: prefer :deep() / ::v-deep modern forms or BEM over /deep/ and >>>. */
+/* Anti-pattern (banned without allow):
+   .panel { /deep/ .inner { color: blue; } }
+   .panel { >>> .slot { margin: 0; } }
+*/
+.panel {
+  color: var(--fg, #111);
+}
+
+.panel :deep(.inner) {
+  color: var(--accent, #06c);
+}

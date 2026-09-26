@@ -1,0 +1,13 @@
+/* Named boundary: prefer mixins over @extend (dart-sass extend graph is complex). */
+/* Copy into product sources; keep scss-rg-allow only on intentional seams. */
+/* Anti-pattern (banned without allow):
+   %base { color: #111; }
+   .btn { @extend %base; }
+*/
+@mixin base-fg($c: #111) {
+  color: $c;
+}
+
+.btn {
+  @include base-fg;
+}
