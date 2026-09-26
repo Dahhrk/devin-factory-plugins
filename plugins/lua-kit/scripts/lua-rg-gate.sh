@@ -24,5 +24,6 @@ check 'BroadcastLua\s*\(|:SendLua\s*\(' 'SendLua/BroadcastLua banned'
 check 'net\.WriteEntity\s*\(\s*LocalPlayer\s*\(' 'client identity via WriteEntity(LocalPlayer()) banned'
 check 'AddCSLuaFile\s*\(\s*["'\''][^"'\'']*sv_' 'AddCSLuaFile of sv_ path banned'
 check 'util\.AddNetworkString\s*\([^)]*\).*(hook\.Add|timer\.(Create|Simple))' 'AddNetworkString near hook/timer (review)'
+check '4[Aa][Aa][Cc][Ff][Cc]|Color\(\s*74\s*,\s*172\s*,\s*252' 'Soft Dark Glass cyan accent (#4AACFC) banned'
 if [[ "$fail" -ne 0 ]]; then exit 1; fi
 echo "PASS lua-rg-gate ($ROOT)"

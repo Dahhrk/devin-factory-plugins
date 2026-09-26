@@ -12,8 +12,8 @@ Follow skills **lua**, **lua-net**, **lua-ui** when applicable.
 - No `net.WriteTable` for known structs; typed writers; validate on SERVER
 - Never `AddCSLuaFile` server-only sources
 - Never trust client identity via written LocalPlayer entity
-- Prefer `player.Iterator` / numeric array loops in hot paths
+- Prefer `player.Iterator` / numeric array loops in hot paths; `lua-hotpath-gate.sh` bans GetAll unless `hotpath-allow`
 - Use `bit.*` not Lua 5.3 operators
-- Prefer event hooks over perpetual Think; throttle HUD
+- Prefer event hooks over perpetual Think; throttle HUD; cache paint labels; empty modules `ready=false`
 
 Repeated review smell twice on Obsidian or other GMod products: encode into lint/CI/skill (kitchen encode-lessons), not more prose.

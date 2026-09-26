@@ -20,9 +20,9 @@ Keep <2-4 invariants>
 
 All must be true. Do not claim done on prose.
 
-1. `bash scripts/lua-rg-gate.sh <addon-lua-root>` exits 0 (product copy of pack script).
+1. `bash scripts/lua-rg-gate.sh <addon-lua-root>` and `bash scripts/lua-hotpath-gate.sh <addon-lua-root>` exit 0 (product copies of pack scripts).
 2. Diff adds no narration comments (`--` that restates the next statement). Survivors only for non-obvious external constraints.
-3. Smallest correct change: no new helper with one caller; no parallel net/UI toolkit beside Obsidian.* when in Obsidian.
+3. Smallest correct change: no new helper with one caller; no parallel net/UI toolkit beside Obsidian.* when in Obsidian; empty domain modules stay `ready=false` (or deleted), never `ready=true` stubs.
 4. If `net.Receive` / `util.AddNetworkString` touched: every SERVER receiver validates `IsValid(ply)`, permission, typed ranges; no WriteTable / client-written identity.
 5. If Think / Tick / HUDPaint / CreateMove touched: no `Color`/`Material`/`Vector(`/`Angle(`/table/`function(` alloc in the hook body.
 6. If Obsidian UI touched: `bash scripts/check-coverage.sh` exits 0 from Obsidian root when that script exists.

@@ -4,7 +4,7 @@
 
 ```
 /poteto-mode <one sentence goal in Obsidian or the GMod addon>
-Done means EXIT PREDICATE in poteto-lua (rg gate 0; no narrating comments; smallest diff; net/hot-hook rules if touched; coverage script 0 if UI; real load/net proof)
+Done means EXIT PREDICATE in poteto-lua (rg + hotpath gates 0; no narrating comments; smallest diff; net/hot-hook rules if touched; coverage script 0 if UI; real load/net proof)
 Keep Lua 5.1/bit.*; no AddCSLuaFile of server-only; Obsidian public API stable; Soft Dark Glass tokens
 ```
 
