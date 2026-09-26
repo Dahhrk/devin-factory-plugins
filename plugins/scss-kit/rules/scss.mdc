@@ -1,0 +1,19 @@
+---
+description: SCSS/Sass PSR + poteto bar for product .scss/.sass
+globs: "**/*.{scss,sass,SCSS,SASS}"
+alwaysApply: false
+---
+
+# SCSS / Sass
+
+Follow skills **scss** and **poteto-scss** when applicable.
+
+- **sass / dart-sass** required in product wiring (`package.json` `sass` / `dart-sass` / `sass.config.*` / CI `sass`)
+- No `!important` without `scss-rg-allow` + rationale; prefer specificity / `@layer` / mixin
+- No `@extend` without `scss-rg-allow` + rationale; prefer mixins (dart-sass extend graph is complex)
+- No `/deep/` or `>>>` without `scss-rg-allow` + rationale; prefer `:deep()` / BEM
+- Nesting depth ≤4 without file-level allow; prefer flat BEM / modifiers
+- Required product gates: `scss-rg-gate` + `scss-hotpath-gate` + `scss-sass-gate`. Do not disable checks to force green.
+- Prove compile with `sass` where product needs it, not "wiring pass" alone
+
+Repeated review smell twice on an SCSS product: encode into lint/CI/skill, not more prose.

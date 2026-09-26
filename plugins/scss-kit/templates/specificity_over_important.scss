@@ -1,0 +1,15 @@
+/* Named boundary: prefer specificity / @layer / mixin over !important. */
+/* Anti-pattern (banned without allow):
+   .toast { color: red !important; }
+*/
+@mixin toast-danger {
+  color: var(--danger, #c00);
+}
+
+.toast {
+  @include toast-danger;
+}
+
+.toast.is-urgent {
+  color: var(--danger-strong, #900);
+}

@@ -1,0 +1,19 @@
+# Copy into product .github/workflows/ or merge steps into existing ci.yml.
+name: scss-gates
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  scss-gates:
+    name: scss-kit gates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tier 0 scss-rg-gate
+        run: bash scripts/scss-rg-gate.sh .
+      - name: Tier 0.5 scss-hotpath-gate
+        run: bash scripts/scss-hotpath-gate.sh .
+      - name: Tier 1 scss-sass-gate
+        run: bash scripts/scss-sass-gate.sh .
