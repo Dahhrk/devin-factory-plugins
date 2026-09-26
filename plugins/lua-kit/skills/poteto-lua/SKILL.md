@@ -49,9 +49,18 @@ Stricter product gates (`verify-*`, `control-*`) override when present.
 
 Load skills **lua**, **lua-net**, **lua-ui** as needed. Second smell → lint/CI/skill (encode-lessons), not more prose.
 
+
+## Delivery labels (standing)
+
+PR titles, branch names when you can choose them, chat-facing labels, and scorecard headers use **plain work descriptions** only (foundation / increment style). Examples: `Remove unused VGUI primitives`, `Debounce F4 search rebuild`.
+
+Never use `pass N`, `full-pass-N`, `poteto pass`, or `poteto/full-pass-N` in user-facing titles or headers.
+
+Internal score history may use `R1`–`Rn` or dates. Merged commit subjects stay history.
+
 ## Standing scorecard (Lua / GMod only)
 
-Weighted product pass sheet. Score each dim 0-10, then overall = sum(weight * score).
+Weighted product run sheet. Score each dim 0-10, then overall = sum(weight * score).
 
 | Dimension | Weight |
 |-----------|--------|
@@ -65,14 +74,14 @@ Weighted product pass sheet. Score each dim 0-10, then overall = sum(weight * sc
 | 8. Code quality | 5% |
 | 9. Optimisations | 5% |
 
-Standing extras (list separately; do not fold into the 100% weighted overall unless the pass asks):
+Standing extras (list separately; do not fold into the 100% weighted overall unless the run asks):
 
 | Extra | /10 | Prove |
 |-------|-----|-------|
 | Facepunch alignment | checklist: locals, no hot alloc, event>Think, iterators, realm/AddCSLuaFile, never trust client, no SendLua, SysTime before micro-opt, unique hooks |
 | CI green | `lua-rg-gate` + `lua-hotpath-gate` PASS on the artifact; if GitHub Actions cannot run, note billing / runner and still prove local gate exit 0 |
 
-Also report Quality / Opts / Amount narrative + LOC (+/− / net) and compare history across passes.
+Also report Quality / Opts / Amount narrative + LOC (+/− / net) and compare history across runs (`R1`–`Rn` or dates internally; descriptive titles user-facing).
 
 **Board-wide:** Facepunch alignment is Lua / GMod only. Other stacks score CI green, trust boundary, and size without a Facepunch extra. TS/UI uses existing Control-Glass gates. Kitchen docs stay docs-only.
 

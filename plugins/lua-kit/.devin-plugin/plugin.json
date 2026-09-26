@@ -1,6 +1,6 @@
 {
   "name": "lua-kit",
-  "version": "0.2.5",
+  "version": "0.2.7",
   "description": "GMod Lua bar: poteto EXIT PREDICATE, net trust, Derma/HUD, rg + hotpath (GetAll/alloc/cyan/ring-opts/SimpleText concat/tostring/upper) + luacheck, optional glualint. Twin of plug-factory lua-kit.",
   "author": {
     "name": "Dark factory"

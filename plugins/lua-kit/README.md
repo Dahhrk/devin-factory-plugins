@@ -17,3 +17,5 @@ Copy gates/templates into the product. Pilot: Obsidian Framework. Compose with `
 Write home: this repo. Mirrors: `Dahhrk/devin-factory-plugins` (`plugins/lua-kit`), `Dahhrk/zcode-factory` (`skills/lua-kit-*`). Research stays in lua-factory draft, not kitchen twins.
 
 Standing scorecard (weighted dims + Facepunch / CI green extras): `skills/poteto-lua` (Lua/GMod only; other stacks skip Facepunch).
+
+PR titles and user-facing labels: plain work descriptions only (never `pass N` / `full-pass-N` / `poteto pass`). Rule lives in `skills/poteto-lua`.
