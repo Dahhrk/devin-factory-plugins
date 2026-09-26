@@ -1,0 +1,20 @@
+---
+description: TypeScript PSR + poteto bar for product .ts/.tsx
+globs: "**/*.{ts,tsx}"
+alwaysApply: false
+---
+
+# TypeScript
+
+Follow skills **typescript** and **poteto-typescript** when applicable. Prefer pstack **typescript-best-practices** for modeling detail.
+
+- `strict` + `noImplicitAny` on; type-check in CI (`tsc -b` or equivalent)
+- No unexplained `any` / `as any` / bare `@ts-ignore`
+- No postfix `!` on DOM queries or other external lookups; check at the boundary then use the narrowed value
+- Parse external data (JSON, fetch, URL, env, DOM) into a named domain type before trusting it
+- Prefer `unknown` at the parse site; `satisfies` over widening `as`
+- Exhaustive `switch` with `never` default on discriminated unions
+- Required product gates: `ts-rg-gate` + `ts-strict-gate` + product lint/typecheck. Do not disable checks to force green.
+- Prove emitted/runtime behaviour (drive smoke, unit, or playwright), not "types pass" alone
+
+Repeated review smell twice on Control-Glass or other TS products: encode into lint/CI/skill, not more prose.
