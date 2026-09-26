@@ -1,0 +1,24 @@
+/* Named boundary: prefer scoped element resets over bare universal selectors. */
+/* Copy into product sources; css-rg-allow only on proven design-system seams. */
+/* Anti-pattern (banned without allow):
+   * { box-sizing: border-box; }
+   .app * { margin: 0; }
+*/
+.app {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.app h1,
+.app h2,
+.app h3,
+.app p,
+.app ul,
+.app ol,
+.app li,
+.app button,
+.app input,
+.app textarea {
+  box-sizing: border-box;
+  margin: 0;
+}

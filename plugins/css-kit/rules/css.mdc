@@ -1,0 +1,19 @@
+---
+description: CSS PSR + poteto bar for product .css
+globs: "**/*.{css,CSS}"
+alwaysApply: false
+---
+
+# CSS
+
+Follow skills **css** and **poteto-css** when applicable.
+
+- **stylelint** required in product wiring (`.stylelintrc*` / `stylelint.config.*` / package.json `stylelint` / CI `stylelint`)
+- stylelint rules must keep **declaration-no-important** enabled and **selector-max-universal** set (product bar: `0`)
+- No `!important` without `css-rg-allow` + rationale; prefer higher specificity / cascade layers
+- No universal selector `*` hotpath without `css-rg-allow` + rationale; prefer scoped resets
+- No `expression()` / `behavior:` IE smells without `css-rg-allow` + rationale
+- Required product gates: `css-rg-gate` + `css-hotpath-gate` + `css-stylelint-gate`. Do not disable checks to force green.
+- Prove runtime behaviour with visual / layout checks where product needs them, not "lint pass" alone
+
+Repeated review smell twice on a CSS product: encode into lint/CI/skill, not more prose.

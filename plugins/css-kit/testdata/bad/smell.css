@@ -1,0 +1,6 @@
+/* Intentional smells for css-rg-gate discrimination (not product code). */
+.toast { color: red !important; }
+* { box-sizing: border-box; }
+.bar * { margin: 0; }
+#legacy { width: expression(document.body.clientWidth); }
+#htc { behavior: url(ie-hover.htc); }
