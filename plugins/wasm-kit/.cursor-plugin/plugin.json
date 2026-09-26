@@ -1,0 +1,7 @@
+{
+  "name": "wasm-kit",
+  "version": "0.1.0",
+  "description": "WebAssembly poteto bar: PSR Wasm encode. wat hygiene (leftover debug call/import) banned, unbounded memory.grow without comment banned, imported host eval patterns banned. Tier 0 single-walk rg + hotpath budget + wat/wasm tooling wiring. Requires ripgrep.",
+  "skills": "./skills",
+  "rules": "./rules"
+}
