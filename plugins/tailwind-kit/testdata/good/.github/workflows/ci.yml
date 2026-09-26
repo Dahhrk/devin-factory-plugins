@@ -1,0 +1,8 @@
+name: ci
+on: [push]
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - run: npx tailwindcss -i ./styles.css -o ./dist.css
+      - run: echo 'tailwindcss build check'

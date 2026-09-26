@@ -1,0 +1,7 @@
+{
+  "name": "tailwind-kit",
+  "version": "0.1.0",
+  "description": "Tailwind CSS poteto bar: PSR Tailwind encode. tailwindcss wiring, no @apply overuse, no arbitrary-value sprawl, no safelist abuse, no content-path miss / purge footguns. Tier 0 single-walk rg + hotpath budget + tailwindcss wiring. Requires ripgrep.",
+  "skills": "./skills",
+  "rules": "./rules"
+}

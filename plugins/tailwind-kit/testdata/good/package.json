@@ -1,0 +1,10 @@
+{
+  "name": "tailwind-kit-good-fixture",
+  "private": true,
+  "devDependencies": {
+    "tailwindcss": "^4.0.0"
+  },
+  "scripts": {
+    "build:css": "tailwindcss -i ./styles.css -o ./dist.css"
+  }
+}
