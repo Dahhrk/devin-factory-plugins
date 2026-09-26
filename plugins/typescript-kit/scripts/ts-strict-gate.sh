@@ -131,8 +131,6 @@ chain_has_true() {
 if ! chain_has_true "$PRIMARY" "strict"; then
   echo "FAIL: $PRIMARY (and extends chain) missing \"strict\": true (PSR: enable strict checking)"
   fail=1
-fi
-if ! chain_has_true "$PRIMARY" "strict"; then
   if ! chain_has_true "$PRIMARY" "noImplicitAny"; then
     echo "FAIL: $PRIMARY missing noImplicitAny (and strict not true in extends chain)"
     fail=1

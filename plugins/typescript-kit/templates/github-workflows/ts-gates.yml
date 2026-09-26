@@ -19,6 +19,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Tier 0 ts-rg-gate
         run: bash scripts/ts-rg-gate.sh .
+      - name: Tier 0.5 ts-hotpath-gate
+        run: bash scripts/ts-hotpath-gate.sh .
       - name: Tier 0.5 ts-strict-gate
         run: bash scripts/ts-strict-gate.sh .
       - name: Tier 0.5 ts-runtime-gate
