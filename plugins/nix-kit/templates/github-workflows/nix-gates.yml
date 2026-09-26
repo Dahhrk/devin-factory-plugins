@@ -1,0 +1,19 @@
+# Copy into product .github/workflows/ or merge steps into existing ci.yml.
+name: nix-gates
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  nix-gates:
+    name: nix-kit gates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tier 0 nix-rg-gate
+        run: bash scripts/nix-rg-gate.sh .
+      - name: Tier 0.5 nix-hotpath-gate
+        run: bash scripts/nix-hotpath-gate.sh .
+      - name: Tier 1 nix-nix-gate
+        run: bash scripts/nix-nix-gate.sh .

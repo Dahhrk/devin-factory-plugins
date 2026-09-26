@@ -1,0 +1,7 @@
+{
+  "name": "nix-kit",
+  "version": "0.1.0",
+  "description": "Nix poteto bar: PSR Nix encode. No fetchurl without hash, no builtins.exec / IFD abuse, no impure env lookups, no world-writable store paths in recipes, no curl|bash in builders. Tier 0 single-walk rg + hotpath budget + nix wiring. Requires ripgrep.",
+  "skills": "./skills",
+  "rules": "./rules"
+}
