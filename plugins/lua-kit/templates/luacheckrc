@@ -1,0 +1,99 @@
+-- GMod / GLua Lua 5.1 .luacheckrc template (lua-kit Tier 1)
+-- Copy to product repo root as .luacheckrc and add your addon root table to globals.
+
+std = "lua51"
+max_line_length = 120
+
+globals = {
+  -- Realm / engine
+  "SERVER",
+  "CLIENT",
+  "GAME_DLL",
+  "CLIENT_DLL",
+  "MENU_DLL",
+  -- Types / constructors
+  "Color",
+  "Vector",
+  "Angle",
+  "Matrix",
+  "Entity",
+  "Player",
+  "NPC",
+  "Weapon",
+  "Vehicle",
+  "Material",
+  "CreateMaterial",
+  -- Common libs
+  "hook",
+  "net",
+  "util",
+  "timer",
+  "file",
+  "http",
+  "concommand",
+  "cvars",
+  "game",
+  "engine",
+  "system",
+  "player",
+  "ents",
+  "team",
+  "bit",
+  "jit",
+  -- Client UI / render
+  "surface",
+  "draw",
+  "vgui",
+  "gui",
+  "input",
+  "render",
+  "cam",
+  "mesh",
+  "halo",
+  "killicon",
+  "notification",
+  -- Helpers
+  "IsValid",
+  "LocalPlayer",
+  "CurTime",
+  "SysTime",
+  "RealTime",
+  "FrameTime",
+  "Lerp",
+  "LerpVector",
+  "LerpAngle",
+  "include",
+  "AddCSLuaFile",
+  "FindMetaTable",
+  "TypeID",
+  "istable",
+  "isstring",
+  "isnumber",
+  "isbool",
+  "isfunction",
+  "isentity",
+  "isvector",
+  "isangle",
+  "ismatrix",
+  -- Metatable stubs often treated as globals in checks
+  "PLAYER",
+  "ENTITY",
+  "WEAPON",
+  "VEHICLE",
+}
+
+read_globals = {
+  "GAMEMODE",
+  "GM",
+  "DarkRP",
+  "CAMI",
+  "ulx",
+  "ULib",
+  "SAM",
+  "sAdmin",
+}
+
+-- Hook callbacks often leave unused args (ply, len, etc.)
+ignore = {
+  "212",
+}
