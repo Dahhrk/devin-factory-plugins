@@ -41,6 +41,15 @@ else
   echo "ok: runtime passes on good"
 fi
 
+# good must PASS oxlint (config-only in selfcheck so CI without network still works)
+if ! TS_OXLINT_CONFIG_ONLY=1 bash "$HERE/ts-oxlint-gate.sh" "$ROOT/testdata/good" >/tmp/ts-kit-selfcheck-good-oxlint.txt 2>&1; then
+  echo "FAIL selfcheck: expected ts-oxlint-gate PASS on testdata/good"
+  cat /tmp/ts-kit-selfcheck-good-oxlint.txt
+  fail=1
+else
+  echo "ok: oxlint passes on good"
+fi
+
 # extends chain must PASS strict (strict only on base)
 if ! bash "$HERE/ts-strict-gate.sh" "$ROOT/testdata/extends-ok" >/tmp/ts-kit-selfcheck-extends.txt 2>&1; then
   echo "FAIL selfcheck: expected ts-strict-gate PASS on testdata/extends-ok"
@@ -66,6 +75,24 @@ if bash "$HERE/ts-runtime-gate.sh" "$ROOT/testdata/runtime-missing" >/tmp/ts-kit
   fail=1
 else
   echo "ok: runtime fails when missing"
+fi
+
+# missing oxlint config must FAIL
+if TS_OXLINT_CONFIG_ONLY=1 bash "$HERE/ts-oxlint-gate.sh" "$ROOT/testdata/oxlint-missing" >/tmp/ts-kit-selfcheck-oxlint-missing.txt 2>&1; then
+  echo "FAIL selfcheck: expected ts-oxlint-gate FAIL on testdata/oxlint-missing"
+  cat /tmp/ts-kit-selfcheck-oxlint-missing.txt
+  fail=1
+else
+  echo "ok: oxlint fails when config missing"
+fi
+
+# weak oxlint config (missing factory keys) must FAIL
+if TS_OXLINT_CONFIG_ONLY=1 bash "$HERE/ts-oxlint-gate.sh" "$ROOT/testdata/oxlint-weak" >/tmp/ts-kit-selfcheck-oxlint-weak.txt 2>&1; then
+  echo "FAIL selfcheck: expected ts-oxlint-gate FAIL on testdata/oxlint-weak"
+  cat /tmp/ts-kit-selfcheck-oxlint-weak.txt
+  fail=1
+else
+  echo "ok: oxlint fails when factory rules missing"
 fi
 
 # library .d.ts any: product mode FAIL, library skip PASS
@@ -103,6 +130,16 @@ else
   else
     fail=1
   fi
+fi
+
+# bad fixture must mention the new boundary smells (prove encode substance)
+if ! grep -q 'fetch(' "$ROOT/testdata/bad/src/smell.ts" \
+  || ! grep -q 'new URL' "$ROOT/testdata/bad/src/smell.ts" \
+  || ! grep -q 'process.env' "$ROOT/testdata/bad/src/smell.ts"; then
+  echo "FAIL selfcheck: bad fixture missing fetch/URL/env smells"
+  fail=1
+else
+  echo "ok: bad fixture encodes fetch/URL/env"
 fi
 
 if [[ "$fail" -ne 0 ]]; then exit 1; fi
