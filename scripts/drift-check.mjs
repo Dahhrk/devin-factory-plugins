@@ -38,8 +38,8 @@ import { basename, join, relative } from 'node:path';
 const here = process.cwd();
 const isDevinRepo = existsSync(join(here, 'plugins', 'pstack')) && existsSync(join(here, 'plugins', 'factory-baseline'));
 const PACKS = isDevinRepo
-  ? [['plugins/pstack', 'pstack'], ['plugins/cursor-team-kit', 'cursor-team-kit'], ['plugins/lua-kit', 'lua-kit'], ['plugins/typescript-kit', 'typescript-kit'], ['plugins/python-kit', 'python-kit'], ['plugins/go-kit', 'go-kit'], ['plugins/shell-kit', 'shell-kit'], ['plugins/rust-kit', 'rust-kit']]
-  : [['pstack', 'pstack'], ['cursor-team-kit', 'cursor-team-kit'], ['lua-kit', 'lua-kit'], ['typescript-kit', 'typescript-kit'], ['python-kit', 'python-kit'], ['go-kit', 'go-kit'], ['shell-kit', 'shell-kit'], ['rust-kit', 'rust-kit']];
+  ? [['plugins/pstack', 'pstack'], ['plugins/cursor-team-kit', 'cursor-team-kit'], ['plugins/lua-kit', 'lua-kit'], ['plugins/typescript-kit', 'typescript-kit'], ['plugins/python-kit', 'python-kit'], ['plugins/go-kit', 'go-kit'], ['plugins/shell-kit', 'shell-kit'], ['plugins/rust-kit', 'rust-kit'], ['plugins/c-kit', 'c-kit']]
+  : [['pstack', 'pstack'], ['cursor-team-kit', 'cursor-team-kit'], ['lua-kit', 'lua-kit'], ['typescript-kit', 'typescript-kit'], ['python-kit', 'python-kit'], ['go-kit', 'go-kit'], ['shell-kit', 'shell-kit'], ['rust-kit', 'rust-kit'], ['c-kit', 'c-kit']];
 
 const args = process.argv.slice(2);
 const zcodeFlagIdx = args.indexOf('--zcode');
