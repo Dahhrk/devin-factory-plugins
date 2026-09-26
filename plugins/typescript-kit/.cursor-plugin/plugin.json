@@ -1,7 +1,7 @@
 {
   "name": "typescript-kit",
-  "version": "0.7.0",
-  "description": "TypeScript poteto bar: PSR handbook + strict (extends-aware), global-fetch/URL/env + JSON/DOM rg boundaries (method .fetch allowed), portable bare @ts-expect-error, env-schema + typed-parse templates, oxlint adoption with type-aware no-floating-promises + no-misused-promises (pinned oxlint + oxlint-tsgolint, never floating-latest), runtime/drive proof, product-vs-library .d.ts policy, parallel rg/selfcheck, typecheck aliases, selfcheck fixtures.",
+  "version": "0.8.0",
+  "description": "TypeScript poteto bar: PSR handbook + strict (extends-aware), global-fetch/URL/env + JSON/DOM rg boundaries (method .fetch allowed), portable bare @ts-expect-error, env-schema + typed-parse templates, oxlint adoption with type-aware no-floating-promises + no-misused-promises (pinned oxlint + oxlint-tsgolint), runtime/drive proof, product-vs-library .d.ts policy, single-walk rg + wall-clock hotpath budget gate (TS_RG_BUDGET_MS, default 250ms), typecheck aliases, selfcheck fixtures. Requires ripgrep.",
   "skills": "./skills",
   "rules": "./rules"
 }
