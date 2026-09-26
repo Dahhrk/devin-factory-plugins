@@ -1,0 +1,32 @@
+# Copy into product .github/workflows/ or merge steps into existing ci.yml.
+name: rust-gates
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  rust-gates:
+    name: rust-kit gates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - name: Tier 0 rust-rg-gate
+        run: bash scripts/rust-rg-gate.sh .
+      - name: Tier 0.5 rust-hotpath-gate
+        run: bash scripts/rust-hotpath-gate.sh .
+      - name: Tier 0.5 rust-fmt-gate
+        run: bash scripts/rust-fmt-gate.sh .
+      - name: Tier 0.5 rust-clippy-gate
+        run: bash scripts/rust-clippy-gate.sh .
+      - name: Tier 1 rust-test-ci-gate
+        run: bash scripts/rust-test-ci-gate.sh .
+      - name: cargo test
+        run: cargo test
+      - name: cargo clippy
+        run: cargo clippy --all-targets -- -D warnings
+      - name: cargo fmt
+        run: cargo fmt --all -- --check

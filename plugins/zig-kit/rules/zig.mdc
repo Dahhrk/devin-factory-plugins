@@ -1,0 +1,19 @@
+---
+description: Zig PSR + poteto bar for product .zig
+globs: "**/*.zig"
+alwaysApply: false
+---
+
+# Zig
+
+Follow skills **zig** and **poteto-zig** when applicable.
+
+- Formatter clean (`zig fmt` / CI `zig fmt --check`)
+- **zig build test** required in product wiring (build.zig test step and/or CI)
+- No `@panic` / `@trap` in library code without `zig-rg-allow` + rationale; prefer error unions / `return error.`
+- No `catch unreachable` (unchecked paths including alloc) without `zig-rg-allow` + rationale; prefer `try` / `errdefer`
+- No bare `TODO` / `FIXME` without `zig-rg-allow` + rationale; finish or track outside product paths
+- Required product gates: `zig-rg-gate` + `zig-hotpath-gate` + `zig-fmt-gate` + `zig-build-test-gate`. Do not disable checks to force green.
+- Prove runtime behaviour with `zig build test`, not "fmt pass" alone
+
+Repeated review smell twice on a Zig product: encode into lint/CI/skill, not more prose.

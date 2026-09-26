@@ -1,0 +1,10 @@
+{
+  "name": "scss-kit-good-fixture",
+  "private": true,
+  "devDependencies": {
+    "sass": "^1.77.0"
+  },
+  "scripts": {
+    "build:css": "sass styles:dist --style=compressed"
+  }
+}

@@ -1,0 +1,19 @@
+# Copy into product .github/workflows/ or merge steps into existing ci.yml.
+name: vbnet-gates
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  vbnet-gates:
+    name: vbnet-kit gates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tier 0 vbnet-rg-gate
+        run: bash scripts/vbnet-rg-gate.sh .
+      - name: Tier 0.5 vbnet-hotpath-gate
+        run: bash scripts/vbnet-hotpath-gate.sh .
+      - name: Tier 1 vbnet-dotnet-gate
+        run: bash scripts/vbnet-dotnet-gate.sh .

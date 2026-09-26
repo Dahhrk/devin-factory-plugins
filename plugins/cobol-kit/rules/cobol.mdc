@@ -1,0 +1,19 @@
+---
+description: COBOL PSR + poteto bar for product .cob/.cbl/.cpy
+globs: "**/*.{cob,cbl,cpy,COB,CBL,CPY}"
+alwaysApply: false
+---
+
+# COBOL
+
+Follow skills **cobol** and **poteto-cobol** when applicable.
+
+- No **GOTO** / **GO TO** without `cobol-rg-allow` + rationale (prefer PERFORM / EVALUATE / structured EXIT)
+- No **ALTER** without `cobol-rg-allow` + rationale (prefer explicit PERFORM targets)
+- **ACCEPT** must carry **ON EXCEPTION** (or ON ERROR) on the same line without allow (prefer validated input paths)
+- **IF** / **END-IF** hygiene: file-level IF count must not exceed END-IF count (add END-IF; period-terminated IF-without-END-IF is a smell)
+- Product **cobc** wiring: Makefile / CI mentioning `cobc` (GnuCOBOL)
+- Required product gates: `cobol-rg-gate` + `cobol-hotpath-gate` + `cobol-cobc-gate`. Do not disable checks to force green.
+- Prove behaviour with `cobc` / smoke where product needs them, not "lint pass" alone
+
+Repeated review smell twice on a COBOL product: encode into lint/CI/skill, not more prose.

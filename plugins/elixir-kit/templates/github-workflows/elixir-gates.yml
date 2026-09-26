@@ -1,0 +1,23 @@
+# Copy into product .github/workflows/ or merge steps into existing ci.yml.
+name: elixir-gates
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  elixir-gates:
+    name: elixir-kit gates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tier 0 elixir-rg-gate
+        run: bash scripts/elixir-rg-gate.sh .
+      - name: Tier 0.5 elixir-hotpath-gate
+        run: bash scripts/elixir-hotpath-gate.sh .
+      - name: Tier 0.5 elixir-fmt-gate
+        run: bash scripts/elixir-fmt-gate.sh .
+      - name: Tier 1 elixir-credo-gate
+        run: bash scripts/elixir-credo-gate.sh .
+      - name: Tier 1 elixir-dialyzer-gate
+        run: bash scripts/elixir-dialyzer-gate.sh .

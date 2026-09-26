@@ -1,0 +1,7 @@
+{
+  "name": "ts-kit-extends-fixture",
+  "private": true,
+  "scripts": {
+    "test:types": "tsc -p tsconfig.json"
+  }
+}

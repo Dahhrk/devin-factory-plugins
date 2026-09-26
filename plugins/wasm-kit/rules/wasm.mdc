@@ -1,0 +1,18 @@
+---
+description: WebAssembly PSR + poteto bar for product .wat / .wast / host wiring
+globs: "**/*.{wat,wast,wasm,toml,yml,yaml}"
+alwaysApply: false
+---
+
+# WebAssembly
+
+Follow skills **wasm** and **poteto-wasm** when applicable.
+
+- No leftover **debug wat hygiene** (`call $print` / `$log` / `$debug`, or `(import "console" "log"`) without `wasm-rg-allow` + rationale
+- No **memory.grow** without a same-line `;;` comment documenting the bound / intent (or `wasm-rg-allow`)
+- No **imported host eval** patterns (`(import ... "eval"` / `"eval_js"` / `"Function"` / `"exec"` / `"js_eval"`) without allow
+- Product **wat/wasm tooling** wiring: `.wat` / `.wast` / `.wasm` sources plus Makefile / Cargo / package.json / CI mentioning `wat2wasm` / `wasm-tools` / `wabt` / `wasm-as` / `wasm-opt` / `wasmati`
+- Required product gates: `wasm-rg-gate` + `wasm-hotpath-gate` + `wasm-tools-gate`. Do not disable checks to force green.
+- Prove behaviour with `wat2wasm` / `wasm-tools validate` / smoke where product needs them, not "lint pass" alone
+
+Repeated review smell twice on a Wasm product: encode into lint/CI/skill, not more prose.

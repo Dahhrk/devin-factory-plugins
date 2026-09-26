@@ -1,0 +1,25 @@
+# Copy into product .github/workflows/ or merge steps into existing ci.yml.
+name: php-gates
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  php-gates:
+    name: php-kit gates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          tools: pint, phpstan
+      - name: Tier 0 php-rg-gate
+        run: bash scripts/php-rg-gate.sh .
+      - name: Tier 0.5 php-hotpath-gate
+        run: bash scripts/php-hotpath-gate.sh .
+      - name: Tier 0.5 php-fmt-gate
+        run: bash scripts/php-fmt-gate.sh .
+      - name: Tier 1 php-stan-gate
+        run: bash scripts/php-stan-gate.sh .

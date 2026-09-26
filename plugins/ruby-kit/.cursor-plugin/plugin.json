@@ -1,0 +1,7 @@
+{
+  "name": "ruby-kit",
+  "version": "0.1.0",
+  "description": "Ruby poteto bar: PSR Ruby encode. RuboCop, rubocop-performance, SQL string interpolate in where/order/select, eval/send smells. Tier 0 single-walk rg + hotpath budget + rubocop fmt + rubocop-performance. Requires ripgrep.",
+  "skills": "./skills",
+  "rules": "./rules"
+}

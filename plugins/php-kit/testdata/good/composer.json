@@ -1,0 +1,7 @@
+{
+    "name": "factory/php-kit-good-fixture",
+    "require-dev": {
+        "laravel/pint": "^1.18",
+        "phpstan/phpstan": "^2.0"
+    }
+}

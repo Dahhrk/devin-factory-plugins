@@ -1,0 +1,19 @@
+---
+description: PHP PSR + poteto bar for product .php
+globs: "**/*.{php,phtml}"
+alwaysApply: false
+---
+
+# PHP
+
+Follow skills **php** and **poteto-php** when applicable.
+
+- Formatter clean (Laravel Pint or php-cs-fixer / agreed PSR-12 config)
+- **phpstan** or **psalm** required in product wiring
+- No `eval(` without `php-rg-allow` + rationale
+- No `unserialize(` of untrusted input without `php-rg-allow` + rationale; prefer JSON / allowlisted classes (`allowed_classes`)
+- No SQL string concat with variables (`"SELECT ...".$id` / `whereRaw(...$var)`); prefer bound parameters / query builder
+- Required product gates: `php-rg-gate` + `php-hotpath-gate` + `php-fmt-gate` + `php-stan-gate`. Do not disable checks to force green.
+- Prove runtime behaviour with tests / phpstan, not "fmt pass" alone
+
+Repeated review smell twice on a PHP product: encode into lint/CI/skill, not more prose.

@@ -1,0 +1,6 @@
+//- Named boundary: prefer buffered = / #{} over unescaped != / !{}.
+//- Anti-pattern (banned without allow): p!= userHtml
+
+- var title = 'Hello'
+p= title
+p #{title}

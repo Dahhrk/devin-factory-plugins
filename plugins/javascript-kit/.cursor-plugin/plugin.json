@@ -1,0 +1,7 @@
+{
+  "name": "javascript-kit",
+  "version": "0.1.0",
+  "description": "JavaScript poteto bar (distinct from typescript-kit): PSR JS encode. ESLint flat config, Prettier, no-eval, prototype-pollution smells, sync fs in request path. Tier 0 single-walk rg + hotpath budget + prettier + eslint-flat. Requires ripgrep.",
+  "skills": "./skills",
+  "rules": "./rules"
+}

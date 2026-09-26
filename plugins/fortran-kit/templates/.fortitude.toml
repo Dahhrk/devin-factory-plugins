@@ -1,0 +1,4 @@
+[check]
+select = ["E", "C", "OB", "S", "PORT", "FORT"]
+# PSR: keep implicit-typing (C001) enabled. Do not ignore C001.
+ignore = []

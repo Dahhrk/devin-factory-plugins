@@ -1,0 +1,9 @@
+{/* Documented intentional seam; keep allow on the smell line. */}
+export const legacy = props.html ?? ''
+
+# Hello
+
+<p>{props.text}</p>
+
+{/* Prefer children; allow documents intentional legacy seam */}
+<div dangerouslySetInnerHTML={{__html: legacy}} /> {/* mdx-rg-allow: fixture documents allow marker for intentional legacy HTML seam */}

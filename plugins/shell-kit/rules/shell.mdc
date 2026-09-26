@@ -1,0 +1,20 @@
+---
+description: Shell PSR + poteto bar for product .sh/.bash
+globs: "**/*.{sh,bash}"
+alwaysApply: false
+---
+
+# Shell
+
+Follow skills **shell** and **poteto-shell** when applicable.
+
+- ShellCheck warning+ clean; shfmt (`-i 2 -ci -bn`) clean
+- Quote expansions (`"$var"`, `"$@"`, arrays); no unquoted `for`/`cd`/`rm` on `$var`
+- Explicit failure: `set -euo pipefail` on product entrypoints
+- Safe temps: `mktemp` + `trap ... EXIT`; no `/tmp/...$$`
+- No `eval` and no `curl|sh` / `wget|bash` without `sh-rg-allow` + rationale
+- Tests cover filenames with spaces, empty values, and signal cleanup
+- Required product gates: `sh-rg-gate` + `sh-hotpath-gate` + `sh-shellcheck-gate` + `sh-fmt-gate` + `sh-strict-gate` + `sh-test-gate`. Do not disable checks to force green.
+- Prove behaviour with real script runs / bats, not "fmt pass" alone
+
+Repeated review smell twice on a Shell product: encode into lint/CI/skill, not more prose.

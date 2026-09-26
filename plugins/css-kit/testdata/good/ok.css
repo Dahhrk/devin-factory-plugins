@@ -1,0 +1,12 @@
+.app {
+  color: var(--fg, #111);
+  box-sizing: border-box;
+}
+
+.app h1,
+.app p {
+  margin: 0;
+}
+
+/* Documented intentional seam; keep allow on the smell line. */
+.legacy-toast { z-index: 9999 !important; } /* css-rg-allow: fixture documents allow marker for intentional !important seam */

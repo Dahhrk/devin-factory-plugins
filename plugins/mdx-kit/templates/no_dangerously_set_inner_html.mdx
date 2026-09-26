@@ -1,0 +1,12 @@
+{/* Named boundary: prefer MDX/JSX children over dangerouslySetInnerHTML. */}
+{/* Anti-pattern (banned without allow): <div dangerouslySetInnerHTML={{__html: raw}} /> */}
+
+export function SafeBlock({children}) {
+  return <div className="prose">{children}</div>
+}
+
+# Title
+
+<SafeBlock>
+  Trusted markdown and JSX children only.
+</SafeBlock>

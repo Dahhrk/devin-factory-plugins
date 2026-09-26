@@ -1,0 +1,19 @@
+/* Named boundary: keep nesting depth ≤4; prefer flat BEM / modifiers. */
+/* Anti-pattern (banned without allow):
+   .a { .b { .c { .d { .e { color: #000; } } } } }
+*/
+.card {
+  color: var(--fg, #111);
+}
+
+.card__title {
+  margin: 0;
+}
+
+.card__body {
+  margin: 0;
+}
+
+.card--featured {
+  border-color: var(--accent, #06c);
+}

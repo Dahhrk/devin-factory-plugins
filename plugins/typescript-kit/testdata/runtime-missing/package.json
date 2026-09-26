@@ -1,0 +1,7 @@
+{
+  "name": "ts-kit-runtime-missing",
+  "private": true,
+  "scripts": {
+    "typecheck": "tsc -b"
+  }
+}

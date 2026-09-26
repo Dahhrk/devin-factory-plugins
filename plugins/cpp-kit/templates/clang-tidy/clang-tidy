@@ -1,0 +1,4 @@
+# Copy to product root as .clang-tidy (PSR C++ / language-farm: clang-tidy).
+Checks: 'bugprone-*,performance-*,modernize-use-nullptr,modernize-use-override,readability-braces-around-statements,-clang-analyzer-osx*'
+WarningsAsErrors: ''
+HeaderFilterRegex: '.*'

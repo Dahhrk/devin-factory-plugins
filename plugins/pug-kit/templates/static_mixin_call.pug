@@ -1,0 +1,8 @@
+//- Named boundary: prefer static mixin names over +#{name}.
+//- Anti-pattern (banned without allow): +#{mixinName}(args)
+
+mixin card(title)
+  .card
+    h2= title
+
++card('Trusted')

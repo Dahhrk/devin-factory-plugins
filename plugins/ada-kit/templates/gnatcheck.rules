@@ -1,0 +1,4 @@
+--+Unchecked_Conversions
+--+Local_Packages
+--+Metrics_Cyclomatic_Complexity:10
+-- PSR Ada: keep Unchecked_Conversions enabled. Do not disable it to force green.

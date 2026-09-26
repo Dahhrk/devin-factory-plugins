@@ -1,0 +1,8 @@
+name: ci
+on: [push]
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - run: npx pug-lint .
+      - run: echo 'pug compile check'

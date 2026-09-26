@@ -1,0 +1,19 @@
+---
+description: Swift PSR + poteto bar for product .swift
+globs: "**/*.swift"
+alwaysApply: false
+---
+
+# Swift
+
+Follow skills **swift** and **poteto-swift** when applicable.
+
+- Formatter clean (swift-format or SwiftFormat / agreed `.swift-format`)
+- **SwiftLint** required in product wiring
+- No force unwrap (`foo!` / IUO) without `swift-rg-allow` + rationale; prefer `if let` / `guard let` / `??`
+- No `try!` without `swift-rg-allow` + rationale; prefer `try` / `try?` with typed error handling
+- No `Unsafe*Pointer` / `withUnsafe*` / `assumingMemoryBound` without `swift-rg-allow` on a named boundary; document lifetime invariants
+- Required product gates: `swift-rg-gate` + `swift-hotpath-gate` + `swift-fmt-gate` + `swift-lint-gate`. Do not disable checks to force green.
+- Prove runtime behaviour with tests / SwiftLint, not "fmt pass" alone
+
+Repeated review smell twice on a Swift product: encode into lint/CI/skill, not more prose.

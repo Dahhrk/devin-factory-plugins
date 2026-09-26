@@ -1,0 +1,19 @@
+plugins {
+  id 'java'
+  id 'com.diffplug.spotless' version '6.25.0'
+  id 'checkstyle'
+}
+
+spotless {
+  java {
+    googleJavaFormat()
+  }
+}
+
+checkstyle {
+  toolVersion = '10.12.4'
+}
+
+dependencies {
+  compileOnly 'org.jspecify:jspecify:1.0.0'
+}

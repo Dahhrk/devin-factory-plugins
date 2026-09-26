@@ -1,0 +1,10 @@
+{
+  "name": "apps-script-good-fixture",
+  "private": true,
+  "scripts": {
+    "push": "clasp push"
+  },
+  "devDependencies": {
+    "@google/clasp": "^3.0.0"
+  }
+}

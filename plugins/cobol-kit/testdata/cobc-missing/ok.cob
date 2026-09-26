@@ -1,0 +1,6 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. OKMISSING.
+       PROCEDURE DIVISION.
+       MAIN.
+           DISPLAY "ok"
+           STOP RUN.

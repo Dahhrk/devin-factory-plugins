@@ -1,0 +1,7 @@
+{
+  "name": "assembly-kit",
+  "version": "0.1.0",
+  "description": "Assembly poteto bar: PSR Assembly encode. No shellcode in product paths, explicit section hygiene, no jmp-to-register without comment gate. Tier 0 single-walk rg + hotpath budget + nasm/gas build wiring. Requires ripgrep.",
+  "skills": "./skills",
+  "rules": "./rules"
+}

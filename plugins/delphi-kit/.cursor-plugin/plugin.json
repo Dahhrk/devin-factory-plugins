@@ -1,0 +1,7 @@
+{
+  "name": "delphi-kit",
+  "version": "0.1.0",
+  "description": "Delphi / Object Pascal poteto bar: PSR Delphi/Pascal encode. no goto, no with-statement, unchecked GetMem banned, WriteLn banned in libs. Tier 0 single-walk rg + hotpath budget + fpc/lazbuild wiring. Requires ripgrep.",
+  "skills": "./skills",
+  "rules": "./rules"
+}

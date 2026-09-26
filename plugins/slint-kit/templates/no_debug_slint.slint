@@ -1,0 +1,17 @@
+// Named boundary: remove leftover debug() before merge (PSR Slint hygiene).
+// Prefer temporary local probes; do not ship debug() in product .slint.
+// SPDX-License-Identifier: MIT
+
+import { VerticalBox, Button } from "std-widgets.slint";
+
+export component OkWindow inherits Window {
+    in-out property <int> counter: 0;
+    callback bumped();
+    VerticalBox {
+        Text { text: "Counter: \{root.counter}"; }
+        Button {
+            text: "Bump";
+            clicked => { root.bumped(); }
+        }
+    }
+}

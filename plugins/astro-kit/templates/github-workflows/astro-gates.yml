@@ -1,0 +1,19 @@
+# Copy into product .github/workflows/ or merge steps into existing ci.yml.
+name: astro-gates
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  astro-gates:
+    name: astro-kit gates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tier 0 astro-rg-gate
+        run: bash scripts/astro-rg-gate.sh .
+      - name: Tier 0.5 astro-hotpath-gate
+        run: bash scripts/astro-hotpath-gate.sh .
+      - name: Tier 1 astro-astro-gate
+        run: bash scripts/astro-astro-gate.sh .

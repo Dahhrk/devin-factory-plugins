@@ -1,0 +1,18 @@
+[project]
+name = "python-kit-good-fixture"
+version = "0.0.0"
+requires-python = ">=3.10"
+
+[tool.ruff]
+src = ["."]
+
+[tool.ruff.lint]
+select = ["E", "F", "B", "I", "UP", "W"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+files = ["."]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

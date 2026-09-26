@@ -1,0 +1,7 @@
+{
+  "name": "css-kit",
+  "version": "0.1.0",
+  "description": "CSS poteto bar: PSR CSS encode. stylelint lint, no !important abuse, no universal selector hotpath, no expression()/behavior IE smells. Tier 0 single-walk rg + hotpath budget + stylelint wiring. Requires ripgrep.",
+  "skills": "./skills",
+  "rules": "./rules"
+}

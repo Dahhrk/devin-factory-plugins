@@ -1,0 +1,21 @@
+# Starter RuboCop config (PSR Ruby / language-farm). Copy to product .rubocop.yml.
+require:
+  - rubocop-performance
+
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.2
+  Exclude:
+    - "vendor/**/*"
+    - "tmp/**/*"
+    - "node_modules/**/*"
+    - "db/schema.rb"
+
+Layout/LineLength:
+  Max: 120
+
+Performance:
+  Enabled: true
+
+Style/Documentation:
+  Enabled: false

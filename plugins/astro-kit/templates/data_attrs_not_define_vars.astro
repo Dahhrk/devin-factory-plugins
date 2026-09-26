@@ -1,0 +1,12 @@
+---
+/* Named boundary: pass server values via data-* + module script, not define:vars. */
+/* Anti-pattern (banned without allow): <script define:vars={{ id }}>...</script> */
+/* define:vars inlines into <script>; XSS history via incomplete </script> sanitization. */
+const id = Astro.props.id ?? '';
+---
+<div id="feature" data-id={id}></div>
+<script>
+  const el = document.getElementById('feature');
+  const id = el?.dataset.id ?? '';
+  console.debug('feature', id);
+</script>

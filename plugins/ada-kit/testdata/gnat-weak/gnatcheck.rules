@@ -1,0 +1,2 @@
+-- Intentional weak rules: Unchecked_Conversions disabled (PSR requires it enabled when rules present).
+---Unchecked_Conversions

@@ -1,0 +1,21 @@
+# Starter detekt config for factory products (PSR Kotlin).
+build:
+  maxIssues: 0
+config:
+  validation: true
+processors:
+  active: true
+console-reports:
+  active: true
+rules:
+  PotentiallyHarmfulInteraction:
+    active: false
+  PotentialBugs:
+    UnsafeCallOnNullableType:
+      active: true
+  Coroutines:
+    active: true
+    GlobalCoroutineUsage:
+      active: true
+    SleepInsteadOfDelay:
+      active: true

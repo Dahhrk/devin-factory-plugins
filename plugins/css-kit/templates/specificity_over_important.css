@@ -1,0 +1,12 @@
+/* Named boundary: prefer specificity / @layer over !important. */
+/* Copy into product sources; keep css-rg-allow only on intentional seams. */
+/* Anti-pattern (banned without allow):
+   .toast { color: red !important; }
+*/
+.toast {
+  color: var(--danger, #c00);
+}
+
+.toast.is-urgent {
+  color: var(--danger-strong, #900);
+}

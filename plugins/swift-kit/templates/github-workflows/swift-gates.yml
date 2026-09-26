@@ -1,0 +1,21 @@
+# Copy into product .github/workflows/ or merge steps into existing ci.yml.
+name: swift-gates
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  swift-gates:
+    name: swift-kit gates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tier 0 swift-rg-gate
+        run: bash scripts/swift-rg-gate.sh .
+      - name: Tier 0.5 swift-hotpath-gate
+        run: bash scripts/swift-hotpath-gate.sh .
+      - name: Tier 0.5 swift-fmt-gate
+        run: bash scripts/swift-fmt-gate.sh .
+      - name: Tier 1 swift-lint-gate
+        run: bash scripts/swift-lint-gate.sh .

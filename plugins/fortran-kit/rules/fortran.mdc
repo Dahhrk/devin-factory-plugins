@@ -1,0 +1,20 @@
+---
+description: Fortran PSR + poteto bar for product .f90/.F90/.fypp
+globs: "**/*.{f90,F90,f95,F95,f03,F03,f08,F08,f,F,fypp}"
+alwaysApply: false
+---
+
+# Fortran
+
+Follow skills **fortran** and **poteto-fortran** when applicable.
+
+- **fortitude** required in product wiring (`.fortitude.toml` / `fortitude.toml` / `[tool.fortitude]` / CI `fortitude check`)
+- Settings must keep **C001** / **implicit-typing** enabled (not ignored / excluded)
+- Every `program` / `module` unit uses `implicit none`; no old-style `implicit <type>` without `fortran-rg-allow` + rationale
+- No `GOTO` / `GO TO` without `fortran-rg-allow` + rationale; prefer structured `select case` / loops / pure control flow
+- `open` / `read` / `write` / `close` carry `iostat=` (and prefer `iomsg=`) without `fortran-rg-allow` + rationale
+- **fprettify** recommended for format; not a hard EXIT at 0.1.0
+- Required product gates: `fortran-rg-gate` + `fortran-hotpath-gate` + `fortran-fortitude-gate`. Do not disable checks to force green.
+- Prove behaviour with unit / integration checks where product needs them, not "lint pass" alone
+
+Repeated review smell twice on a Fortran product: encode into lint/CI/skill, not more prose.

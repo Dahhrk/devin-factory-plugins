@@ -1,0 +1,19 @@
+---
+description: Delphi / Object Pascal PSR + poteto bar for product .pas/.pp/.dpr/.lpr
+globs: "**/*.{pas,pp,inc,dpr,lpr,PAS,PP,INC,DPR,LPR}"
+alwaysApply: false
+---
+
+# Delphi / Object Pascal
+
+Follow skills **delphi** and **poteto-delphi** when applicable.
+
+- No **goto** without `delphi-rg-allow` + rationale (prefer structured loops / Exit / raise)
+- No **with-statement** (`with ... do`) without `delphi-rg-allow` + rationale (prefer explicit qualifiers)
+- **GetMem** banned without allow (prefer `New` / managed types; GetMem is the unchecked heap API)
+- **WriteLn** banned in library units (`.pas` / `.pp`); CLI programs (`.dpr` / `.lpr`) may WriteLn
+- Product **fpc** / **lazbuild** wiring: Makefile / CI mentioning `fpc` or `lazbuild`
+- Required product gates: `delphi-rg-gate` + `delphi-hotpath-gate` + `delphi-fpc-gate`. Do not disable checks to force green.
+- Prove behaviour with `fpc` / `lazbuild` / smoke where product needs them, not "lint pass" alone
+
+Repeated review smell twice on a Delphi / Object Pascal product: encode into lint/CI/skill, not more prose.

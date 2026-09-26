@@ -1,0 +1,18 @@
+---
+description: Go Template PSR + poteto bar for product .go / .tmpl / .gotmpl / HTML templates
+globs: "**/*.{go,tmpl,gotmpl,html,HTML}"
+alwaysApply: false
+---
+
+# Go Template
+
+Follow skills **gotemplate** and **poteto-gotemplate** when applicable.
+
+- **html/template** required for HTML output (`"html/template"` import / go.mod + templates / CI). Do not use `"text/template"` for HTML without `gotemplate-rg-allow` + rationale (XSS).
+- Check `Execute` / `ExecuteTemplate` errors. No `_ = tmpl.Execute(...)` / discarded-err execute without allow.
+- No escaping bypass via `template.HTML(...)` casts or raw/safe/unescaped FuncMap helpers without allow; prefer contextual autoescape.
+- No nested template include of untrusted names (`{{template .Name}}` / `ExecuteTemplate(w, userInput, data)`) without allow; prefer static string names.
+- Required product gates: `gotemplate-rg-gate` + `gotemplate-hotpath-gate` + `gotemplate-html-gate`. Do not disable checks to force green.
+- Prove render of trusted templates where product needs it, not "wiring pass" alone
+
+Repeated review smell twice on a Go Template product: encode into lint/CI/skill, not more prose.

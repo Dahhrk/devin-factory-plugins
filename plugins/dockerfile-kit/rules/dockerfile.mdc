@@ -1,0 +1,21 @@
+---
+description: Dockerfile PSR + poteto bar for product Dockerfiles, Containerfiles, and compose wiring
+globs: "**/Dockerfile*,**/*.Dockerfile,**/Containerfile*,**/docker-compose*.{yml,yaml}"
+alwaysApply: false
+---
+
+# Dockerfile
+
+Follow skills **dockerfile** and **poteto-dockerfile** when applicable.
+
+- **docker** wiring required (`Dockerfile` / `Containerfile` / compose / CI `docker build`). Do not claim Dockerfile product green without wiring.
+- No `ADD` for secrets / remote URLs without `dockerfile-rg-allow` + rationale; prefer `COPY` (ADD vs COPY secrets chapter).
+- No `:latest` / unpinned floating tags without allow; prefer digest or immutable tag.
+- No `apt-get` install/update without `rm -rf /var/lib/apt/lists/*` on the same `RUN` without allow.
+- No `USER root` late (final process as root) without allow; prefer non-root `USER`.
+- No secrets in `ARG`/`ENV` (`password` / `secret` / `token` / `apikey` / `*_KEY` / `auth` / `passphrase` / `credential`) without allow; prefer BuildKit secret mounts.
+- No `curl|bash` / `wget|sh` pipe-to-shell without allow.
+- Required product gates: `dockerfile-rg-gate` + `dockerfile-hotpath-gate` + `dockerfile-docker-gate`. Do not disable checks to force green.
+- Prove `docker build` / `--check` where product needs it, not "wiring pass" alone
+
+Repeated review smell twice on a Dockerfile product: encode into lint/CI/skill, not more prose.

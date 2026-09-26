@@ -1,0 +1,31 @@
+# Copy into product .github/workflows/ or merge steps into existing ci.yml.
+name: sh-gates
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  sh-gates:
+    name: shell-kit gates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install ShellCheck
+        run: sudo apt-get update && sudo apt-get install -y shellcheck
+      - name: Install shfmt
+        run: go install mvdan.cc/sh/v3/cmd/shfmt@latest
+        env:
+          GOTOOLCHAIN: auto
+      - name: Tier 0 sh-rg-gate
+        run: bash scripts/sh-rg-gate.sh .
+      - name: Tier 0.5 sh-hotpath-gate
+        run: bash scripts/sh-hotpath-gate.sh .
+      - name: Tier 0.5 sh-shellcheck-gate
+        run: bash scripts/sh-shellcheck-gate.sh .
+      - name: Tier 0.5 sh-fmt-gate
+        run: bash scripts/sh-fmt-gate.sh .
+      - name: Tier 1 sh-strict-gate
+        run: bash scripts/sh-strict-gate.sh .
+      - name: Tier 1 sh-test-gate
+        run: bash scripts/sh-test-gate.sh .

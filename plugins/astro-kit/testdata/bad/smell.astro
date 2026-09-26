@@ -1,0 +1,11 @@
+---
+/* Intentional smells for astro-rg-gate discrimination (not product code). */
+const userHtml = Astro.props.html ?? '<b>x</b>';
+const uid = Astro.props.id ?? '1';
+import Counter from './Counter.tsx';
+---
+<Counter client:load />
+<div class="body" set:html={userHtml} />
+<script define:vars={{ uid }}>
+  console.log(uid);
+</script>

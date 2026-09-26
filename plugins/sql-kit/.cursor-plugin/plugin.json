@@ -1,0 +1,7 @@
+{
+  "name": "sql-kit",
+  "version": "0.1.0",
+  "description": "SQL poteto bar: PSR SQL encode. sqlfluff lint, no SELECT *, no SQL injection concat, no unsafe dynamic SQL. Tier 0 single-walk rg + hotpath budget + sqlfluff wiring. Requires ripgrep.",
+  "skills": "./skills",
+  "rules": "./rules"
+}

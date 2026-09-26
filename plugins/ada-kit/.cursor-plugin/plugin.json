@@ -1,0 +1,7 @@
+{
+  "name": "ada-kit",
+  "version": "0.1.0",
+  "description": "Ada poteto bar: PSR Ada encode. No Unchecked_Conversion, no pragma Suppress, gnatcheck/gnatpp wiring with Unchecked_Conversions enabled. Tier 0 single-walk rg + hotpath budget + gnat gate. Requires ripgrep. gnatpp recommended formatter.",
+  "skills": "./skills",
+  "rules": "./rules"
+}

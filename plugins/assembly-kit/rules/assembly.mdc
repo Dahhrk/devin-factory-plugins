@@ -1,0 +1,18 @@
+---
+description: Assembly PSR + poteto bar for product .asm/.s/.S/.nasm
+globs: "**/*.{asm,s,S,nasm,inc}"
+alwaysApply: false
+---
+
+# Assembly
+
+Follow skills **assembly** and **poteto-assembly** when applicable.
+
+- No **shellcode** in product paths (path/name `*shellcode*`, `shellcode` labels, classic `/bin/sh` payload `db`, nop-sled `db 0x90,0x90,0x90+`) without `assembly-rg-allow` + rationale
+- Explicit **section hygiene**: instruction-bearing units declare `section .text` / `.section .text` / `.text`, or bare-metal `BITS`+`ORG` (boot sector style)
+- No **`jmp` to register** (`jmp rax` / `jmp ebx` / …) without a same-line `;` comment gate (or `assembly-rg-allow` + rationale)
+- Product build wiring for **nasm** or **gas** (`as`) in Makefile / CMake / meson / CI
+- Required product gates: `assembly-rg-gate` + `assembly-hotpath-gate` + `assembly-build-gate`. Do not disable checks to force green.
+- Prove behaviour with assemble/link checks where product needs them, not "lint pass" alone
+
+Repeated review smell twice on an Assembly product: encode into lint/CI/skill, not more prose.

@@ -1,0 +1,21 @@
+---
+description: Go PSR + poteto bar for product .go
+globs: "**/*.go"
+alwaysApply: false
+---
+
+# Go
+
+Follow skills **go** and **poteto-go** when applicable.
+
+- `gofmt` clean; `go vet` clean; race tests wired in CI or Makefile
+- Propagate errors with `%w` / `errors.Is` / `errors.As`; do not swallow with blank assign without rationale
+- Propagate cancellation via `context.Context`; do not start `errgroup.WithContext(context.Background())` when a parent ctx exists
+- Bound every `go` launch (WaitGroup, errgroup, or cancel); no fire-and-forget in product paths
+- Close resources (`Body.Close`, `Close`, cancel funcs); prefer `defer`
+- No exported package-level `var Hook = func...` seams without `go-rg-allow` + rationale; prefer params
+- No deprecated `ioutil`; no `panic` in recoverable prod paths
+- Required product gates: `go-rg-gate` + `go-hotpath-gate` + `go-fmt-gate` + `go-vet-gate` + `go-race-ci-gate` + `go-golangci-gate`. Do not disable checks to force green.
+- Prove runtime behaviour with `go test` (race where supported), not "vet pass" alone
+
+Repeated review smell twice on a Go product: encode into lint/CI/skill, not more prose.

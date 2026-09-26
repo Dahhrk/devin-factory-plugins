@@ -1,0 +1,10 @@
+// Intentional smells for slint-rg-gate discrimination (not product code).
+export component Smell inherits Window {
+    callback bang();
+    TouchArea {
+        clicked => {
+            debug("leftover hygiene smell");
+            root.bang();
+        }
+    }
+}

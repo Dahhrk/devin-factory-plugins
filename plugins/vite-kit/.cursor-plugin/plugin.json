@@ -1,0 +1,7 @@
+{
+  "name": "vite-kit",
+  "version": "0.1.0",
+  "description": "Vite poteto bar: PSR Vite encode. vite wiring, no server.fs.strict:false, no parent-escape server.fs.allow, no loadEnv empty-prefix all-env dump. Tier 0 single-walk rg + hotpath budget + vite wiring. Requires ripgrep.",
+  "skills": "./skills",
+  "rules": "./rules"
+}

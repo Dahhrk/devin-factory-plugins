@@ -1,0 +1,9 @@
+name: ci
+on: [push]
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: gnatcheck -P product.gpr
+      - run: gnatpp -P product.gpr

@@ -1,0 +1,19 @@
+# Starter Ruff config aligned with python-kit / PSR Python.
+# Merge into product ruff.toml or [tool.ruff] in pyproject.toml.
+# Formatter: `ruff format` (factory one-formatter policy).
+
+target-version = "py310"
+src = ["src"]
+
+[lint]
+select = [
+  "E",  # pycodestyle error
+  "F",  # pyflakes
+  "B",  # flake8-bugbear
+  "I",  # isort
+  "UP", # pyupgrade
+  "W",  # pycodestyle warning
+]
+
+[lint.per-file-ignores]
+"tests/**" = ["B011"]

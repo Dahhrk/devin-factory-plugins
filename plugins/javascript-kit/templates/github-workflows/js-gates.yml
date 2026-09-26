@@ -1,0 +1,24 @@
+# Copy into product .github/workflows/ or merge steps into existing ci.yml.
+name: js-gates
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  js-gates:
+    name: javascript-kit gates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Tier 0 js-rg-gate
+        run: bash scripts/js-rg-gate.sh .
+      - name: Tier 0.5 js-hotpath-gate
+        run: bash scripts/js-hotpath-gate.sh .
+      - name: Tier 0.5 js-fmt-gate
+        run: bash scripts/js-fmt-gate.sh .
+      - name: Tier 1 js-eslint-flat-gate
+        run: bash scripts/js-eslint-flat-gate.sh .

@@ -1,0 +1,9 @@
+# Copy to product root as .clang-format (PSR ObjC / language-farm: clang-format).
+BasedOnStyle: LLVM
+IndentWidth: 2
+ColumnLimit: 100
+ObjCBlockIndentWidth: 2
+ObjCSpaceAfterProperty: true
+ObjCSpaceBeforeProtocolList: true
+AllowShortFunctionsOnASingleLine: Inline
+SortIncludes: true

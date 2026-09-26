@@ -1,0 +1,21 @@
+# Copy into product .github/workflows/ or merge steps into existing ci.yml.
+name: zig-gates
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  zig-gates:
+    name: zig-kit gates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tier 0 zig-rg-gate
+        run: bash scripts/zig-rg-gate.sh .
+      - name: Tier 0.5 zig-hotpath-gate
+        run: bash scripts/zig-hotpath-gate.sh .
+      - name: Tier 0.5 zig-fmt-gate
+        run: bash scripts/zig-fmt-gate.sh .
+      - name: Tier 1 zig-build-test-gate
+        run: bash scripts/zig-build-test-gate.sh .

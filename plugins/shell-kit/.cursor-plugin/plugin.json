@@ -1,0 +1,7 @@
+{
+  "name": "shell-kit",
+  "version": "0.1.0",
+  "description": "Shell poteto bar: PSR Shell encode. ShellCheck, shfmt, quote expansions, set -euo pipefail, safe temps (mktemp+trap), tests for filenames/signals/empty. Tier 0 single-walk rg (eval, unsafe /tmp/$$, unquoted for/cd/rm, curl|sh) + hotpath budget + ShellCheck + shfmt + strict-set + test presence. Requires ripgrep.",
+  "skills": "./skills",
+  "rules": "./rules"
+}

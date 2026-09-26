@@ -1,0 +1,19 @@
+# Copy into product .github/workflows/ or merge steps into existing ci.yml.
+name: slint-gates
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  slint-gates:
+    name: slint-kit gates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tier 0 slint-rg-gate
+        run: bash scripts/slint-rg-gate.sh .
+      - name: Tier 0.5 slint-hotpath-gate
+        run: bash scripts/slint-hotpath-gate.sh .
+      - name: Tier 1 slint-cargo-gate
+        run: bash scripts/slint-cargo-gate.sh .

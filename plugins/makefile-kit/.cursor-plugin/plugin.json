@@ -1,0 +1,7 @@
+{
+  "name": "makefile-kit",
+  "version": "0.1.0",
+  "description": "Makefile poteto bar: PSR Makefile encode. No recursive make without .PHONY, no tab/space mix, no unchecked $(shell), no include of untrusted path, no .ONESHELL abuse / curl|bash recipes. Tier 0 single-walk rg + hotpath budget + make wiring. Requires ripgrep.",
+  "skills": "./skills",
+  "rules": "./rules"
+}

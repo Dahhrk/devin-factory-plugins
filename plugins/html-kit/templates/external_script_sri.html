@@ -1,0 +1,10 @@
+<!-- Named boundary: external scripts should carry Subresource Integrity. -->
+<!-- Copy into product sources; html-rg-allow only on proven first-party seams. -->
+<!-- Anti-pattern (banned without allow):
+     <script src="https://cdn.example.com/lib.js"></script>
+-->
+<script
+  src="https://cdn.example.com/lib.js"
+  integrity="sha384-oqVuAfXRKap7fdgcCY5uykM6+R9GqQ8K/uxy9rx7HNQlGYl1kPzQho1wx4JwY8wC"
+  crossorigin="anonymous"
+></script>

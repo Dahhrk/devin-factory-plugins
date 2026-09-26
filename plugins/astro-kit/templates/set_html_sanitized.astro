@@ -1,0 +1,12 @@
+---
+/* Named boundary: sanitize before set:html; prefer auto-escaped {expr}. */
+/* Anti-pattern (banned without allow): <div set:html={userHtml} /> */
+import DOMPurify from 'isomorphic-dompurify';
+const raw = Astro.props.html ?? '';
+const safe = DOMPurify.sanitize(raw);
+---
+{/* Prefer escaped text when markup is not required */}
+<p>{Astro.props.text}</p>
+<div set:html={DOMPurify.sanitize(raw)} />
+<!-- intentional sanitize-on-line form also OK via const + allow if needed -->
+<div set:html={safe} /> <!-- astro-rg-allow: safe already DOMPurify.sanitize'd above; line-local const -->

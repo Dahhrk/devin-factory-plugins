@@ -1,0 +1,3 @@
+# Starter Clippy config aligned with rust-kit / PSR Rust.
+# Prefer also enabling [lints.clippy] in Cargo.toml and `cargo clippy` in CI.
+cognitive-complexity-threshold = 30

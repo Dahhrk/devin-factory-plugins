@@ -1,0 +1,19 @@
+---
+description: Tailwind CSS PSR + poteto bar for product Tailwind templates and config
+globs: "**/*.{css,CSS,html,HTML,js,jsx,ts,tsx,vue,svelte,astro,mdx},{**/tailwind.config.js,**/tailwind.config.cjs,**/tailwind.config.mjs,**/tailwind.config.ts}"
+alwaysApply: false
+---
+
+# Tailwind CSS
+
+Follow skills **tailwind** and **poteto-tailwind** when applicable.
+
+- **tailwindcss** required in product wiring (`"tailwindcss":` in package.json / `tailwind.config.*` / `@import "tailwindcss"` / CI)
+- No `@apply` overuse without `tailwind-rg-allow` + rationale; prefer utilities in markup or real components
+- No arbitrary-value sprawl (`util-[…]` / `[prop:…]`) without allow; prefer theme / design tokens
+- No safelist abuse (`safelist:` / blanket `@source inline(…)`) without allow; prefer correct content / `@source` paths
+- No content-path miss / purge footguns (`content: []`, dynamic `className = 'x-' + y`) without allow
+- Required product gates: `tailwind-rg-gate` + `tailwind-hotpath-gate` + `tailwind-tailwind-gate`. Do not disable checks to force green.
+- Prove Tailwind build (CLI / Vite / PostCSS) where product needs it, not "wiring pass" alone
+
+Repeated review smell twice on a Tailwind product: encode into lint/CI/skill, not more prose.

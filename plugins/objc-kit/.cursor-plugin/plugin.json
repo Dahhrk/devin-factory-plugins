@@ -1,0 +1,7 @@
+{
+  "name": "objc-kit",
+  "version": "0.1.0",
+  "description": "Objective-C poteto bar: PSR ObjC encode. clang-format, ARC (no manual retain/release/autorelease), no NSLog in libs, no performSelector: smells. Tier 0 single-walk rg + hotpath budget + fmt gate. Requires ripgrep.",
+  "skills": "./skills",
+  "rules": "./rules"
+}

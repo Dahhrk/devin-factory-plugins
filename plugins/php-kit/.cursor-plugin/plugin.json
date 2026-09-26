@@ -1,0 +1,7 @@
+{
+  "name": "php-kit",
+  "version": "0.1.0",
+  "description": "PHP poteto bar: PSR PHP encode. php-cs-fixer/pint, phpstan/psalm, SQL concat, eval, unserialize smells. Tier 0 single-walk rg + hotpath budget + fmt + phpstan/psalm wiring. Requires ripgrep.",
+  "skills": "./skills",
+  "rules": "./rules"
+}

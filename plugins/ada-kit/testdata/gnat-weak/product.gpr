@@ -1,0 +1,6 @@
+-- Intentional weak wiring: project present but no Check / Pretty_Printer / gnatcheck|gnatpp.
+project Product is
+   for Source_Dirs use (".");
+   for Object_Dir use "obj";
+   for Main use ("ok.adb");
+end Product;

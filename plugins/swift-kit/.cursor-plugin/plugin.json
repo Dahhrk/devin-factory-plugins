@@ -1,0 +1,7 @@
+{
+  "name": "swift-kit",
+  "version": "0.1.0",
+  "description": "Swift poteto bar: PSR Swift encode. swift-format, SwiftLint, force unwrap, try!, unsafe pointers. Tier 0 single-walk rg + hotpath budget + fmt + SwiftLint wiring. Requires ripgrep.",
+  "skills": "./skills",
+  "rules": "./rules"
+}

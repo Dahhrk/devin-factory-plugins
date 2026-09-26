@@ -1,0 +1,6 @@
+# Starter ShellCheck config aligned with shell-kit / PSR Shell.
+# Copy to product .shellcheckrc
+shell=bash
+enable=all
+# Prefer external sources when using -x in CI
+external-sources=true

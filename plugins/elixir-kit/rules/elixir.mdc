@@ -1,0 +1,20 @@
+---
+description: Elixir PSR + poteto bar for product .ex / .exs
+globs: "**/*.{ex,exs}"
+alwaysApply: false
+---
+
+# Elixir
+
+Follow skills **elixir** and **poteto-elixir** when applicable.
+
+- Formatter clean (`mix format` / `.formatter.exs` / CI `mix format --check-formatted`)
+- **Credo** required in product wiring (`.credo.exs` and/or mix deps / CI)
+- **dialyzer** (dialyxir) required in product wiring (mix dialyzer / dialyxir dep / CI)
+- No `String.to_atom` on untrusted or external input without `elixir-rg-allow` + rationale; prefer `String.to_existing_atom` / allowlisted atoms
+- No SQL string concat / interpolation of untrusted values without `elixir-rg-allow` + rationale; prefer Ecto binds / parameterized queries
+- No `Process.sleep` on hot paths without `elixir-rg-allow` + rationale; prefer `Process.send_after` / receive / backoff supervisor
+- Required product gates: `elixir-rg-gate` + `elixir-hotpath-gate` + `elixir-fmt-gate` + `elixir-credo-gate` + `elixir-dialyzer-gate`. Do not disable checks to force green.
+- Prove runtime behaviour with mix test / ExUnit, not "format pass" alone
+
+Repeated review smell twice on an Elixir product: encode into lint/CI/skill, not more prose.

@@ -1,0 +1,26 @@
+# Copy into product .github/workflows/ or merge steps into existing ci.yml.
+name: csharp-gates
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  csharp-gates:
+    name: csharp-kit gates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+      - name: Tier 0 csharp-rg-gate
+        run: bash scripts/csharp-rg-gate.sh .
+      - name: Tier 0.5 csharp-hotpath-gate
+        run: bash scripts/csharp-hotpath-gate.sh .
+      - name: Tier 0.5 csharp-fmt-gate
+        run: bash scripts/csharp-fmt-gate.sh .
+      - name: Tier 1 csharp-analyzers-gate
+        run: bash scripts/csharp-analyzers-gate.sh .
+      - name: Tier 1 csharp-nullable-gate
+        run: bash scripts/csharp-nullable-gate.sh .

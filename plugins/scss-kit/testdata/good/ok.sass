@@ -1,0 +1,14 @@
+@use 'sass:color'
+
+@mixin toast-fg($c: #c00)
+  color: $c
+
+.toast
+  @include toast-fg(#c00)
+
+.card
+  color: #111
+
+.card__title,
+.card__body
+  margin: 0

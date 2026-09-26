@@ -1,0 +1,10 @@
+name: ci
+on: push
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: run batch
+        run: cmd /c ok.bat
+        shell: cmd

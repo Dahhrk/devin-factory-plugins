@@ -1,0 +1,18 @@
+---
+description: Astro PSR + poteto bar for product .astro
+globs: "**/*.astro"
+alwaysApply: false
+---
+
+# Astro
+
+Follow skills **astro** and **poteto-astro** when applicable.
+
+- **astro** required in product wiring (`package.json` `astro` / `astro.config.*` / CI `astro check` / `astro build`)
+- No `client:load` without `astro-rg-allow` + rationale; prefer `client:visible` / `client:idle` / `client:media` / static HTML
+- No `set:html` without sanitize on the same line (`DOMPurify.sanitize` / `sanitizeHtml` / `.sanitize(`) or `astro-rg-allow`; prefer auto-escaped `{expr}`
+- No `define:vars` without `astro-rg-allow` + rationale; prefer `data-*` attributes + module scripts (define:vars XSS / inline-script smell)
+- Required product gates: `astro-rg-gate` + `astro-hotpath-gate` + `astro-astro-gate`. Do not disable checks to force green.
+- Prove `astro check` / `astro build` where product needs it, not "wiring pass" alone
+
+Repeated review smell twice on an Astro product: encode into lint/CI/skill, not more prose.

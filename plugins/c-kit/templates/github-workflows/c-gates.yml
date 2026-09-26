@@ -1,0 +1,35 @@
+# Copy into product .github/workflows/ or merge steps into existing ci.yml.
+name: c-gates
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  c-gates:
+    name: c-kit gates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install clang-format
+        run: sudo apt-get update && sudo apt-get install -y clang-format
+      - name: Tier 0 c-rg-gate
+        run: bash scripts/c-rg-gate.sh .
+      - name: Tier 0.5 c-hotpath-gate
+        run: bash scripts/c-hotpath-gate.sh .
+      - name: Tier 0.5 c-fmt-gate
+        run: bash scripts/c-fmt-gate.sh .
+      - name: Tier 0.5 c-warn-gate
+        run: bash scripts/c-warn-gate.sh .
+      - name: Tier 1 c-san-ci-gate
+        run: bash scripts/c-san-ci-gate.sh .
+      - name: Tier 1b c-malloc-gate
+        run: bash scripts/c-malloc-gate.sh .
+      - name: Configure with sanitizers and warnings
+        run: |
+          cmake -B build \
+            -DCMAKE_BUILD_TYPE=Debug \
+            -DCMAKE_C_FLAGS="-Wall -Wextra" \
+            -DASAN=ON
+      - name: Build
+        run: cmake --build build

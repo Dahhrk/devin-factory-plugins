@@ -1,0 +1,7 @@
+{
+  "name": "kotlin-kit",
+  "version": "0.1.0",
+  "description": "Kotlin poteto bar: PSR Kotlin encode. ktlint, detekt, !! force unwrap, runBlocking on hot paths, SQL concat. Tier 0 single-walk rg + hotpath budget + ktlint + detekt wiring. Requires ripgrep.",
+  "skills": "./skills",
+  "rules": "./rules"
+}

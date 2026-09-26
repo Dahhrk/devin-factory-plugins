@@ -1,0 +1,19 @@
+# Copy into product .github/workflows/ or merge steps into existing ci.yml.
+name: mdx-gates
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  mdx-gates:
+    name: mdx-kit gates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tier 0 mdx-rg-gate
+        run: bash scripts/mdx-rg-gate.sh .
+      - name: Tier 0.5 mdx-hotpath-gate
+        run: bash scripts/mdx-hotpath-gate.sh .
+      - name: Tier 1 mdx-mdx-gate
+        run: bash scripts/mdx-mdx-gate.sh .

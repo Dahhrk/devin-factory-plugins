@@ -1,0 +1,7 @@
+{
+  "name": "r-kit",
+  "version": "0.1.0",
+  "description": "R poteto bar: PSR R encode. lintr lint, no attach(), TRUE/FALSE not T/F, no eval(parse()). Tier 0 single-walk rg + hotpath budget + lintr wiring. Requires ripgrep.",
+  "skills": "./skills",
+  "rules": "./rules"
+}

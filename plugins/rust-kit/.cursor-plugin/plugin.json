@@ -1,0 +1,7 @@
+{
+  "name": "rust-kit",
+  "version": "0.1.0",
+  "description": "Rust poteto bar: PSR Rust encode. rustfmt, Clippy, cargo test, document unsafe invariants and FFI, avoid unchecked external-boundary assumptions, deliberate app vs library lockfile policy. Tier 0 single-walk rg (unsafe, transmute, extern C, todo/unimplemented, no_mangle) + hotpath budget + fmt/clippy + test-CI. Requires ripgrep.",
+  "skills": "./skills",
+  "rules": "./rules"
+}

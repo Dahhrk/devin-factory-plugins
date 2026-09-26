@@ -1,0 +1,7 @@
+{
+  "name": "astro-kit",
+  "version": "0.1.0",
+  "description": "Astro poteto bar: PSR Astro encode. astro check/build wiring, no client:load abuse, no set:html without sanitize, no define:vars XSS smells. Tier 0 single-walk rg + hotpath budget + astro wiring. Requires ripgrep.",
+  "skills": "./skills",
+  "rules": "./rules"
+}

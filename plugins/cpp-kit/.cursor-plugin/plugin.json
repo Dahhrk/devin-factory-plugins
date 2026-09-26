@@ -1,0 +1,7 @@
+{
+  "name": "cpp-kit",
+  "version": "0.1.0",
+  "description": "C++ poteto bar: PSR C++ encode. clang-format, -Wall -Wextra, clang-tidy where practical, modern C++ smells (raw new/delete, C-style casts, sprintf/vsprintf). Tier 0 single-walk rg + hotpath budget + fmt/warn + tidy-CI. Requires ripgrep.",
+  "skills": "./skills",
+  "rules": "./rules"
+}

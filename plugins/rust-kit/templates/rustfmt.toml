@@ -1,0 +1,2 @@
+# Starter rustfmt aligned with rust-kit / PSR Rust.
+edition = "2021"

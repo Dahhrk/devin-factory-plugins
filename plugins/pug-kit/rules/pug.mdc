@@ -1,0 +1,18 @@
+---
+description: Pug PSR + poteto bar for product .pug / .jade templates
+globs: "**/*.{pug,Pug,jade,Jade}"
+alwaysApply: false
+---
+
+# Pug
+
+Follow skills **pug** and **poteto-pug** when applicable.
+
+- **pug** required in product wiring (`"pug":` in package.json / pug config / CI)
+- No unescaped buffered output (`!=` / `!{…}`) without `pug-rg-allow` + rationale; prefer buffered `=` / `#{…}` (HTML escaped). Docs call this unescaped buffered; treat as XSS.
+- No `include` of untrusted interpolated paths (`include #{…}` / `include !{…}`) without allow; prefer static trusted relative / basedir paths
+- No mixin injection via dynamic mixin names (`+#{…}` / `+!{…}`) without allow; prefer static `+name` calls
+- Required product gates: `pug-rg-gate` + `pug-hotpath-gate` + `pug-pug-gate`. Do not disable checks to force green.
+- Prove compile/render of trusted Pug where product needs it, not "wiring pass" alone
+
+Repeated review smell twice on a Pug product: encode into lint/CI/skill, not more prose.

@@ -1,0 +1,27 @@
+# Copy into product .github/workflows/ or merge steps into existing ci.yml.
+name: java-gates
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  java-gates:
+    name: java-kit gates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Tier 0 java-rg-gate
+        run: bash scripts/java-rg-gate.sh .
+      - name: Tier 0.5 java-hotpath-gate
+        run: bash scripts/java-hotpath-gate.sh .
+      - name: Tier 0.5 java-fmt-gate
+        run: bash scripts/java-fmt-gate.sh .
+      - name: Tier 1 java-checkstyle-ci-gate
+        run: bash scripts/java-checkstyle-ci-gate.sh .
+      - name: Tier 1 java-nullability-gate
+        run: bash scripts/java-nullability-gate.sh .

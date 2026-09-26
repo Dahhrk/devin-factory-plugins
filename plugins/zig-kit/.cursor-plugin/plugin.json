@@ -1,0 +1,7 @@
+{
+  "name": "zig-kit",
+  "version": "0.1.0",
+  "description": "Zig poteto bar: PSR Zig encode. zig fmt, zig build test wiring, @panic/@trap in libs, unchecked alloc (catch unreachable), TODO/FIXME. Tier 0 single-walk rg + hotpath budget + zig fmt + build-test wiring. Requires ripgrep.",
+  "skills": "./skills",
+  "rules": "./rules"
+}

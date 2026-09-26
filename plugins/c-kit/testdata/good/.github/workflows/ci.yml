@@ -1,0 +1,10 @@
+name: ci
+on: [push]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: cmake -B build -DASAN=ON -DCMAKE_C_FLAGS="-Wall -Wextra"
+      - run: cmake --build build
+      - run: ctest --test-dir build --output-on-failure

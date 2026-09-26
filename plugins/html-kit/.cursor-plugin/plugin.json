@@ -1,0 +1,7 @@
+{
+  "name": "html-kit",
+  "version": "0.1.0",
+  "description": "HTML poteto bar: PSR HTML encode. htmlhint lint, no missing alt, no inline JS/CSS smells, no external script without integrity where relevant. Tier 0 single-walk rg + hotpath budget + htmlhint wiring. Requires ripgrep.",
+  "skills": "./skills",
+  "rules": "./rules"
+}

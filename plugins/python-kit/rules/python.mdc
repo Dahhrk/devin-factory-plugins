@@ -1,0 +1,21 @@
+---
+description: Python PSR + poteto bar for product .py
+globs: "**/*.py"
+alwaysApply: false
+---
+
+# Python
+
+Follow skills **python** and **poteto-python** when applicable.
+
+- One formatter (Ruff format); Ruff lint includes E / F / B
+- mypy or Pyright config present for packages and services
+- Tests cover exceptions, I/O, and runtime validation
+- No bare `except:`; no bare `type: ignore` or bare `noqa`
+- No mutable default arguments
+- No `shell=True` / `os.system` / bare `eval` / `exec` / `pickle.load*` / `yaml.load` without `py-rg-allow` + rationale
+- No bare `os.environ[` / `json.loads` outside a named parse boundary (`templates/env_schema.py`, `templates/typed_parse.py`)
+- Required product gates: `py-rg-gate` + `py-hotpath-gate` + `py-ruff-gate` + `py-typing-gate` + `py-test-gate`. Do not disable checks to force green.
+- Prove runtime behaviour with pytest (or product test runner), not "ruff pass" alone
+
+Repeated review smell twice on a Python product: encode into lint/CI/skill, not more prose.

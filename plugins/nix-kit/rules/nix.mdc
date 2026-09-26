@@ -1,0 +1,20 @@
+---
+description: Nix PSR + poteto bar for product *.nix / flake / default / shell
+globs: "**/*.nix,**/flake.nix,**/default.nix,**/shell.nix"
+alwaysApply: false
+---
+
+# Nix
+
+Follow skills **nix** and **poteto-nix** when applicable.
+
+- **nix** wiring required (`*.nix` / flake / default / shell / CI `nix`). Do not claim Nix product green without wiring.
+- No `fetchurl` / `fetchTarball` / `fetchzip` without `hash` / `sha256` / `outputHash` on the call line without `nix-rg-allow` + rationale.
+- No `builtins.exec` / classic IFD (`import (fetch…)`, `builtins.readFile (fetch|runCommand|…)`) without allow.
+- No `builtins.getEnv` without allow.
+- No world-writable `chmod 777` / `chmod a+w` / `umask 000` in builders without allow.
+- No `curl|bash` / `wget|sh` in builders without allow.
+- Required product gates: `nix-rg-gate` + `nix-hotpath-gate` + `nix-nix-gate`. Do not disable checks to force green.
+- Prove `nix` / `nix-build` / `nix flake check` where product needs it, not "wiring pass" alone
+
+Repeated review smell twice on a Nix product: encode into lint/CI/skill, not more prose.

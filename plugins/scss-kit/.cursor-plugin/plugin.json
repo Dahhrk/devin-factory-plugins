@@ -1,0 +1,7 @@
+{
+  "name": "scss-kit",
+  "version": "0.1.0",
+  "description": "SCSS/Sass poteto bar: PSR SCSS encode. dart-sass/sass wiring, no !important abuse, no @extend overuse, no /deep/ or >>>, nesting depth ≤4. Tier 0 single-walk rg + hotpath budget + sass wiring. Covers .scss and .sass. Requires ripgrep.",
+  "skills": "./skills",
+  "rules": "./rules"
+}

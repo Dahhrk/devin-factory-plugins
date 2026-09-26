@@ -1,0 +1,1 @@
+message("weak lintr settings")

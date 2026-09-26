@@ -1,0 +1,8 @@
+name: ci
+on: [push]
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - run: npx eslint --ext mdx .
+      - run: echo '@mdx-js/mdx compile check'

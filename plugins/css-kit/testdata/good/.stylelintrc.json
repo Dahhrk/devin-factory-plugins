@@ -1,0 +1,6 @@
+{
+  "rules": {
+    "declaration-no-important": true,
+    "selector-max-universal": 0
+  }
+}

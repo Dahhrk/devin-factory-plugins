@@ -1,0 +1,21 @@
+@use 'sass:color';
+
+@mixin toast-fg($c: #c00) {
+  color: $c;
+}
+
+.toast {
+  @include toast-fg(var(--danger, #c00));
+}
+
+.card {
+  color: var(--fg, #111);
+}
+
+.card__title,
+.card__body {
+  margin: 0;
+}
+
+/* Documented intentional seam; keep allow on the smell line. */
+.legacy-toast { z-index: 9999 !important; } /* scss-rg-allow: fixture documents allow marker for intentional !important seam */

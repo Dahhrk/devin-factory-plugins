@@ -1,0 +1,19 @@
+# Copy into product .github/workflows/ or merge steps into existing ci.yml.
+name: delphi-gates
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  delphi-gates:
+    name: delphi-kit gates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tier 0 delphi-rg-gate
+        run: bash scripts/delphi-rg-gate.sh .
+      - name: Tier 0.5 delphi-hotpath-gate
+        run: bash scripts/delphi-hotpath-gate.sh .
+      - name: Tier 1 delphi-fpc-gate
+        run: bash scripts/delphi-fpc-gate.sh .

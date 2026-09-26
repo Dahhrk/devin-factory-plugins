@@ -1,0 +1,18 @@
+---
+description: Slint PSR + poteto bar for product .slint / Slint host Rust
+globs: "**/*.{slint,rs,toml}"
+alwaysApply: false
+---
+
+# Slint
+
+Follow skills **slint** and **poteto-slint** when applicable.
+
+- No leftover **debug(** in `.slint` without `slint-rg-allow` + rationale (prefer env `SLINT_DEBUG_PERFORMANCE` / temporary local probes removed before merge)
+- No **clone_strong()** capture into Slint callbacks without allow (prefer `as_weak` / `upgrade` / `upgrade_in_event_loop`)
+- No **unsafe {** blocks in Rust files that register `.on_` callbacks without allow + SAFETY docs (prefer safe path; FFI underlays may allow with named boundary)
+- Product **slint** wiring: `.slint` sources plus `Cargo.toml` / `build.rs` / CI mentioning `slint` or `slint-build`
+- Required product gates: `slint-rg-gate` + `slint-hotpath-gate` + `slint-cargo-gate`. Do not disable checks to force green.
+- Prove behaviour with `cargo build` / smoke where product needs them, not "lint pass" alone
+
+Repeated review smell twice on a Slint product: encode into lint/CI/skill, not more prose.

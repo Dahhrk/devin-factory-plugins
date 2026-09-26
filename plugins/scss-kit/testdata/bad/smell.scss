@@ -1,0 +1,24 @@
+/* Intentional smells for scss-rg-gate discrimination (not product code). */
+.toast { color: red !important; }
+
+%base { color: #111; }
+.btn { @extend %base; }
+.card { @extend %base; }
+.chip { @extend %base; }
+
+.panel {
+  /deep/ .inner { color: blue; }
+  >>> .slot { margin: 0; }
+}
+
+.a {
+  .b {
+    .c {
+      .d {
+        .e {
+          color: #000;
+        }
+      }
+    }
+  }
+}

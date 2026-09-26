@@ -1,0 +1,7 @@
+{
+  "name": "scss-kit-weak-fixture",
+  "private": true,
+  "devDependencies": {
+    "postcss": "^8.4.0"
+  }
+}

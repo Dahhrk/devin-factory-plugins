@@ -1,0 +1,20 @@
+---
+description: Makefile PSR + poteto bar for product Makefiles and *.mk modules
+globs: "**/Makefile,**/makefile,**/GNUmakefile,**/*.mk,**/*.make"
+alwaysApply: false
+---
+
+# Makefile
+
+Follow skills **makefile** and **poteto-makefile** when applicable.
+
+- **make** wiring required (`Makefile` / `*.mk` / CI `make`). Do not claim Makefile product green without wiring.
+- No recursive `$(MAKE)` / `${MAKE}` in a recipe without `.PHONY` for that target file without `makefile-rg-allow` + rationale.
+- No space-indented recipes (tab/space mix); recipe lines must start with a real tab without allow.
+- No unchecked `$(shell ...)` without allow; prefer make natives or check `.SHELLSTATUS`.
+- No `include $(...)` / `-include ${...}` of untrusted / variable path without allow; prefer static `include rules.mk`.
+- No `.ONESHELL` abuse or `curl|bash` / `wget|sh` recipes without allow.
+- Required product gates: `makefile-rg-gate` + `makefile-hotpath-gate` + `makefile-make-gate`. Do not disable checks to force green.
+- Prove `make` build where product needs it, not "wiring pass" alone
+
+Repeated review smell twice on a Makefile product: encode into lint/CI/skill, not more prose.
