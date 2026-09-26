@@ -20,12 +20,12 @@ Keep <2-4 invariants>
 
 All must be true. Do not claim done on prose.
 
-1. `bash scripts/ts-rg-gate.sh <product-root>` exits 0 (product copy of pack script; scans `src` by default).
-2. `bash scripts/ts-strict-gate.sh <product-root>` exits 0.
+1. `bash scripts/ts-rg-gate.sh <product-root>` exits 0 (product copy of pack script; scans `src`, else `lib`/`app`; override with `TS_RG_SRC`).
+2. `bash scripts/ts-strict-gate.sh <product-root>` exits 0 (strict via extends; typecheck aliases accepted).
 3. Product `npm run typecheck` and `npm run lint` exit 0 when those scripts exist.
 4. Diff adds no narration comments that restate the next statement. Survivors only for non-obvious external constraints (or required SAFETY markers for remaining assertions).
 5. Smallest correct change: prefer deletion; no new helper with one caller; no invent fake handlers for score.
-6. If DOM / `JSON.parse` / fetch / URL / env touched: validate at the boundary into a named type or throw; no postfix `!` on the lookup.
+6. If DOM / `JSON.parse` / fetch / URL / env touched: validate at the boundary into a named type or throw; no postfix `!` on the lookup. No `as unknown as` without `ts-rg-allow` rationale; no bare `@ts-expect-error`.
 7. If discriminated unions touched: exhaustive `switch` with `never` default.
 8. Stricter product gates (`verify-*`, `control-*`, visual-parity, anti-ai-ui, boundaries) override when present. Prove on the real artifact.
 9. Do not disable, skip, or weaken gates / expectations merely to make a build pass (PSR AI rule 11). Record what was tested and what remains uncertain.
@@ -45,7 +45,7 @@ All must be true. Do not claim done on prose.
 4. Exhaustive unions before optional bags
 5. Measure (bundle / profiler) before further micro-opt
 
-Load skill **typescript** as needed. Second smell → lint/CI/skill (encode-lessons), not more prose.
+Load skill **typescript** as needed. Second smell -> lint/CI/skill (encode-lessons), not more prose.
 
 ## Delivery labels (standing)
 
@@ -53,7 +53,7 @@ PR titles, branch names when you can choose them, chat-facing labels, and scorec
 
 Never use `pass N`, `full-pass-N`, `poteto pass`, or `poteto/full-pass-N` in user-facing titles or headers.
 
-Internal score history may use `R1`–`Rn` or dates. Merged commit subjects stay history.
+Internal score history may use `R1`-`Rn` or dates. Merged commit subjects stay history.
 
 ## Standing scorecard (TypeScript only)
 
@@ -78,7 +78,7 @@ Standing extras (list separately; do not fold into the 100% weighted overall unl
 | Handbook / strict alignment | checklist: strict+noImplicitAny, no unexplained any, no DOM `!`, boundary parse, exhaustive unions, CI typecheck, runtime/drive proof |
 | CI green | `ts-rg-gate` + `ts-strict-gate` + product typecheck/lint PASS on the artifact; if GitHub Actions cannot run, note billing / runner and still prove local gate exit 0 |
 
-Also report Quality / Opts / Amount narrative + LOC (+/− / net) and compare history across runs (`R1`–`Rn` or dates internally; descriptive titles user-facing).
+Also report Quality / Opts / Amount narrative + LOC (+/− / net) and compare history across runs (`R1`-`Rn` or dates internally; descriptive titles user-facing).
 
 **Board-wide:** Facepunch alignment is Lua / GMod only. TS/UI uses this sheet plus existing Control-Glass gates. Kitchen docs stay docs-only.
 
