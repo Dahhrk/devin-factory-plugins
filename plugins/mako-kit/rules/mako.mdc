@@ -1,0 +1,19 @@
+---
+description: Mako PSR + poteto bar for product .mako / HTML templates and Mako Python wiring
+globs: "**/*.{mako,html,HTML,py,pyi}"
+alwaysApply: false
+---
+
+# Mako
+
+Follow skills **mako** and **poteto-mako** when applicable.
+
+- **mako** required (`from mako` / `import mako` / requirements|pyproject mako / CI). Do not claim Mako product green without wiring.
+- No `disable_unicode` / risky `input_encoding` (None / latin-1 / ascii) footguns without `mako-rg-allow` + rationale (unicode chapter; `disable_unicode` removed in Py3).
+- No untrusted `<%include file="...${...}..."/>` without allow; prefer static include paths.
+- No `${}` without filters / `|n` raw / empty `default_filters` / `expression_filter="n"` without allow; prefer `<%page expression_filter="h"/>` or `|h`.
+- No `module_directory` code-exec cache paths without allow; compiled modules are executable Python.
+- Required product gates: `mako-rg-gate` + `mako-hotpath-gate` + `mako-mako-gate`. Do not disable checks to force green.
+- Prove render of trusted templates where product needs it, not "wiring pass" alone
+
+Repeated review smell twice on a Mako product: encode into lint/CI/skill, not more prose.

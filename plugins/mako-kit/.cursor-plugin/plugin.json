@@ -1,0 +1,7 @@
+{
+  "name": "mako-kit",
+  "version": "0.1.0",
+  "description": "Mako poteto bar: PSR Mako encode. No disable_unicode / input_encoding footguns, no untrusted <%include>, no ${} without filters / |n raw, no module_directory code-exec cache paths. Tier 0 single-walk rg + hotpath budget + mako wiring. Requires ripgrep.",
+  "skills": "./skills",
+  "rules": "./rules"
+}
