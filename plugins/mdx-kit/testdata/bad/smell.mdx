@@ -1,0 +1,4 @@
+{/* Intentional smells for mdx-rg-gate discrimination (not product code). */}
+export const userHtml = props.html ?? '<b>x</b>'
+
+<div dangerouslySetInnerHTML={{__html: userHtml}} />

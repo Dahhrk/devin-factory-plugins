@@ -1,0 +1,18 @@
+---
+description: MDX PSR + poteto bar for product .mdx and MDX pipeline JS
+globs: "**/*.{mdx,MDX,js,jsx,mjs,cjs,ts,tsx}"
+alwaysApply: false
+---
+
+# MDX
+
+Follow skills **mdx** and **poteto-mdx** when applicable.
+
+- **@mdx-js/mdx** (or @mdx-js/rollup / @mdx-js/loader / @next/mdx) required in product wiring
+- No `dangerouslySetInnerHTML` without `mdx-rg-allow` + rationale; prefer MDX/JSX children or sanitized markdown (react-markdown + rehype-sanitize)
+- No `evaluate` / `evaluateSync` of dynamic / user-controlled MDX without `mdx-rg-allow` + rationale; prefer static `.mdx` imports from trusted authors
+- No `rehype-raw` / `rehypeRaw` without `rehype-sanitize` / `rehypeSanitize` in the same file (or allow); remark/rehype plugins can reopen XSS
+- Required product gates: `mdx-rg-gate` + `mdx-hotpath-gate` + `mdx-mdx-gate`. Do not disable checks to force green.
+- Prove compile/build of trusted MDX where product needs it, not "wiring pass" alone
+
+Repeated review smell twice on an MDX product: encode into lint/CI/skill, not more prose.

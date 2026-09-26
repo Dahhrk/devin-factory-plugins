@@ -1,0 +1,7 @@
+{
+  "name": "mdx-kit",
+  "version": "0.1.0",
+  "description": "MDX poteto bar: PSR MDX encode. @mdx-js/mdx wiring, no raw HTML injection (dangerouslySetInnerHTML), no untrusted JSX evaluate, no rehype-raw without rehype-sanitize. Tier 0 single-walk rg + hotpath budget + mdx wiring. Requires ripgrep.",
+  "skills": "./skills",
+  "rules": "./rules"
+}
