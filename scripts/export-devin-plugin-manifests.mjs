@@ -1,12 +1,16 @@
 #!/usr/bin/env node
 // Regenerate missing plugins/*/.devin-plugin/plugin.json from sibling .cursor-plugin.
-// Does not overwrite existing Devin manifests. Run: node scripts/export-devin-plugin-manifests.mjs
+// Does not overwrite existing Devin manifests.
+// Run: node scripts/export-devin-plugin-manifests.mjs [--assert]
+// --assert: after create/skip, fail if any plugins/<kit> lacks .devin-plugin/plugin.json
 import { readdirSync, readFileSync, existsSync, mkdirSync, writeFileSync, statSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const pluginsDir = join(root, "plugins");
+
+const ASSERT = process.argv.includes("--assert");
 
 const EXTRA = {
   ada: ["ada", "gnat", "gnatcheck"],
@@ -121,3 +125,20 @@ for (const entry of readdirSync(pluginsDir)) {
 
 console.log(`export-devin-plugin-manifests: created=${created} skipped-existing=${skipped}`);
 if (createdNames.length) console.log(createdNames.join("\n"));
+if (ASSERT) {
+  const missing = [];
+  for (const entry of readdirSync(pluginsDir)) {
+    const dir = join(pluginsDir, entry);
+    if (!statSync(dir).isDirectory()) continue;
+    const devinPath = join(dir, ".devin-plugin", "plugin.json");
+    if (!existsSync(devinPath)) missing.push(entry);
+  }
+  if (missing.length) {
+    console.error(
+      "export-devin-plugin-manifests --assert FAILED: missing .devin-plugin/plugin.json for:",
+    );
+    for (const name of missing) console.error("  " + name);
+    process.exit(1);
+  }
+  console.log("export-devin-plugin-manifests --assert: all kits have .devin-plugin/plugin.json");
+}

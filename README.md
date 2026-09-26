@@ -59,9 +59,12 @@ and MCP servers. Subagents (`agents/`) are CLI/Desktop-only today, so the ported
 
 ```bash
 node scripts/validate-plugins.mjs
+node scripts/export-devin-plugin-manifests.mjs --assert
 ```
 
-CI runs the same script on every PR.
+CI runs `validate-plugins` on every PR. After mirroring kits from plug-factory,
+run `export-devin-plugin-manifests.mjs --assert` so every kit has
+`plugins/<kit>/.devin-plugin/plugin.json` (Cursor-only trees are a defect).
 
 ## Twin drift checks
 
