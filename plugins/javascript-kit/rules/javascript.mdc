@@ -1,0 +1,19 @@
+---
+description: JavaScript PSR + poteto bar for product .js (distinct from TypeScript)
+globs: "**/*.{js,mjs,cjs,jsx}"
+alwaysApply: false
+---
+
+# JavaScript
+
+Follow skills **javascript** and **poteto-javascript** when applicable. Plain JS products use this pack, not typescript-kit.
+
+- Formatter clean (Prettier)
+- ESLint flat config (`eslint.config.js|mjs|cjs`); legacy `.eslintrc*` alone is not enough
+- No `eval(` / `new Function(` without `js-rg-allow` + rationale
+- No `__proto__` / `constructor.prototype` / `Object.assign(..., req.body|query|params)` without `js-rg-allow` + rationale; prefer `Object.create(null)` merges
+- No sync fs (`readFileSync` / `statSync` / …) on request path without `js-rg-allow` + rationale; prefer `fs.promises`
+- Required product gates: `js-rg-gate` + `js-hotpath-gate` + `js-fmt-gate` + `js-eslint-flat-gate`. Do not disable checks to force green.
+- Prove runtime behaviour with tests / eslint / prettier, not "fmt pass" alone
+
+Repeated review smell twice on a JS product: encode into lint/CI/skill, not more prose.
