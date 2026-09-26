@@ -1,0 +1,19 @@
+# Copy into product .github/workflows/ or merge steps into existing ci.yml.
+name: cobol-gates
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  cobol-gates:
+    name: cobol-kit gates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tier 0 cobol-rg-gate
+        run: bash scripts/cobol-rg-gate.sh .
+      - name: Tier 0.5 cobol-hotpath-gate
+        run: bash scripts/cobol-hotpath-gate.sh .
+      - name: Tier 1 cobol-cobc-gate
+        run: bash scripts/cobol-cobc-gate.sh .

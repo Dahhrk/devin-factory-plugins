@@ -1,0 +1,7 @@
+{
+  "name": "cobol-kit",
+  "version": "0.1.0",
+  "description": "COBOL poteto bar: PSR COBOL encode. no GOTO/ALTER, checked ACCEPT (ON EXCEPTION), END-IF hygiene. Tier 0 single-walk rg + hotpath budget + cobc wiring. Requires ripgrep.",
+  "skills": "./skills",
+  "rules": "./rules"
+}
