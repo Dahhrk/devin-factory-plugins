@@ -1,0 +1,17 @@
+---
+description: Ada PSR + poteto bar for product .ads/.adb
+globs: "**/*.{ads,adb,ada,gpr}"
+alwaysApply: false
+---
+
+# Ada
+
+Follow skills **ada** and **poteto-ada** when applicable.
+
+- No **Unchecked_Conversion** (`Ada.Unchecked_Conversion` / instantiations) without `ada-rg-allow` + rationale
+- No **pragma Suppress** without `ada-rg-allow` + rationale (prefer keeping checks)
+- Product **gnatcheck** / **gnatpp** wiring: `.gpr` `package Check` and/or `package Pretty_Printer`, `gnatcheck.rules` with `--+Unchecked_Conversions` (not `---`), or CI `gnatcheck`/`gnatpp`
+- Required product gates: `ada-rg-gate` + `ada-hotpath-gate` + `ada-gnat-gate`. Do not disable checks to force green.
+- Prove behaviour with gprbuild / gnatcheck where product needs them, not "lint pass" alone
+
+Repeated review smell twice on an Ada product: encode into lint/CI/skill, not more prose.

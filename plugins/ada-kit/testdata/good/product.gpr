@@ -1,0 +1,13 @@
+project Product is
+   for Source_Dirs use (".");
+   for Object_Dir use "obj";
+   for Main use ("ok.adb");
+
+   package Pretty_Printer is
+      for Default_Switches ("ada") use ("-i3");
+   end Pretty_Printer;
+
+   package Check is
+      for Default_Switches ("ada") use ("-rules", "-from=gnatcheck.rules");
+   end Check;
+end Product;
