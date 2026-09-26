@@ -34,7 +34,7 @@
     {
       "source": "git-subdir",
       "url": "https://github.com/Dahhrk/devin-factory-plugins.git",
-      "path": "plugins/gmod-kit"
+      "path": "plugins/lua-kit"
     }
   ]
 }

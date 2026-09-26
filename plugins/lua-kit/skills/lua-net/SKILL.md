@@ -1,5 +1,5 @@
 ---
-name: gmod-net-secure
+name: lua-net
 description: GMod networking and realm safety — typed net messages, validation, AddCSLuaFile, NWVars. Use when editing net.Receive/net.Start, util.AddNetworkString, NW*Vars, SendLua, or server/client file shipping.
 paths: ["**/*.lua"]
 ---

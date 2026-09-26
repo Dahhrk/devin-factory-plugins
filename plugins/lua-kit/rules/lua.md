@@ -5,7 +5,7 @@ trigger: always_on
 
 # GMod Lua rule
 
-You are editing Garry's Mod Lua (LuaJIT / 5.1). Follow skills **gmod-lua**, **gmod-net-secure**, and **gmod-ui-derma** when applicable.
+You are editing Garry's Mod Lua (LuaJIT / 5.1). Follow skills **lua**, **lua-net**, and **lua-ui** when applicable.
 
 Hard expectations:
 

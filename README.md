@@ -17,7 +17,7 @@ Cursor integration.
 | [`factory-baseline`](plugins/factory-baseline) | Factory house rules: draft-PR-only checklist, Done means + Keep handoff, no-secrets-in-kitchen screen. |
 | [`pstack`](plugins/pstack) | Conversion of the public MIT [pstack](https://github.com/cursor/plugins/tree/main/pstack) Cursor plugin (poteto-mode, `principle-*`, verification authoring, review workflows). |
 | [`cursor-team-kit`](plugins/cursor-team-kit) | Conversion of the public MIT [cursor-team-kit](https://github.com/cursor/plugins/tree/main/cursor-team-kit) Cursor plugin (`deslop`, `verify-this`, `control-cli`, `control-ui`, PR/CI helpers). |
-| [`gmod-kit`](plugins/gmod-kit) | GMod Lua bar (poteto EXIT, net, Derma, rg gate). Twin of plug-factory `gmod-kit`. |
+| [`lua-kit`](plugins/lua-kit) | GMod Lua bar (poteto EXIT, net, Derma, rg gate). Twin of plug-factory `lua-kit`. |
 
 Skills resolve as `/<plugin>:<skill>`, e.g. `/cursor-team-kit:deslop`,
 `/factory-baseline:draft-pr-only`, `/pstack:poteto-mode`.

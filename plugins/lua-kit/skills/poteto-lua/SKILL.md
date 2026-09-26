@@ -1,5 +1,5 @@
 ---
-name: poteto-gmod-lua
+name: poteto-lua
 description: Poteto-mode bar for Garry's Mod Lua. Use for /poteto-mode on Lua/GMod/Obsidian work, or when Dark asks for poteto bar on addon code. Least code, no comments, falsifiable Done means.
 disable-model-invocation: false
 ---
@@ -22,7 +22,7 @@ Keep <2-4 invariants>
 
 All must be true. Do not claim done on prose.
 
-1. `bash /workspace/lua-factory-draft/ci/gmod-rg-gate.sh <addon-lua-root>` exits 0 on the touched tree (or product copy of that script).
+1. `bash /workspace/lua-factory-draft/ci/lua-rg-gate.sh <addon-lua-root>` exits 0 on the touched tree (or product copy of that script).
 2. Diff introduces no narration comments (`--` lines that restate the next statement). Survivors only for non-obvious external constraints.
 3. Diff is the smallest correct change: no new helper with one caller; no parallel net/UI toolkit beside Obsidian.* when in Obsidian.
 4. If `net.Receive` / `util.AddNetworkString` touched: every SERVER receiver validates `IsValid(ply)`, permission, and typed ranges; no `WriteTable` / client-written identity.
@@ -51,9 +51,9 @@ Stricter product gates override when present (`verify-*`, Feature Map, `control-
 
 ## Skills to load
 
-- `gmod-lua` — locals, alloc, hooks, iterators, strings, bit
-- `gmod-net-secure` — net + AddCSLuaFile
-- `gmod-ui-derma` — Derma/HUD/Obsidian panels
+- `lua` — locals, alloc, hooks, iterators, strings, bit
+- `lua-net` — net + AddCSLuaFile
+- `lua-ui` — Derma/HUD/Obsidian panels
 - `principle-encode-lessons-in-structure` — second smell → lint/CI/skill, not more prose
 
 ## Playbook match

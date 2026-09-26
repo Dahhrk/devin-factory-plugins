@@ -1,5 +1,5 @@
 ---
-name: gmod-ui-derma
+name: lua-ui
 description: GMod Derma/VGUI and HUD practices — singleton windows, paint budgets, theme tokens, Obsidian panels. Use when editing vgui/*, derma, HUDPaint, scoreboard, F4, or Obsidian UI modules.
 paths: ["**/vgui/**/*.lua", "**/modules/**/*.lua", "**/*hud*.lua", "**/*derma*.lua", "**/*vgui*.lua"]
 ---

@@ -1,5 +1,5 @@
 ---
-name: gmod-lua
+name: lua
 description: Lua 5.1 / GMod (GLua) coding bar — locals, hooks, alloc, iterators, strings, bit, file layout. Use when reading or editing any .lua in a Garry's Mod addon or Obsidian Framework.
 paths: ["**/*.lua", "**/addon.json"]
 ---
@@ -8,7 +8,7 @@ paths: ["**/*.lua", "**/addon.json"]
 
 GMod runs **LuaJIT / Lua 5.1** semantics. Do not write Lua 5.2+ or 5.3-only syntax.
 
-Apply security skill **gmod-net-secure** whenever `net.*` or `AddCSLuaFile` appears. Apply **gmod-ui-derma** for VGUI/HUD.
+Apply security skill **lua-net** whenever `net.*` or `AddCSLuaFile` appears. Apply **lua-ui** for VGUI/HUD.
 
 ## Rules
 
@@ -22,7 +22,7 @@ Apply security skill **gmod-net-secure** whenever `net.*` or `AddCSLuaFile` appe
 | Strings | Prefer `string.format` for structured strings; `table.concat` for loops. Avoid `a .. b .. c` inside per-frame or per-player loops. |
 | Bitwise | Use `bit.band` / `bit.bor` / `bit.lshift` (GMod). No `x & y` / `x << y` (not 5.1). |
 | Hooks cost | Prefer event hooks (`PlayerDeath`, net receivers) over perpetual Think. Throttle HUD (`Obsidian.Optim.HUDBudget` or equivalent). Unique hook IDs: `Addon.Feature`. |
-| File layout | `autorun`/`lua/<addon>/`; server includes shared; `AddCSLuaFile` only client+shared paths. See **gmod-net-secure** for AddCSLuaFile bans. |
+| File layout | `autorun`/`lua/<addon>/`; server includes shared; `AddCSLuaFile` only client+shared paths. See **lua-net** for AddCSLuaFile bans. |
 | Measure first | Micro-opts only after `SysTime` proves a hot path. Correctness > cleverness. |
 
 ## Addon table pattern
