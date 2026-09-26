@@ -74,5 +74,23 @@ if search '(draw\.)?(SimpleText|DrawText)\([^\n]*string\.format|string\.format\(
   fi
 fi
 
+
+# No tostring / string.upper|lower|sub on SimpleText/DrawText lines (cache initials/labels off paint)
+if search '(draw\.)?(SimpleText|DrawText)\([^\n]*tostring\s*\(' . 2>/dev/null | grep -v 'hotpath-allow' >"$tmp" || true; then
+  if [[ -s "$tmp" ]]; then
+    echo "FAIL: SimpleText/DrawText with tostring (cache label off paint path)"
+    cat "$tmp"
+    fail=1
+  fi
+fi
+
+if search '(draw\.)?(SimpleText|DrawText)\([^\n]*string\.(upper|lower|sub)\(' . 2>/dev/null | grep -v 'hotpath-allow' >"$tmp" || true; then
+  if [[ -s "$tmp" ]]; then
+    echo "FAIL: SimpleText/DrawText with string.upper/lower/sub (cache initial/label off paint)"
+    cat "$tmp"
+    fail=1
+  fi
+fi
+
 if [[ "$fail" -ne 0 ]]; then exit 1; fi
 echo "PASS lua-hotpath-gate ($ROOT)"

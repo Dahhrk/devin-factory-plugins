@@ -14,6 +14,6 @@ Follow skills **lua**, **lua-net**, **lua-ui** when applicable.
 - Never trust client identity via written LocalPlayer entity
 - Prefer `player.Iterator` / numeric array loops in hot paths; `lua-hotpath-gate.sh` bans GetAll unless `hotpath-allow`
 - Use `bit.*` not Lua 5.3 operators
-- Prefer event hooks over perpetual Think; throttle HUD; cache paint labels and Paint*Ring opts; no SimpleText ` .. `/format; empty modules `ready=false`
+- Prefer event hooks over perpetual Think; throttle HUD; cache paint labels and Paint*Ring opts; no SimpleText ` .. `/format/tostring/upper-sub; empty modules `ready=false`
 
 Repeated review smell twice on Obsidian or other GMod products: encode into lint/CI/skill (kitchen encode-lessons), not more prose.
