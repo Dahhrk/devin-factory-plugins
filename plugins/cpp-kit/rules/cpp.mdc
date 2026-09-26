@@ -1,0 +1,20 @@
+---
+description: C++ PSR + poteto bar for product .cpp/.hpp/.h
+globs: "**/*.{cpp,cc,cxx,hpp,hh,h}"
+alwaysApply: false
+---
+
+# C++
+
+Follow skills **cpp** and **poteto-cpp** when applicable.
+
+- `clang-format` clean (`.clang-format` + dry-run in CI)
+- Compiler diagnostics: `-Wall` and `-Wextra` wired in CMake/Make/meson/CI
+- clang-tidy where practical: `.clang-tidy` or `clang-tidy` in CMake/CI
+- No raw `new` / `delete` without `cpp-rg-allow` + rationale; prefer `std::unique_ptr` / `std::make_unique`
+- No C-style casts without `cpp-rg-allow` + rationale; prefer `static_cast` / `reinterpret_cast` / `const_cast`
+- No `sprintf` / `vsprintf` without `cpp-rg-allow` + rationale; prefer `{fmt}` / `std::format` / `snprintf`
+- Required product gates: `cpp-rg-gate` + `cpp-hotpath-gate` + `cpp-fmt-gate` + `cpp-warn-gate` + `cpp-tidy-ci-gate`. Do not disable checks to force green.
+- Prove runtime behaviour with tests / sanitizer builds, not "fmt pass" alone
+
+Repeated review smell twice on a C++ product: encode into lint/CI/skill, not more prose.

@@ -1,0 +1,32 @@
+# Copy into product .github/workflows/ or merge steps into existing ci.yml.
+name: cpp-gates
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  cpp-gates:
+    name: cpp-kit gates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install clang-format
+        run: sudo apt-get update && sudo apt-get install -y clang-format
+      - name: Tier 0 cpp-rg-gate
+        run: bash scripts/cpp-rg-gate.sh .
+      - name: Tier 0.5 cpp-hotpath-gate
+        run: bash scripts/cpp-hotpath-gate.sh .
+      - name: Tier 0.5 cpp-fmt-gate
+        run: bash scripts/cpp-fmt-gate.sh .
+      - name: Tier 0.5 cpp-warn-gate
+        run: bash scripts/cpp-warn-gate.sh .
+      - name: Tier 1 cpp-tidy-ci-gate
+        run: bash scripts/cpp-tidy-ci-gate.sh .
+      - name: Configure with warnings
+        run: |
+          cmake -B build \
+            -DCMAKE_BUILD_TYPE=Debug \
+            -DCMAKE_CXX_FLAGS="-Wall -Wextra"
+      - name: Build
+        run: cmake --build build
