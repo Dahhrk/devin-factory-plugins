@@ -56,5 +56,23 @@ if search 'Paint(Avatar|Occupancy)Ring\([^)]*\{' . 2>/dev/null | grep -v 'hotpat
   fi
 fi
 
+
+# No Lua concat or string.format on SimpleText/DrawText lines (cache labels off paint)
+if search '(draw\.)?(SimpleText|DrawText)\([^\n]* \.\. ' . 2>/dev/null | grep -v 'hotpath-allow' >"$tmp" || true; then
+  if [[ -s "$tmp" ]]; then
+    echo "FAIL: SimpleText/DrawText with .. concat (cache label on panel / rebuild)"
+    cat "$tmp"
+    fail=1
+  fi
+fi
+
+if search '(draw\.)?(SimpleText|DrawText)\([^\n]*string\.format|string\.format\([^\n]*(draw\.)?(SimpleText|DrawText)' . 2>/dev/null | grep -v 'hotpath-allow' >"$tmp" || true; then
+  if [[ -s "$tmp" ]]; then
+    echo "FAIL: SimpleText/DrawText with string.format (cache label off paint path)"
+    cat "$tmp"
+    fail=1
+  fi
+fi
+
 if [[ "$fail" -ne 0 ]]; then exit 1; fi
 echo "PASS lua-hotpath-gate ($ROOT)"
