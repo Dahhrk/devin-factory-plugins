@@ -1,0 +1,17 @@
+{
+  "name": "javascript-kit-good-fixture",
+  "private": true,
+  "type": "commonjs",
+  "devDependencies": {
+    "eslint": "^9.0.0",
+    "prettier": "^3.0.0"
+  },
+  "scripts": {
+    "format": "prettier --check .",
+    "lint": "eslint ."
+  },
+  "prettier": {
+    "semi": true,
+    "singleQuote": true
+  }
+}

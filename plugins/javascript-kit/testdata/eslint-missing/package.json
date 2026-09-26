@@ -1,0 +1,5 @@
+{
+  "name": "javascript-kit-eslint-missing",
+  "private": true,
+  "devDependencies": { "prettier": "^3.0.0" }
+}
