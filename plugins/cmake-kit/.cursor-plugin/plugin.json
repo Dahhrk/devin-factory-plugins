@@ -1,0 +1,7 @@
+{
+  "name": "cmake-kit",
+  "version": "0.1.0",
+  "description": "CMake poteto bar: PSR CMake encode. No file(DOWNLOAD) without hash, no unchecked execute_process, no GLOB for sources, no CACHE FORCE abuse, no include of untrusted path. Tier 0 single-walk rg + hotpath budget + cmake wiring. Requires ripgrep.",
+  "skills": "./skills",
+  "rules": "./rules"
+}
