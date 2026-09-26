@@ -1,0 +1,19 @@
+# Copy into product .github/workflows/ or merge steps into existing ci.yml.
+name: dockerfile-gates
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  dockerfile-gates:
+    name: dockerfile-kit gates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tier 0 dockerfile-rg-gate
+        run: bash scripts/dockerfile-rg-gate.sh .
+      - name: Tier 0.5 dockerfile-hotpath-gate
+        run: bash scripts/dockerfile-hotpath-gate.sh .
+      - name: Tier 1 dockerfile-docker-gate
+        run: bash scripts/dockerfile-docker-gate.sh .
