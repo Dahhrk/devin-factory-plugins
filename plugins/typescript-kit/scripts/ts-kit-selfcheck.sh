@@ -58,6 +58,7 @@ expect_fail strict-missing "strict fails when missing" bash "$HERE/ts-strict-gat
 expect_fail runtime-missing "runtime fails when missing" bash "$HERE/ts-runtime-gate.sh" "$ROOT/testdata/runtime-missing" &
 expect_fail oxlint-missing "oxlint fails when config missing" env TS_OXLINT_CONFIG_ONLY=1 bash "$HERE/ts-oxlint-gate.sh" "$ROOT/testdata/oxlint-missing" &
 expect_fail oxlint-weak "oxlint fails when factory rules missing" env TS_OXLINT_CONFIG_ONLY=1 bash "$HERE/ts-oxlint-gate.sh" "$ROOT/testdata/oxlint-weak" &
+expect_fail oxlint-typeaware-missing "oxlint fails when typeAware/floating/misused missing" env TS_OXLINT_CONFIG_ONLY=1 bash "$HERE/ts-oxlint-gate.sh" "$ROOT/testdata/oxlint-typeaware-missing" &
 expect_fail lib-product "product mode flags .d.ts any" bash "$HERE/ts-rg-gate.sh" "$ROOT/testdata/library-dts" &
 expect_pass lib-skip "library mode skips .d.ts any" env TS_RG_SKIP_DTS=1 bash "$HERE/ts-rg-gate.sh" "$ROOT/testdata/library-dts" &
 wait
@@ -74,14 +75,14 @@ if [[ ! -f "$OXLINT" ]]; then
   fail=1
 else
   missing=0
-  for key in no-explicit-any no-non-null-assertion switch-exhaustiveness-check ban-ts-comment; do
+  for key in no-explicit-any no-non-null-assertion switch-exhaustiveness-check ban-ts-comment no-floating-promises no-misused-promises typeAware; do
     if ! grep -q "$key" "$OXLINT"; then
       echo "FAIL selfcheck: oxlintrc missing $key"
       missing=1
     fi
   done
   if [[ "$missing" -eq 0 ]]; then
-    echo "ok: oxlint template encodes any / non-null / exhaustive-switch / ban-ts-comment"
+    echo "ok: oxlint template encodes any / non-null / exhaustive-switch / ban-ts-comment / floating / misused / typeAware"
   else
     fail=1
   fi
@@ -136,15 +137,25 @@ else
   echo "ok: good fixture encodes whole-object env parse"
 fi
 
+# float-bad fixture must encode floating + misused smells
+FLOAT_BAD="$ROOT/testdata/oxlint-float-bad/src/float.ts"
+if [[ ! -f "$FLOAT_BAD" ]] \
+  || ! grep -qx 'load()' "$FLOAT_BAD" \
+  || ! grep -Fq 'onReady(async' "$FLOAT_BAD" \
+  || ! grep -Fq 'setTimeout(async' "$FLOAT_BAD"; then
+  echo "FAIL selfcheck: oxlint-float-bad missing floating/misused smells"
+  fail=1
+else
+  echo "ok: oxlint-float-bad encodes floating + misused + setTimeout(async)"
+fi
+
 # Prove bare @ts-expect-error is actually caught (portable filter, not broken PCRE2 lookahead)
 if ! grep -q 'ts-expect-error' "$WORKDIR/bad-rg.out" 2>/dev/null \
   && ! rg -q 'ts-expect-error' "$WORKDIR/bad-rg.out" 2>/dev/null; then
-  # bad-rg.out should contain FAIL lines; check smell.ts still has bare form and gate failed
   if [[ "$(cat "$WORKDIR/bad-rg.rc")" -eq 0 ]]; then
     echo "FAIL selfcheck: bad rg unexpectedly passed"
     fail=1
   else
-    # Explicitly re-scan bad for bare expect-error message
     if ! bash "$HERE/ts-rg-gate.sh" "$ROOT/testdata/bad" 2>&1 | tee "$WORKDIR/bad-rg-retry.out" | grep -q 'ts-expect-error requires'; then
       echo "FAIL selfcheck: bare @ts-expect-error not reported"
       cat "$WORKDIR/bad-rg-retry.out"
@@ -157,9 +168,10 @@ else
   echo "ok: bare @ts-expect-error discriminated"
 fi
 
-# Oxlint pin: never @latest; version stamp + gate default agree; offline refuses npx
+# Oxlint pin: never @latest; version stamps + gate defaults agree; offline refuses npx
 OXLINT_GATE="$HERE/ts-oxlint-gate.sh"
 PIN_FILE="$ROOT/templates/oxlint.version"
+TSG_PIN_FILE="$ROOT/templates/oxlint-tsgolint.version"
 if [[ ! -f "$PIN_FILE" ]]; then
   echo "FAIL selfcheck: missing templates/oxlint.version"
   fail=1
@@ -192,10 +204,39 @@ else
   fi
 fi
 
+if [[ ! -f "$TSG_PIN_FILE" ]]; then
+  echo "FAIL selfcheck: missing templates/oxlint-tsgolint.version"
+  fail=1
+else
+  TSG_PIN="$(tr -d '[:space:]' <"$TSG_PIN_FILE")"
+  if [[ -z "$TSG_PIN" ]]; then
+    echo "FAIL selfcheck: empty oxlint-tsgolint.version"
+    fail=1
+  elif ! grep -Fq "$TSG_PIN" "$OXLINT_GATE"; then
+    echo "FAIL selfcheck: oxlint gate missing tsgolint pin $TSG_PIN"
+    fail=1
+  else
+    echo "ok: oxlint gate pins tsgolint $TSG_PIN"
+  fi
+  if ! grep -q 'oxlint-tsgolint@\${TS_OXLINT_TSGOLINT_VERSION}' "$OXLINT_GATE" \
+    && ! grep -F -q 'oxlint-tsgolint@${TS_OXLINT_TSGOLINT_VERSION}' "$OXLINT_GATE"; then
+    echo "FAIL selfcheck: oxlint gate missing pinned oxlint-tsgolint@\${TS_OXLINT_TSGOLINT_VERSION}"
+    fail=1
+  else
+    echo "ok: oxlint gate npx dual-pins oxlint-tsgolint"
+  fi
+  if ! grep -q -- '--type-aware' "$OXLINT_GATE"; then
+    echo "FAIL selfcheck: oxlint gate missing --type-aware live flag"
+    fail=1
+  else
+    echo "ok: oxlint gate live path passes --type-aware"
+  fi
+fi
+
 # Offline mode must fail clearly when no local binary (do not fall through to npx)
 OFF_OUT="$WORKDIR/oxlint-offline.out"
 OFF_RC=0
-env -u TS_OXLINT_BIN -u TS_OXLINT_CONFIG_ONLY PATH="/usr/bin:/bin" \
+env -u TS_OXLINT_BIN -u TS_OXLINT_CONFIG_ONLY -u TS_OXLINT_TSGOLINT_BIN PATH="/usr/bin:/bin" \
   TS_OXLINT_OFFLINE=1 bash "$OXLINT_GATE" "$ROOT/testdata/good" >"$OFF_OUT" 2>&1 || OFF_RC=$?
 if [[ "$OFF_RC" -eq 0 ]]; then
   echo "FAIL selfcheck: TS_OXLINT_OFFLINE=1 unexpectedly passed without local oxlint"
@@ -209,17 +250,50 @@ else
   echo "ok: offline oxlint refuses network/npx fallback"
 fi
 
-# Optional live proof when a local binary exists (PATH or TS_OXLINT_BIN)
-if command -v oxlint >/dev/null 2>&1 || [[ -n "${TS_OXLINT_BIN:-}" ]]; then
-  if TS_OXLINT_OFFLINE=1 bash "$OXLINT_GATE" "$ROOT/testdata/good" >"$WORKDIR/oxlint-live.out" 2>&1; then
-    echo "ok: live oxlint offline path works with local binary"
-  else
-    echo "FAIL selfcheck: local oxlint live run failed"
-    cat "$WORKDIR/oxlint-live.out"
+# Live type-aware proof when local oxlint+tsgolint exist, or via npx dual-package
+run_typeaware_live=0
+if [[ -n "${TS_OXLINT_BIN:-}" ]] && { command -v tsgolint >/dev/null 2>&1 || [[ -n "${TS_OXLINT_TSGOLINT_BIN:-}" ]]; }; then
+  run_typeaware_live=1
+elif command -v oxlint >/dev/null 2>&1 && command -v tsgolint >/dev/null 2>&1; then
+  run_typeaware_live=1
+elif [[ -x /tmp/oxlint-float-proof/node_modules/.bin/oxlint ]] \
+  && [[ -x /tmp/oxlint-float-proof/node_modules/.bin/tsgolint ]]; then
+  export TS_OXLINT_BIN=/tmp/oxlint-float-proof/node_modules/.bin/oxlint
+  export PATH="/tmp/oxlint-float-proof/node_modules/.bin:$PATH"
+  run_typeaware_live=1
+elif command -v npx >/dev/null 2>&1 && [[ "${TS_OXLINT_SELFCHECK_OFFLINE:-}" != "1" ]]; then
+  run_typeaware_live=2
+fi
+
+if [[ "$run_typeaware_live" -eq 1 ]]; then
+  if TS_OXLINT_OFFLINE=1 bash "$OXLINT_GATE" "$ROOT/testdata/oxlint-float-bad" >"$WORKDIR/oxlint-float-live.out" 2>&1; then
+    echo "FAIL selfcheck: type-aware live unexpectedly passed on oxlint-float-bad"
+    cat "$WORKDIR/oxlint-float-live.out"
     fail=1
+  elif ! grep -Eq 'no-floating-promises|no-misused-promises' "$WORKDIR/oxlint-float-live.out"; then
+    echo "FAIL selfcheck: type-aware live miss missing floating/misused diagnostics"
+    cat "$WORKDIR/oxlint-float-live.out"
+    fail=1
+  else
+    echo "ok: type-aware live fails oxlint-float-bad (floating/misused)"
+  fi
+elif [[ "$run_typeaware_live" -eq 2 ]]; then
+  PIN="$(tr -d '[:space:]' <"$PIN_FILE")"
+  TSG_PIN="$(tr -d '[:space:]' <"$TSG_PIN_FILE")"
+  if (cd "$ROOT/testdata/oxlint-float-bad" && npx --yes -p "oxlint@$PIN" -p "oxlint-tsgolint@$TSG_PIN" oxlint --type-aware -c .oxlintrc.json .) \
+    >"$WORKDIR/oxlint-float-npx.out" 2>&1; then
+    echo "FAIL selfcheck: npx type-aware unexpectedly passed on oxlint-float-bad"
+    cat "$WORKDIR/oxlint-float-npx.out"
+    fail=1
+  elif ! grep -Eq 'no-floating-promises|no-misused-promises' "$WORKDIR/oxlint-float-npx.out"; then
+    echo "FAIL selfcheck: npx type-aware miss missing floating/misused diagnostics"
+    cat "$WORKDIR/oxlint-float-npx.out"
+    fail=1
+  else
+    echo "ok: npx type-aware fails oxlint-float-bad (floating/misused)"
   fi
 else
-  echo "ok: skip live oxlint (no local binary; pin+offline proven)"
+  echo "ok: skip live type-aware (no local oxlint+tsgolint; pin+config proven; set bins or unset TS_OXLINT_SELFCHECK_OFFLINE)"
 fi
 
 if [[ "$fail" -ne 0 ]]; then exit 1; fi

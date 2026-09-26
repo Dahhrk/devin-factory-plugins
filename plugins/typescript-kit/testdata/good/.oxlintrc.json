@@ -1,5 +1,8 @@
 {
   "$schema": "https://raw.githubusercontent.com/oxc-project/oxc/main/npm/oxlint/configuration_schema.json",
+  "options": {
+    "typeAware": true
+  },
   "plugins": ["typescript"],
   "rules": {
     "typescript/no-explicit-any": "error",
@@ -12,6 +15,18 @@
         "ts-nocheck": true,
         "ts-expect-error": "allow-with-description",
         "minimumDescriptionLength": 8
+      }
+    ],
+    "typescript/no-floating-promises": "error",
+    "typescript/no-misused-promises": [
+      "error",
+      {
+        "checksConditionals": true,
+        "checksVoidReturn": {
+          "arguments": true,
+          "attributes": false
+        },
+        "checksSpreads": true
       }
     ]
   }
