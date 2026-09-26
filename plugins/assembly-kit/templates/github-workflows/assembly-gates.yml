@@ -1,0 +1,19 @@
+# Copy into product .github/workflows/ or merge steps into existing ci.yml.
+name: assembly-gates
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  assembly-gates:
+    name: assembly-kit gates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tier 0 assembly-rg-gate
+        run: bash scripts/assembly-rg-gate.sh .
+      - name: Tier 0.5 assembly-hotpath-gate
+        run: bash scripts/assembly-hotpath-gate.sh .
+      - name: Tier 1 assembly-build-gate
+        run: bash scripts/assembly-build-gate.sh .
