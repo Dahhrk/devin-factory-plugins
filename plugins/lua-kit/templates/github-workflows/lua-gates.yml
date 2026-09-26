@@ -1,0 +1,81 @@
+# Product CI skeleton from lua-kit.
+# Copy to .github/workflows/lua-gates.yml in the product repo.
+# Expects scripts/lua-rg-gate.sh (and optionally .luacheckrc) in the product tree.
+# Pilot: Obsidian Framework.
+
+name: lua-gates
+
+on:
+  push:
+    paths:
+      - "**/*.lua"
+      - ".luacheckrc"
+      - "scripts/lua-rg-gate.sh"
+      - "scripts/lua-luacheck-gate.sh"
+      - "glualint.json"
+      - ".github/workflows/lua-gates.yml"
+  pull_request:
+    paths:
+      - "**/*.lua"
+      - ".luacheckrc"
+      - "scripts/lua-rg-gate.sh"
+      - "scripts/lua-luacheck-gate.sh"
+      - "glualint.json"
+      - ".github/workflows/lua-gates.yml"
+
+jobs:
+  tier0-rg:
+    name: Tier 0 rg gate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install ripgrep
+        run: sudo apt-get update && sudo apt-get install -y ripgrep
+      - name: Run lua-rg-gate
+        run: bash scripts/lua-rg-gate.sh .
+
+  tier1-luacheck:
+    name: Tier 1 luacheck
+    runs-on: ubuntu-latest
+    needs: tier0-rg
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install luacheck
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lua5.1 luarocks
+          sudo luarocks install luacheck
+      - name: Ensure .luacheckrc
+        run: |
+          if [ ! -f .luacheckrc ]; then
+            echo "Missing .luacheckrc — copy from lua-kit/templates/luacheckrc"
+            exit 1
+          fi
+      - name: Run luacheck
+        run: |
+          if [ -x scripts/lua-luacheck-gate.sh ]; then
+            bash scripts/lua-luacheck-gate.sh .
+          else
+            luacheck .
+          fi
+
+  # Tier 2 glualint (optional). Enable when the product adopts glualint.json
+  # and a glualint binary (see FPtje/GLuaFixer). Until then this job is
+  # commented out so CI stays green on Tier 0 + Tier 1 only.
+  #
+  # tier2-glualint:
+  #   name: Tier 2 glualint
+  #   runs-on: ubuntu-latest
+  #   needs: tier1-luacheck
+  #   # continue-on-error: true   # use while rolling out; remove when required
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - name: Install glualint
+  #       run: |
+  #         # Pin a release from https://github.com/FPtje/GLuaFixer/releases
+  #         # or use: uses: FPtje/GLuaFixer/.github/workflows/glualint.yml@master
+  #         echo "Install glualint binary for your runner, then:"
+  #         echo "  glualint lint ."
+  #         exit 1
+  #     - name: Run glualint
+  #       run: glualint lint .

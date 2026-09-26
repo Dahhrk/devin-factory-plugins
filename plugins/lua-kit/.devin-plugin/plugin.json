@@ -1,8 +1,8 @@
 {
   "name": "lua-kit",
-  "version": "0.1.0",
-  "description": "Dark factory Garry's Mod Lua bar: poteto EXIT PREDICATE, net security, Derma/HUD, rg gate — twin of plug-factory lua-kit",
+  "version": "0.2.0",
+  "description": "Dark factory Garry's Mod Lua bar: poteto EXIT PREDICATE, net security, Derma/HUD, rg + luacheck gates, optional glualint. Twin of plug-factory lua-kit.",
   "author": { "name": "Dark factory" },
   "license": "MIT",
-  "keywords": ["devin", "plugin", "gmod", "lua", "glua", "net", "derma"]
+  "keywords": ["devin", "plugin", "gmod", "lua", "glua", "net", "derma", "luacheck"]
 }

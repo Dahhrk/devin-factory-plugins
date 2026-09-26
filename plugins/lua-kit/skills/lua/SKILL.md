@@ -44,6 +44,16 @@ local healthyColor = Color(100, 255, 100)
 - Building menus by sending Lua strings (`SendLua` / `BroadcastLua`)
 - Assuming `pairs` order or sparse-array `#t` length
 
+## Lint gates (product CI)
+
+| Tier | Tool | Pack path |
+|------|------|-----------|
+| 0 | rg banned patterns | `scripts/lua-rg-gate.sh` |
+| 1 | luacheck Lua 5.1 + GMod globals | `templates/luacheckrc`, `scripts/lua-luacheck-gate.sh` |
+| 2 | glualint (optional) | `templates/glualint.json` |
+
+Product workflow skeleton: `templates/github-workflows/lua-gates.yml`. Pilot: Obsidian Framework.
+
 ## References (external)
 
 - https://wiki.facepunch.com/gmod/optimizationTips
