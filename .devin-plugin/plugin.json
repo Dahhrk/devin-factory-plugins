@@ -2,10 +2,17 @@
   "name": "dark-factory-pack",
   "version": "0.1.0",
   "description": "Meta-plugin: installing this pulls in the dark factory Devin coding-lane baseline plus the converted pstack and cursor-team-kit skill sets",
-  "author": { "name": "Dark factory" },
+  "author": {
+    "name": "Dark factory"
+  },
   "license": "MIT",
-  "keywords": ["devin", "plugin", "meta", "dark-factory", "governance"],
-
+  "keywords": [
+    "devin",
+    "plugin",
+    "meta",
+    "dark-factory",
+    "governance"
+  ],
   "requiredPlugins": [
     {
       "source": "git-subdir",
@@ -21,6 +28,13 @@
       "source": "git-subdir",
       "url": "https://github.com/Dahhrk/devin-factory-plugins.git",
       "path": "plugins/cursor-team-kit"
+    }
+  ],
+  "optionalPlugins": [
+    {
+      "source": "git-subdir",
+      "url": "https://github.com/Dahhrk/devin-factory-plugins.git",
+      "path": "plugins/gmod-kit"
     }
   ]
 }
