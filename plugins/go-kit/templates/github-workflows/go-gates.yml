@@ -1,0 +1,30 @@
+# Copy into product .github/workflows/ or merge steps into existing ci.yml.
+name: go-gates
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  go-gates:
+    name: go-kit gates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - name: Tier 0 go-rg-gate
+        run: bash scripts/go-rg-gate.sh .
+      - name: Tier 0.5 go-hotpath-gate
+        run: bash scripts/go-hotpath-gate.sh .
+      - name: Tier 0.5 go-fmt-gate
+        run: bash scripts/go-fmt-gate.sh .
+      - name: Tier 0.5 go-vet-gate
+        run: bash scripts/go-vet-gate.sh . ./...
+      - name: Tier 1 go-race-ci-gate
+        run: bash scripts/go-race-ci-gate.sh .
+      - name: Tier 1b go-golangci-gate
+        run: bash scripts/go-golangci-gate.sh .
+      - name: go test race
+        run: go test -race ./...

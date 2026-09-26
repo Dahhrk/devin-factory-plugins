@@ -1,0 +1,7 @@
+{
+  "name": "go-kit",
+  "version": "0.1.0",
+  "description": "Go poteto bar: PSR Effective Go encode. gofmt, go vet, race in CI, propagate errors/cancellation, bound goroutines, close resources, avoid uncontrolled globals. Tier 0 single-walk rg (func hooks, bare go, ioutil, panic, errgroup+Background) + hotpath budget + fmt/vet + race-CI + golangci bodyclose/errcheck. Requires ripgrep.",
+  "skills": "./skills",
+  "rules": "./rules"
+}

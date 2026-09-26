@@ -1,0 +1,23 @@
+# Starter golangci config aligned with go-kit / PSR Go.
+# Merge into product .golangci.yml; enable errcheck + bodyclose for typed depth.
+version: "2"
+
+linters:
+  default: none
+  enable:
+    - bodyclose
+    - errcheck
+    - govet
+    - ineffassign
+    - staticcheck
+    - unused
+  exclusions:
+    rules:
+      - path: _test\.go$
+        linters:
+          - bodyclose
+          - errcheck
+
+formatters:
+  enable:
+    - gofmt
