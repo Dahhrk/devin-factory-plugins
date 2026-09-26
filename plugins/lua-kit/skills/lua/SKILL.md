@@ -1,6 +1,6 @@
 ---
 name: lua
-description: Lua 5.1 / GMod coding bar. Locals, hooks, alloc, iterators, strings, bit, file layout. Use when reading or editing any .lua in a GMod addon or Obsidian Framework.
+description: Lua 5.1 / GMod coding bar. Locals, hooks, alloc, iterators, strings, bit, file layout, PSR Lua checks. Use when reading or editing any .lua in a GMod addon or Obsidian Framework.
 paths: ["**/*.lua", "**/addon.json"]
 ---
 
@@ -9,6 +9,16 @@ paths: ["**/*.lua", "**/addon.json"]
 LuaJIT / Lua 5.1 only. No 5.2+/5.3 syntax.
 
 Net / `AddCSLuaFile`: skill **lua-net**. VGUI / HUD: skill **lua-ui**. Gates: pack README.
+
+## PSR Lua ch.4 (encoded)
+
+From Programming Standards Reference language checks:
+
+1. **Formatter/linter required** — product must run `luacheck` (Tier 1) and `glualint` (Tier 2). Do not disable or weaken gates to force green.
+2. **Explicit scope** — `local` by default; one addon root table global. Luacheck unused/undefined enforces.
+3. **Table-shape** — dense arrays use `#` / numeric `for`; membership via key-set not `table.HasValue` (Tier 0).
+4. **Host boundaries** — no `RunString` / `CompileString` / `RunStringEx` (Tier 0). Net trust: skill **lua-net**.
+5. **Lua-version / host differences** — no `goto` / `::labels::` / `_ENV` / `//` (Tier 0). Prefer `bit.*` over 5.3 ops. Style: `and`/`or`/`not`/`~=` over GMod `&&`/`||`/`!`.
 
 ## Rules
 
@@ -39,5 +49,7 @@ local healthyColor = Color(100, 255, 100)
 - `hook.Add("Think", ..., function() player.GetAll() ... end)` every tick
 - `Material("...")` or `Color(r,g,b)` inside `HUDPaint`
 - Assuming `pairs` order or sparse-array `#t` length
+- JS-style `\"` inside Lua strings (agent slip; Tier 0)
+- Method-existence checks written as `obj:Method and obj:Method()` (use `obj.Method and obj:Method()`)
 
 Wiki: https://wiki.facepunch.com/gmod/optimizationTips

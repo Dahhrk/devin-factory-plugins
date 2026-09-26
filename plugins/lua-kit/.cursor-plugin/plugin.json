@@ -1,0 +1,7 @@
+{
+  "name": "lua-kit",
+  "version": "0.2.8",
+  "description": "GMod Lua bar: poteto EXIT, PSR Lua ch.4 (formatter/linter, scope, table-shape, host, version/host), rg+hotpath+luacheck+glualint required, Facepunch extras.",
+  "skills": "./skills",
+  "rules": "./rules"
+}
