@@ -1,0 +1,11 @@
+{
+  "name": "astro-kit-good-fixture",
+  "private": true,
+  "dependencies": {
+    "astro": "^5.0.0"
+  },
+  "scripts": {
+    "check": "astro check",
+    "build": "astro build"
+  }
+}
