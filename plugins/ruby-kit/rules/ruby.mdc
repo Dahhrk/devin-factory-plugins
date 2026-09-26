@@ -1,0 +1,19 @@
+---
+description: Ruby PSR + poteto bar for product .rb
+globs: "**/*.{rb,rake,gemspec}"
+alwaysApply: false
+---
+
+# Ruby
+
+Follow skills **ruby** and **poteto-ruby** when applicable.
+
+- Formatter clean (RuboCop layout / agreed RuboCop config)
+- RuboCop + **rubocop-performance** required in product wiring
+- No `eval(` without `ruby-rg-allow` + rationale
+- No dynamic `send` / `__send__` / `public_send` with interpolated method name or `params` without `ruby-rg-allow` + rationale; prefer explicit methods or an allowlisted dispatcher
+- No SQL string interpolate in `.where` / `.order` / `.select` / `.find_by_sql` / … (`"...#{...}"`); prefer bind parameters / hash conditions / Arel
+- Required product gates: `ruby-rg-gate` + `ruby-hotpath-gate` + `ruby-fmt-gate` + `ruby-rubocop-performance-gate`. Do not disable checks to force green.
+- Prove runtime behaviour with tests / RuboCop, not "fmt pass" alone
+
+Repeated review smell twice on a Ruby product: encode into lint/CI/skill, not more prose.

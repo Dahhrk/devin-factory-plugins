@@ -1,0 +1,25 @@
+# Copy into product .github/workflows/ or merge steps into existing ci.yml.
+name: ruby-gates
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  ruby-gates:
+    name: ruby-kit gates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.2"
+          bundler-cache: true
+      - name: Tier 0 ruby-rg-gate
+        run: bash scripts/ruby-rg-gate.sh .
+      - name: Tier 0.5 ruby-hotpath-gate
+        run: bash scripts/ruby-hotpath-gate.sh .
+      - name: Tier 0.5 ruby-fmt-gate
+        run: bash scripts/ruby-fmt-gate.sh .
+      - name: Tier 1 ruby-rubocop-performance-gate
+        run: bash scripts/ruby-rubocop-performance-gate.sh .
