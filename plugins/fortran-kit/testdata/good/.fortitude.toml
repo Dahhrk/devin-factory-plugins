@@ -1,0 +1,3 @@
+[check]
+select = ["E", "C", "OB", "S", "PORT", "FORT"]
+ignore = []

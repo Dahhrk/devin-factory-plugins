@@ -1,0 +1,7 @@
+{
+  "name": "fortran-kit",
+  "version": "0.1.0",
+  "description": "Fortran poteto bar: PSR Fortran encode. fortitude lint, implicit none, no GOTO, checked I/O (iostat). Tier 0 single-walk rg + hotpath budget + fortitude wiring. Requires ripgrep. fprettify recommended formatter.",
+  "skills": "./skills",
+  "rules": "./rules"
+}

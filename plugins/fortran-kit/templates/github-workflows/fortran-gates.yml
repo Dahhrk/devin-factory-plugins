@@ -1,0 +1,19 @@
+# Copy into product .github/workflows/ or merge steps into existing ci.yml.
+name: fortran-gates
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  fortran-gates:
+    name: fortran-kit gates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tier 0 fortran-rg-gate
+        run: bash scripts/fortran-rg-gate.sh .
+      - name: Tier 0.5 fortran-hotpath-gate
+        run: bash scripts/fortran-hotpath-gate.sh .
+      - name: Tier 1 fortran-fortitude-gate
+        run: bash scripts/fortran-fortitude-gate.sh .
