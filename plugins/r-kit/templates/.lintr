@@ -1,0 +1,4 @@
+linters: linters_with_defaults(
+    T_and_F_symbol_linter(),
+    undesirable_function_linter(fun_names = default_undesirable_functions)
+  )

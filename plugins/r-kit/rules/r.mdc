@@ -1,0 +1,19 @@
+---
+description: R PSR + poteto bar for product .R/.r/.Rmd
+globs: "**/*.{R,r,Rmd,rmd}"
+alwaysApply: false
+---
+
+# R
+
+Follow skills **r** and **poteto-r** when applicable.
+
+- **lintr** required in product wiring (`.lintr` / CI `lintr::lint` / `lintr::lint_dir` / `lintr::lint_package`)
+- Settings must keep **T_and_F_symbol_linter** and **undesirable_function_linter** enabled (not `NULL` / excluded)
+- No `attach()` without `r-rg-allow` + rationale; prefer `pkg::fun` / explicit environments / `@importFrom`
+- No symbol `T` / `F` without `r-rg-allow` + rationale; prefer `TRUE` / `FALSE`
+- No `eval(parse(...))` without `r-rg-allow` + rationale; prefer `get` / `[[` / explicit mappings / `rlang` quasiquotation
+- Required product gates: `r-rg-gate` + `r-hotpath-gate` + `r-lintr-gate`. Do not disable checks to force green.
+- Prove behaviour with testthat / integration checks where product needs them, not "lint pass" alone
+
+Repeated review smell twice on an R product: encode into lint/CI/skill, not more prose.
