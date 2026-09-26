@@ -1,0 +1,30 @@
+# Copy into product .github/workflows/ or merge steps into existing ci.yml.
+name: py-gates
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  py-gates:
+    name: python-kit gates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install ruff
+        run: pip install ruff
+      - name: Tier 0 py-rg-gate
+        run: bash scripts/py-rg-gate.sh .
+      - name: Tier 0.5 py-hotpath-gate
+        run: bash scripts/py-hotpath-gate.sh .
+      - name: Tier 0.5 py-ruff-gate
+        run: bash scripts/py-ruff-gate.sh .
+      - name: Tier 1 py-typing-gate
+        run: bash scripts/py-typing-gate.sh .
+      - name: Tier 1 py-test-gate
+        run: bash scripts/py-test-gate.sh .
+      - name: pytest
+        run: pip install pytest && pytest -q
