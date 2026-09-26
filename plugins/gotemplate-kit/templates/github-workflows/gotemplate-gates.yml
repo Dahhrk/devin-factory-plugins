@@ -1,0 +1,19 @@
+# Copy into product .github/workflows/ or merge steps into existing ci.yml.
+name: gotemplate-gates
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  gotemplate-gates:
+    name: gotemplate-kit gates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tier 0 gotemplate-rg-gate
+        run: bash scripts/gotemplate-rg-gate.sh .
+      - name: Tier 0.5 gotemplate-hotpath-gate
+        run: bash scripts/gotemplate-hotpath-gate.sh .
+      - name: Tier 1 gotemplate-html-gate
+        run: bash scripts/gotemplate-html-gate.sh .
