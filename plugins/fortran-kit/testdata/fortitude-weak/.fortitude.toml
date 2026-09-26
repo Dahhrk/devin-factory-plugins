@@ -1,0 +1,3 @@
+[check]
+select = ["E", "S"]
+ignore = ["C001"]
