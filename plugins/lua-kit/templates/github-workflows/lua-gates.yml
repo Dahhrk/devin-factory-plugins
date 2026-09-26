@@ -9,6 +9,7 @@ on:
       - "**/*.lua"
       - ".luacheckrc"
       - "scripts/lua-rg-gate.sh"
+      - "scripts/lua-hotpath-gate.sh"
       - "scripts/lua-luacheck-gate.sh"
       - "glualint.json"
       - ".github/workflows/lua-gates.yml"
@@ -17,6 +18,7 @@ on:
       - "**/*.lua"
       - ".luacheckrc"
       - "scripts/lua-rg-gate.sh"
+      - "scripts/lua-hotpath-gate.sh"
       - "scripts/lua-luacheck-gate.sh"
       - "glualint.json"
       - ".github/workflows/lua-gates.yml"
@@ -32,10 +34,21 @@ jobs:
       - name: Run lua-rg-gate
         run: bash scripts/lua-rg-gate.sh .
 
+  tier05-hotpath:
+    name: Tier 0.5 hotpath gate
+    runs-on: ubuntu-latest
+    needs: tier0-rg
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install ripgrep
+        run: sudo apt-get update && sudo apt-get install -y ripgrep
+      - name: Run lua-hotpath-gate
+        run: bash scripts/lua-hotpath-gate.sh .
+
   tier1-luacheck:
     name: Tier 1 luacheck
     runs-on: ubuntu-latest
-    needs: tier0-rg
+    needs: tier05-hotpath
     steps:
       - uses: actions/checkout@v4
       - name: Install luacheck
