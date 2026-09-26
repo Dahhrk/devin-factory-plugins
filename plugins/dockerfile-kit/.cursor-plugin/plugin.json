@@ -1,0 +1,7 @@
+{
+  "name": "dockerfile-kit",
+  "version": "0.1.0",
+  "description": "Dockerfile poteto bar: PSR Dockerfile encode. No ADD-vs-COPY secrets, no :latest tags, no apt without cleanup, no USER root late, no secrets in ARG/ENV, no curl|bash. Tier 0 single-walk rg + hotpath budget + docker wiring. Requires ripgrep.",
+  "skills": "./skills",
+  "rules": "./rules"
+}
