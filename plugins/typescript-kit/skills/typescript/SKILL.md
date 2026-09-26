@@ -1,6 +1,6 @@
 ---
 name: typescript
-description: TypeScript PSR bar. Strict checking (extends-aware), oxlint adoption gate, fetch/URL/env + JSON/DOM rg boundaries, runtime/drive proof, product-vs-library .d.ts policy, no unexplained any/assertions/double-assertion, described @ts-expect-error, typecheck aliases. Use when reading or editing any .ts or .tsx in a factory product.
+description: TypeScript PSR bar. Strict checking (extends-aware), oxlint adoption gate, global-fetch/URL/env + JSON/DOM rg boundaries (method .fetch allowed), env-schema + typed-parse templates, runtime/drive proof, product-vs-library .d.ts policy, no unexplained any/assertions/double-assertion, described @ts-expect-error, typecheck aliases. Use when reading or editing any .ts or .tsx in a factory product.
 paths: ["**/*.ts", "**/*.tsx", "**/tsconfig*.json", "**/.oxlintrc.json"]
 ---
 
@@ -12,8 +12,8 @@ Apply pstack **principle-type-system-discipline** and **typescript-best-practice
 
 1. **Handbook + compiler options** - follow TypeScript handbook idioms; product `tsconfig` is the contract.
 2. **Strict checking** - `strict: true` on the app config or an `extends` parent. Gate: `scripts/ts-strict-gate.sh` (walks extends; accepts tsconfig.app/json/base/build/types).
-3. **Avoid unexplained any and assertions** - ban `: any`, `as any`, `as unknown as`, bare `@ts-ignore` / `@ts-nocheck`, and `@ts-expect-error` without a trailing description. Prefer `unknown` + parse. Non-null `!` on external lookups is an unexplained assertion. Gate: `scripts/ts-rg-gate.sh`. Product oxlint: `scripts/ts-oxlint-gate.sh` + `templates/oxlintrc.json` (`typescript/no-explicit-any`, `typescript/no-non-null-assertion`, `typescript/ban-ts-comment` allow-with-description).
-4. **Validate external data at runtime** - DOM nodes, `JSON.parse`, `fetch`, `new URL`, and `process.env.*` cross into named domain types at the boundary. No postfix `!` on `getElementById` / `querySelector*`. Bare calls fail rg unless `ts-rg-allow` on the named parser line.
+3. **Avoid unexplained any and assertions** - ban `: any`, `as any`, `as unknown as`, bare `@ts-ignore` / `@ts-nocheck`, and `@ts-expect-error` without a trailing description. Prefer `unknown` + parse. Non-null `!` on external lookups is an unexplained assertion. Gate: `scripts/ts-rg-gate.sh` (portable bare expect-error filter; no PCRE2 required). Product oxlint: `scripts/ts-oxlint-gate.sh` + `templates/oxlintrc.json` (`typescript/no-explicit-any`, `typescript/no-non-null-assertion`, `typescript/ban-ts-comment` allow-with-description).
+4. **Validate external data at runtime** - DOM nodes, `JSON.parse`, **global** `fetch`, `new URL`, and `process.env.*` cross into named domain types at the boundary. No postfix `!` on `getElementById` / `querySelector*`. Bare calls fail rg unless `ts-rg-allow` on the named parser line. Method `.fetch(` is allowed. Whole-object `process.env` into a schema/parser is allowed. Starters: `templates/env-schema.ts`, `templates/typed-parse.ts`.
 5. **Type-check in CI** - `typecheck` / `check-types` / `type-check` / `test:types`, or any script invoking `tsc`/`tsgo`, must exist.
 6. **Test emitted/runtime behaviour** - drive smoke, playwright, vitest/jest, or `node --test` against the running artifact. Types alone are not Done. Gate: `scripts/ts-runtime-gate.sh`.
 7. **Exhaustive unions** - discriminated unions + `never` default. Oxlint `typescript/switch-exhaustiveness-check` in the product template; rule `typescript-exhaustive-switch`.

@@ -1,5 +1,6 @@
 # Copy into product .github/workflows/ or merge steps into existing ci.yml.
 # Pair with templates/oxlintrc.json at product root as .oxlintrc.json.
+# Boundary starters: templates/env-schema.ts, templates/typed-parse.ts.
 name: ts-gates
 
 on:

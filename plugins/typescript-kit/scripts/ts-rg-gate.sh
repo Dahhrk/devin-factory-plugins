@@ -15,6 +15,9 @@
 #   Library research: TS_RG_SKIP_DTS=1 skips declaration files (host plugin /
 #   parser APIs often need any). Prefer named allow on a line when only one
 #   site is intentional.
+#
+# fetch: matches global fetch( only — not method .fetch( (tRPC / React Query).
+# Hot-path: one shared file walk setup; smell checks run concurrently.
 set -euo pipefail
 ROOT="${1:-.}"
 cd "$ROOT"
@@ -44,76 +47,139 @@ if [[ ! -d "$SRC" ]]; then
 fi
 
 fail=0
-HITFILE="$(mktemp)"
-trap 'rm -f "$HITFILE" "$HITFILE.f"' EXIT
+TMPDIR_GATE="$(mktemp -d)"
+trap 'rm -rf "$TMPDIR_GATE"' EXIT
 
 SKIP_DTS=0
 case "${TS_RG_SKIP_DTS:-}" in
   1|true|TRUE|yes|YES) SKIP_DTS=1 ;;
 esac
 
-check() {
-  local pat="$1" msg="$2"
-  : >"$HITFILE"
-  if command -v rg >/dev/null 2>&1; then
-    local rg_args=( -n --glob '*.ts' --glob '*.tsx' --glob '*.mts' --glob '*.cts'
-      --glob '!**/node_modules/**' --glob '!**/.git/**' )
-    if [[ "$SKIP_DTS" -eq 1 ]]; then
-      rg_args+=( --glob '!*.d.ts' --glob '!*.d.mts' --glob '!*.d.cts' )
-    fi
-    rg "${rg_args[@]}" -e "$pat" "$SRC" >"$HITFILE" 2>/dev/null || true
+HAS_RG=0
+if command -v rg >/dev/null 2>&1; then HAS_RG=1; fi
+
+rg_globs=()
+if [[ "$HAS_RG" -eq 1 ]]; then
+  rg_globs=( --glob '*.ts' --glob '*.tsx' --glob '*.mts' --glob '*.cts'
+    --glob '!**/node_modules/**' --glob '!**/.git/**' )
+  if [[ "$SKIP_DTS" -eq 1 ]]; then
+    rg_globs+=( --glob '!*.d.ts' --glob '!*.d.mts' --glob '!*.d.cts' )
+  fi
+fi
+
+# Emit raw hits for pat into hitfile (no allow filter yet).
+scan() {
+  local pat="$1" hitfile="$2"
+  : >"$hitfile"
+  if [[ "$HAS_RG" -eq 1 ]]; then
+    rg -n "${rg_globs[@]}" -e "$pat" "$SRC" >"$hitfile" 2>/dev/null || true
   else
     local find_expr=( "$SRC" \( -name '*.ts' -o -name '*.tsx' -o -name '*.mts' -o -name '*.cts' \) )
     if [[ "$SKIP_DTS" -eq 1 ]]; then
       find_expr+=( ! -name '*.d.ts' ! -name '*.d.mts' ! -name '*.d.cts' )
     fi
     find "${find_expr[@]}" ! -path '*/node_modules/*' ! -path '*/.git/*' -print0 2>/dev/null \
-      | xargs -0 grep -nE "$pat" >"$HITFILE" 2>/dev/null || true
-  fi
-  if [[ ! -s "$HITFILE" ]]; then
-    return 0
-  fi
-  if command -v rg >/dev/null 2>&1; then
-    rg -v 'ts-rg-allow' "$HITFILE" >"$HITFILE.f" || true
-  else
-    grep -v 'ts-rg-allow' "$HITFILE" >"$HITFILE.f" || true
-  fi
-  if [[ -s "$HITFILE.f" ]]; then
-    echo "FAIL: $msg"
-    head -40 "$HITFILE.f"
-    local n
-    n=$(wc -l <"$HITFILE.f" | tr -d ' ')
-    if [[ "$n" -gt 40 ]]; then echo "... ($n total hits)"; fi
-    fail=1
+      | xargs -0 grep -nE "$pat" >"$hitfile" 2>/dev/null || true
   fi
 }
 
-# PSR: avoid unexplained any (type positions only; not English "any" in comments)
-check '\bas\s+any\b' 'as any banned'
-check ':\s*any\b' 'explicit : any banned'
-check '<any>' 'generic any banned'
-check '\bany\[' 'any[] banned'
-check '\bPromise\s*<\s*any\s*>' 'Promise<any> banned'
-check '\bRecord\s*<\s*[^,]+,\s*any\s*>' 'Record<*, any> banned'
-check '@ts-ignore\b' '@ts-ignore banned (prefer typed fix or @ts-expect-error with description via oxlint)'
-check '@ts-nocheck\b' '@ts-nocheck banned'
+# Drop ts-rg-allow lines; optionally drop lines matching keep_pat (inverse filter).
+filter_hits() {
+  local hitfile="$1" filtered="$2" drop_described="${3:-}"
+  if [[ ! -s "$hitfile" ]]; then
+    : >"$filtered"
+    return 0
+  fi
+  local tmp="$filtered.raw"
+  if [[ "$HAS_RG" -eq 1 ]]; then
+    rg -v 'ts-rg-allow' "$hitfile" >"$tmp" || true
+  else
+    grep -v 'ts-rg-allow' "$hitfile" >"$tmp" || true
+  fi
+  if [[ -n "$drop_described" ]]; then
+    if [[ "$HAS_RG" -eq 1 ]]; then
+      rg -v "$drop_described" "$tmp" >"$filtered" || true
+    else
+      grep -vE "$drop_described" "$tmp" >"$filtered" || true
+    fi
+    rm -f "$tmp"
+  else
+    mv "$tmp" "$filtered"
+  fi
+}
 
-# Double assertion slips past as-any ban (tRPC / product residual -> encode)
-check '\bas\s+unknown\s+as\b' 'as unknown as banned (prefer named parse / satisfies; ts-rg-allow with rationale)'
+report_fail() {
+  local msg="$1" filtered="$2"
+  echo "FAIL: $msg"
+  head -40 "$filtered"
+  local n
+  n=$(wc -l <"$filtered" | tr -d ' ')
+  if [[ "$n" -gt 40 ]]; then echo "... ($n total hits)"; fi
+}
 
-# Bare expect-error without rationale
-check '@ts-expect-error(?!\s+\S)' '@ts-expect-error requires a trailing description (e.g. // @ts-expect-error - reason)'
+run_check() {
+  local pat="$1" msg="$2" id="$3" drop_described="${4:-}"
+  local hitfile="$TMPDIR_GATE/hit.$id"
+  local filtered="$TMPDIR_GATE/filt.$id"
+  local rcfile="$TMPDIR_GATE/rc.$id"
+  scan "$pat" "$hitfile"
+  filter_hits "$hitfile" "$filtered" "$drop_described"
+  if [[ -s "$filtered" ]]; then
+    report_fail "$msg" "$filtered"
+    echo 1 >"$rcfile"
+  else
+    echo 0 >"$rcfile"
+  fi
+}
 
-# PSR: avoid unexplained assertions on external/DOM data
-check 'getElementById\s*\([^)]*\)\s*!' 'DOM non-null: getElementById(...)! banned; check null then use narrowed node'
-check 'querySelector(All)?\s*\([^)]*\)\s*!' 'DOM non-null: querySelector*(...)! banned; check null then use narrowed node'
+# Concurrent smell checks (wall-clock hot-path; each scan is independent)
+pids=()
+run_check '\bas\s+any\b' 'as any banned' asany &
+pids+=($!)
+run_check ':\s*any\b' 'explicit : any banned' colonany &
+pids+=($!)
+run_check '<any>' 'generic any banned' genany &
+pids+=($!)
+run_check '\bany\[' 'any[] banned' anyarr &
+pids+=($!)
+run_check '\bPromise\s*<\s*any\s*>' 'Promise<any> banned' promiseany &
+pids+=($!)
+run_check '\bRecord\s*<\s*[^,]+,\s*any\s*>' 'Record<*, any> banned' recordany &
+pids+=($!)
+run_check '@ts-ignore\b' '@ts-ignore banned (prefer typed fix or @ts-expect-error with description via oxlint)' tsignore &
+pids+=($!)
+run_check '@ts-nocheck\b' '@ts-nocheck banned' tsnocheck &
+pids+=($!)
+run_check '\bas\s+unknown\s+as\b' 'as unknown as banned (prefer named parse / satisfies; ts-rg-allow with rationale)' unknownas &
+pids+=($!)
+# Portable bare @ts-expect-error: match all, drop lines that already have a description
+# (avoids PCRE2 lookahead; prior (?!...) silently no-oped under default rg)
+run_check '@ts-expect-error\b' '@ts-expect-error requires a trailing description (e.g. // @ts-expect-error - reason)' tsexpect '@ts-expect-error\s+\S' &
+pids+=($!)
+run_check 'getElementById\s*\([^)]*\)\s*!' 'DOM non-null: getElementById(...)! banned; check null then use narrowed node' domid &
+pids+=($!)
+run_check 'querySelector(All)?\s*\([^)]*\)\s*!' 'DOM non-null: querySelector*(...)! banned; check null then use narrowed node' domqs &
+pids+=($!)
+run_check '\bJSON\.parse\s*\(' 'JSON.parse in src banned without a typed parse boundary (move behind a named parser or schema; ts-rg-allow on the parser line if needed)' jsonparse &
+pids+=($!)
+# Global fetch only — exclude method .fetch( (tRPC / React Query prefetch)
+run_check '(^|[^.\w])fetch\s*\(' 'fetch in src banned without a named boundary (parse Response into a domain type; ts-rg-allow on the boundary line; method .fetch is allowed)' fetch &
+pids+=($!)
+run_check '\bnew\s+URL\s*\(' 'new URL in src banned without a named boundary (validate input; ts-rg-allow on the boundary line)' newurl &
+pids+=($!)
+# Accessor form avoids prose/docs; whole-object process.env to a schema parser is OK
+run_check '\bprocess\.env(?:\.\w+|\[)' 'process.env in src banned without a named env parse boundary (ts-rg-allow on the parser line; whole-object process.env to a schema is OK)' processenv &
+pids+=($!)
 
-# PSR: validate external data at runtime (bare parse / net / env is a boundary smell)
-check '\bJSON\.parse\s*\(' 'JSON.parse in src banned without a typed parse boundary (move behind a named parser or schema; ts-rg-allow on the parser line if needed)'
-check '\bfetch\s*\(' 'fetch in src banned without a named boundary (parse Response into a domain type; ts-rg-allow on the boundary line)'
-check '\bnew\s+URL\s*\(' 'new URL in src banned without a named boundary (validate input; ts-rg-allow on the boundary line)'
-# Accessor form avoids prose/docs that only mention the identifier
-check '\bprocess\.env(?:\.\w+|\[)' 'process.env in src banned without a named env parse boundary (ts-rg-allow on the parser line)'
+for pid in "${pids[@]}"; do
+  wait "$pid" || true
+done
+shopt -s nullglob
+for rcfile in "$TMPDIR_GATE"/rc.*; do
+  if [[ "$(cat "$rcfile")" != "0" ]]; then
+    fail=1
+  fi
+done
 
 if [[ "$fail" -ne 0 ]]; then exit 1; fi
 mode="product"

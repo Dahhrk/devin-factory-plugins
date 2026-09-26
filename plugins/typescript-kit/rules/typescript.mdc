@@ -11,7 +11,7 @@ Follow skills **typescript** and **poteto-typescript** when applicable. Prefer p
 - `strict` + `noImplicitAny` on (including via `extends`); type-check in CI (`tsc -b` or equivalent)
 - No unexplained `any` / `as any` / `as unknown as` / bare `@ts-ignore` / bare `@ts-expect-error`
 - No postfix `!` on DOM queries or other external lookups; check at the boundary then use the narrowed value
-- Parse external data (JSON, fetch, URL, env, DOM) into a named domain type before trusting it; bare calls need `ts-rg-allow` on the named parser line
+- Parse external data (JSON, global fetch, URL, env, DOM) into a named domain type before trusting it; bare calls need `ts-rg-allow` on the named parser line. Method `.fetch` is allowed. Prefer `templates/env-schema.ts` / `templates/typed-parse.ts` starters.
 - Prefer `unknown` at the parse site; `satisfies` over widening `as`
 - Exhaustive `switch` with `never` default on discriminated unions (oxlint `switch-exhaustiveness-check`)
 - Product public `.d.ts` must not expose `: any`; library host research may use `TS_RG_SKIP_DTS=1`

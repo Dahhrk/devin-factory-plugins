@@ -51,3 +51,15 @@ export function readPort(fallback = 3000): number {
   if (!Number.isFinite(n)) throw new Error('invalid PORT')
   return n
 }
+
+type Prefetchable = { fetch: () => Promise<void> }
+export async function prefetchAll(q: Prefetchable): Promise<void> {
+  await q.fetch()
+}
+
+export function parseAppEnv(raw: Record<string, string | undefined> = process.env): { port: number } {
+  const portRaw = raw.PORT
+  const port = portRaw === undefined || portRaw === '' ? 3000 : Number(portRaw)
+  if (!Number.isFinite(port)) throw new Error('invalid PORT')
+  return { port }
+}
