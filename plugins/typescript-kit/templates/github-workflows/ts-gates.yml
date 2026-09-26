@@ -1,8 +1,10 @@
 # Copy into product .github/workflows/ or merge steps into existing ci.yml.
 # Pair with templates/oxlintrc.json at product root as .oxlintrc.json.
 # Boundary starters: templates/env-schema.ts, templates/typed-parse.ts.
-# Oxlint pin: templates/oxlint.version (gate uses TS_OXLINT_VERSION; never floating-latest).
-# Offline CI: install oxlint@pin into node_modules or set TS_OXLINT_BIN; TS_OXLINT_OFFLINE=1 refuses npx.
+# Oxlint pins: templates/oxlint.version + templates/oxlint-tsgolint.version
+# (gate uses TS_OXLINT_VERSION + TS_OXLINT_TSGOLINT_VERSION; never floating-latest).
+# Live gate is type-aware (--type-aware): install oxlint + oxlint-tsgolint.
+# Offline CI: install both into node_modules or set TS_OXLINT_BIN; TS_OXLINT_OFFLINE=1 refuses npx.
 name: ts-gates
 
 on:
@@ -29,9 +31,10 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run typecheck
-      - name: oxlint (live, pinned)
+      - name: oxlint (live, pinned, type-aware)
         run: bash scripts/ts-oxlint-gate.sh .
-        # Uses node_modules/.bin/oxlint after npm ci, else npx oxlint@$TS_OXLINT_VERSION
+        # Uses node_modules/.bin/oxlint + oxlint-tsgolint after npm ci,
+        # else npx -p oxlint@$pin -p oxlint-tsgolint@$tsg_pin oxlint --type-aware
       - run: npm run lint
       - name: Runtime / drive proof
         run: npm test
