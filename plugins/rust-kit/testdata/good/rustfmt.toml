@@ -1,0 +1,2 @@
+# Starter rustfmt for rust-kit product fixtures / templates.
+edition = "2021"
