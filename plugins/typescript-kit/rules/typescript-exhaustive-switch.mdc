@@ -1,0 +1,26 @@
+---
+description: Exhaustive switch on TypeScript discriminated unions and enums
+globs: "**/*.{ts,tsx}"
+alwaysApply: false
+---
+
+# Exhaustive switch
+
+When switching on a discriminated union or enum, handle every variant and put a `never` check in `default` so new variants fail typecheck until handled.
+
+```ts
+function assertNever(x: never): never {
+  throw new Error(`unexpected: ${String(x)}`)
+}
+
+switch (event.type) {
+  case "ready":
+    return handleReady(event)
+  case "error":
+    return handleError(event)
+  default:
+    return assertNever(event)
+}
+```
+
+Product oxlint template sets `typescript/switch-exhaustiveness-check` to error. Do not silence it to force green.

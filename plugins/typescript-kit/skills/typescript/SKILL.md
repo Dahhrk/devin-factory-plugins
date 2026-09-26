@@ -1,7 +1,7 @@
 ---
 name: typescript
-description: TypeScript PSR bar. Strict checking (extends-aware), no unexplained any/assertions/double-assertion, described @ts-expect-error, runtime boundary validation, CI typecheck aliases, emitted/runtime proof. Use when reading or editing any .ts or .tsx in a factory product.
-paths: ["**/*.ts", "**/*.tsx", "**/tsconfig*.json"]
+description: TypeScript PSR bar. Strict checking (extends-aware), oxlint no-explicit-any / no-non-null / switch-exhaustiveness, runtime/drive proof, product-vs-library .d.ts policy, no unexplained any/assertions/double-assertion, described @ts-expect-error, CI typecheck aliases. Use when reading or editing any .ts or .tsx in a factory product.
+paths: ["**/*.ts", "**/*.tsx", "**/tsconfig*.json", "**/.oxlintrc.json"]
 ---
 
 # TypeScript
@@ -12,10 +12,12 @@ Apply pstack **principle-type-system-discipline** and **typescript-best-practice
 
 1. **Handbook + compiler options** - follow TypeScript handbook idioms; product `tsconfig` is the contract.
 2. **Strict checking** - `strict: true` on the app config or an `extends` parent. Gate: `scripts/ts-strict-gate.sh` (walks extends; accepts tsconfig.app/json/base/build/types).
-3. **Avoid unexplained any and assertions** - ban `: any`, `as any`, `as unknown as`, bare `@ts-ignore` / `@ts-nocheck`, and `@ts-expect-error` without a trailing description. Prefer `unknown` + parse. Non-null `!` on external lookups is an unexplained assertion. Gate: `scripts/ts-rg-gate.sh`; product should also set oxlint `typescript/no-explicit-any` and `typescript/no-non-null-assertion`.
+3. **Avoid unexplained any and assertions** - ban `: any`, `as any`, `as unknown as`, bare `@ts-ignore` / `@ts-nocheck`, and `@ts-expect-error` without a trailing description. Prefer `unknown` + parse. Non-null `!` on external lookups is an unexplained assertion. Gate: `scripts/ts-rg-gate.sh`. Product oxlint template: `templates/oxlintrc.json` (`typescript/no-explicit-any`, `typescript/no-non-null-assertion`, `typescript/ban-ts-comment` allow-with-description).
 4. **Validate external data at runtime** - DOM nodes, `JSON.parse`, fetch/URL/env cross into named domain types at the boundary. No postfix `!` on `getElementById` / `querySelector*`.
 5. **Type-check in CI** - `typecheck` / `check-types` / `type-check` / `test:types`, or any script invoking `tsc`/`tsgo`, must exist.
-6. **Test emitted/runtime behaviour** - drive smoke, playwright, or unit against the running artifact. Types alone are not Done.
+6. **Test emitted/runtime behaviour** - drive smoke, playwright, vitest/jest, or `node --test` against the running artifact. Types alone are not Done. Gate: `scripts/ts-runtime-gate.sh`.
+7. **Exhaustive unions** - discriminated unions + `never` default. Oxlint `typescript/switch-exhaustiveness-check` in the product template; rule `typescript-exhaustive-switch`.
+8. **`.d.ts` product vs library** - product public types must not expose `: any` (default rg scan includes `.d.ts`). Library host/plugin research may set `TS_RG_SKIP_DTS=1` or a single-line `ts-rg-allow`.
 
 ## Rules
 

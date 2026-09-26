@@ -1,5 +1,5 @@
 {
-  "name": "ts-kit-good-fixture",
+  "name": "ts-kit-library-dts",
   "private": true,
   "scripts": {
     "typecheck": "tsc -b",

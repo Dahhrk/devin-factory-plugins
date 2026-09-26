@@ -8,6 +8,12 @@
 # Default scan dir: src (override with TS_RG_SRC). When src is missing, tries
 # lib then app before failing.
 # Escape hatch: ts-rg-allow on the line.
+#
+# .d.ts product-vs-library policy:
+#   Product (default): scan *.d.ts. Public product types must not expose : any.
+#   Library research: TS_RG_SKIP_DTS=1 skips declaration files (host plugin /
+#   parser APIs often need any). Prefer named allow on a line when only one
+#   site is intentional.
 set -euo pipefail
 ROOT="${1:-.}"
 cd "$ROOT"
@@ -40,16 +46,27 @@ fail=0
 HITFILE="$(mktemp)"
 trap 'rm -f "$HITFILE" "$HITFILE.f"' EXIT
 
+SKIP_DTS=0
+case "${TS_RG_SKIP_DTS:-}" in
+  1|true|TRUE|yes|YES) SKIP_DTS=1 ;;
+esac
+
 check() {
   local pat="$1" msg="$2"
   : >"$HITFILE"
   if command -v rg >/dev/null 2>&1; then
-    rg -n --glob '*.ts' --glob '*.tsx' --glob '*.mts' --glob '*.cts' \
-      --glob '!**/node_modules/**' --glob '!**/.git/**' \
-      -e "$pat" "$SRC" >"$HITFILE" 2>/dev/null || true
+    local rg_args=( -n --glob '*.ts' --glob '*.tsx' --glob '*.mts' --glob '*.cts'
+      --glob '!**/node_modules/**' --glob '!**/.git/**' )
+    if [[ "$SKIP_DTS" -eq 1 ]]; then
+      rg_args+=( --glob '!*.d.ts' --glob '!*.d.mts' --glob '!*.d.cts' )
+    fi
+    rg "${rg_args[@]}" -e "$pat" "$SRC" >"$HITFILE" 2>/dev/null || true
   else
-    find "$SRC" \( -name '*.ts' -o -name '*.tsx' -o -name '*.mts' -o -name '*.cts' \) \
-      ! -path '*/node_modules/*' ! -path '*/.git/*' -print0 2>/dev/null \
+    local find_expr=( "$SRC" \( -name '*.ts' -o -name '*.tsx' -o -name '*.mts' -o -name '*.cts' \) )
+    if [[ "$SKIP_DTS" -eq 1 ]]; then
+      find_expr+=( ! -name '*.d.ts' ! -name '*.d.mts' ! -name '*.d.cts' )
+    fi
+    find "${find_expr[@]}" ! -path '*/node_modules/*' ! -path '*/.git/*' -print0 2>/dev/null \
       | xargs -0 grep -nE "$pat" >"$HITFILE" 2>/dev/null || true
   fi
   if [[ ! -s "$HITFILE" ]]; then
@@ -94,4 +111,6 @@ check 'querySelector(All)?\s*\([^)]*\)\s*!' 'DOM non-null: querySelector*(...)! 
 check '\bJSON\.parse\s*\(' 'JSON.parse in src banned without a typed parse boundary (move behind a named parser or schema; ts-rg-allow on the parser line if needed)'
 
 if [[ "$fail" -ne 0 ]]; then exit 1; fi
-echo "PASS ts-rg-gate ($ROOT/$SRC)"
+mode="product"
+if [[ "$SKIP_DTS" -eq 1 ]]; then mode="library (TS_RG_SKIP_DTS=1)"; fi
+echo "PASS ts-rg-gate ($ROOT/$SRC, $mode)"
