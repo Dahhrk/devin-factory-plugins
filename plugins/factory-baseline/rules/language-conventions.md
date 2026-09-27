@@ -43,7 +43,7 @@ Four seated pack twins stay mirrored for shared conventions and overlapping pack
 - Cursor pack twin: `Dahhrk/plug-factory` (private; packs at repo root)
 - ZCode pack twin: `Dahhrk/zcode-factory` (private; thin plugin at repo root)
 
-Kitchen peer (Claude + ChatGPT, not a pack twin): `Dahhrk/claude-chatgpt-factory` (private). Shared kitchen conventions must stay in sync with `Dahhrk/dark-factory`. Export lanes: Claude (Projects / skills / prompts) and ChatGPT (Custom GPTs / custom instructions / projects). Weekday Factory Drift includes convention drift on this peer. Pack hard-check stays on pack twins only.
+Kitchen peer (Claude + ChatGPT, not a pack twin): `Dahhrk/claude-chatgpt-factory` (private). One of five substance-parity homes (Cursor + Devin + ZCode + Claude + ChatGPT). Shared kitchen conventions must stay in sync with `Dahhrk/dark-factory`. Pack substance mirrors via lane-native exports into Claude and ChatGPT lanes. Weekday Factory Drift includes full pack sync via those exports. Pack hard-check stays on pack twins only.
 
 DevinGo app remains `Dahhrk/devin-go` only (not kitchen, not a pack twin).
 

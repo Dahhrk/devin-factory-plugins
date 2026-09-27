@@ -21,13 +21,15 @@ is authored there and exported to the Devin and ZCode twins.
 Product repos consume packs only. They do not host factory conventions.
 DevinGo stays `Dahhrk/devin-go` only (not the kitchen, not this pack).
 
-## Kitchen peer (Claude + ChatGPT)
+## Kitchen peer (Claude + ChatGPT) — five-home substance-parity
 
-- `Dahhrk/claude-chatgpt-factory` (private) is a **full kitchen peer** to `Dahhrk/dark-factory`, not a pack twin.
-- Export targets: Claude (Projects / skills / prompts) and ChatGPT (Custom GPTs / custom instructions / projects).
+Five homes stay substance-parity: Cursor (`plug-factory`) + Devin (this repo) + ZCode (`zcode-factory`) + Claude + ChatGPT.
+
+- `Dahhrk/claude-chatgpt-factory` (private) is a **full kitchen peer** to `Dahhrk/dark-factory`, not a pack twin. It holds the Claude and ChatGPT lanes in one mono repo.
+- Pack substance mirrors via **lane-native exports** into Claude (Projects / skills / prompts) and ChatGPT (Custom GPTs / custom instructions / projects). Do **not** run pack hard-check (`drift-check.mjs` / export-packs compare) against this peer.
 - Shared kitchen conventions must stay in sync with the kitchen (`docs/language-conventions.md`, naming, decisions/QUEUE shape, poteto-mode).
-- Weekday Factory Drift includes convention drift on this peer. Pack hard-check (`drift-check.mjs`) stays on pack twins only.
-- On unexplained convention drift: open a draft PR on the lagging kitchen; never merge without Dark.
+- Weekday Factory Drift includes **full pack sync** on this peer via those lane-native exports (plus convention compare). Pack hard-check stays on pack twins only.
+- On unexplained drift: open a draft PR on the lagging home; never merge without Dark.
 
 ## Cadence
 
@@ -38,7 +40,7 @@ twins agree and no drift is found.
 
 1. Refresh pack-twin mains from GitHub (`dark-factory`, `devin-factory-plugins`,
    `plug-factory`, `zcode-factory`) plus kitchen peer `claude-chatgpt-factory` for
-   convention compare only.
+   convention compare and lane-native Claude/ChatGPT export parity (not pack hard-check).
 2. Compare convention mirrors. At minimum
    `plugins/factory-baseline/rules/language-conventions.md` in this pack
    against `docs/language-conventions.md` in the kitchen.
