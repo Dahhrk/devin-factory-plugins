@@ -7,9 +7,18 @@ description: Onboard a repo into the dark factory - .devin/ blueprint+config, AG
 
 Available as `/factory-baseline:factory-init`. One-shot onboarding; the
 ambient contract (plugin rules) needs nothing — this installs the
-repo-local pieces.
+repo-local pieces. Runs end-to-end from a bare session: it self-provisions
+packs and the kitchen before touching the repo.
 
 ## Steps
+
+0. **Self-provision the lane.** `devin plugins list`: if
+   `dark-factory-pack` is absent, `devin plugins install -y
+   Dahhrk/devin-factory-plugins`. `gh auth status`: if there is no account
+   with access to the private `Dahhrk` org, stop and say so — auth is the
+   human's job, do not improvise credentials. In cloud sessions the org
+   required-plugins entry governs instead; a local install there is a
+   no-op if plugins are already required.
 
 1. **Locate the kitchen.** Try `%USERPROFILE%\Projects\dark-factory`, then
    `$DARK_FACTORY_REPO`. If absent:
