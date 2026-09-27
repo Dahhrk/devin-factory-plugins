@@ -51,5 +51,3 @@ The keep-up routine that checks this mirror is described in
 [docs/factory-keep-up.md](factory-keep-up.md).
 
 Each twin must ship lane-native manifests (Cursor `.cursor-plugin`, Devin `.devin-plugin`, ZCode flat skills); Cursor-only trees on Devin are a defect.
-
-Keep-up proof marker 2026-09-27: reversible; remove after Drift opens mirror PR.
