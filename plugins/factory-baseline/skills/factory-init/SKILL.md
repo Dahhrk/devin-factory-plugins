@@ -38,23 +38,12 @@ packs and the kitchen before touching the repo.
    delete `.cursor/rules/anti-ai-ui.mdc` and `scripts/check-anti-ai-ui.mjs` —
    a UI trope gate on a backend is noise.
 
-5. **Seat the language kit(s).** Census the repo's file extensions; for
-   each dominant language check whether the marketplace carries a kit
-   (`devin-factory-plugins` → `plugins/<lang>-kit`, or the plug-factory
-   twin). For each matching kit:
-
-   - Vendor repo-side gates: `scripts/*` → repo `scripts/`,
-     `templates/github-workflows/*` → `.github/workflows/`, other
-     `templates/*` configs → repo root (rename `luacheckrc`-style names to
-     their dotted form if needed).
-   - Install the agent side so skills/rules load in sessions:
-     `devin plugins install <kit-path-or-source>` locally; for cloud
-     sessions the kit goes on the org manifest's plugin list.
-   - Extension→kit is mostly literal (`.lua`→lua-kit, `.py`→python-kit);
-     watch aliases: `.ts/.tsx`→typescript-kit, `.cs`→csharp-kit,
-     `.ps1/.psm1`→powershell-kit, `.yml/.yaml` alone is not a kit.
-   - Skip a kit when the repo only has a stray file or two — a vendored
-     gate guarding one file is noise.
+5. **Seat the language kit(s).** Apply the `seat-kit` procedure
+   (`../seat-kit/SKILL.md`, also `/factory-baseline:seat-kit` standalone):
+   census the repo's extensions, vendor each matching kit's repo-side
+   gates, and install its plugin. If the packs were just installed this
+   session and the skill file isn't on disk yet, read it from the
+   marketplace clone (`plugins/factory-baseline/skills/seat-kit/SKILL.md`).
 
 6. **Make the blueprint true.** Edit `.devin/blueprint.yaml` `knowledge`
    to the repo's real commands (build.ps1/cmake/npm test — whatever its
