@@ -36,12 +36,14 @@ Autopilot stays gated until TRUST-NEXT is green. No product secrets in the kitch
 
 ## Anti-drift
 
-Four seated twins stay mirrored for shared conventions and overlapping packs:
+Four seated pack twins stay mirrored for shared conventions and overlapping packs:
 
 - Kitchen: `Dahhrk/dark-factory`
 - Devin plugin pack: `Dahhrk/devin-factory-plugins` (this repo)
 - Cursor pack twin: `Dahhrk/plug-factory` (private; packs at repo root)
 - ZCode pack twin: `Dahhrk/zcode-factory` (private; thin plugin at repo root)
+
+Kitchen peer (Claude + ChatGPT, not a pack twin): `Dahhrk/claude-chatgpt-factory` (private). Shared kitchen conventions must stay in sync with `Dahhrk/dark-factory`. Export lanes: Claude (Projects / skills / prompts) and ChatGPT (Custom GPTs / custom instructions / projects). Weekday Factory Drift includes convention drift on this peer. Pack hard-check stays on pack twins only.
 
 DevinGo app remains `Dahhrk/devin-go` only (not kitchen, not a pack twin).
 
