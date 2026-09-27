@@ -1,6 +1,6 @@
 # Language conventions
 
-Standing rules for factory writing and user-facing docs (Dark, 2026-09-23). Keep mirrored with Dahhrk/dark-factory docs/language-conventions.md.
+Standing rules for factory writing and user-facing docs (Dark, 2026-09-23).
 
 ## Names
 
@@ -39,13 +39,17 @@ Autopilot stays gated until TRUST-NEXT is green. No product secrets in the kitch
 Four seated pack twins stay mirrored for shared conventions and overlapping packs:
 
 - Kitchen: `Dahhrk/dark-factory`
-- Devin plugin pack: `Dahhrk/devin-factory-plugins` (this repo)
+- Devin plugin pack: `Dahhrk/devin-factory-plugins`
 - Cursor pack twin: `Dahhrk/plug-factory` (private; packs at repo root)
 - ZCode pack twin: `Dahhrk/zcode-factory` (private; thin plugin at repo root)
 
-Kitchen peers (not pack twins): `Dahhrk/claude-factory` (Claude) and `Dahhrk/chatgpt-factory` (ChatGPT), former mono `Dahhrk/claude-chatgpt-factory` deleted 2026-09-27. Five-lane substance-parity: Cursor + Devin + ZCode + Claude + ChatGPT. Shared kitchen conventions must stay in sync with `Dahhrk/dark-factory`. Pack substance mirrors via lane-native exports into each peer. Weekday Factory Drift includes full pack sync via those exports. Pack hard-check stays on pack twins only. Keep-up set is six repos (former mono deleted; do not recreate).
+Kitchen peers (not pack twins): `Dahhrk/claude-factory` (Claude) and `Dahhrk/chatgpt-factory` (ChatGPT), split from deprecated mono `Dahhrk/claude-chatgpt-factory`. Five-lane substance-parity: Cursor + Devin + ZCode + Claude + ChatGPT. Shared kitchen conventions must stay in sync with this kitchen. Pack substance mirrors via lane-native exports into each peer. Weekday Factory Drift includes full pack sync via those exports. Pack hard-check stays on pack twins only. Keep-up set is six repos (includes both peers; mono stub excluded).
 
 DevinGo app remains `Dahhrk/devin-go` only (not kitchen, not a pack twin).
 
 The keep-up routine that checks this mirror is described in
-[factory-keep-up.md](factory-keep-up.md).
+[docs/factory-keep-up.md](factory-keep-up.md).
+
+Each twin must ship lane-native manifests (Cursor `.cursor-plugin`, Devin `.devin-plugin`, ZCode flat skills); Cursor-only trees on Devin are a defect.
+
+Keep-up proof marker 2026-09-27: reversible; remove after Drift opens mirror PR.
