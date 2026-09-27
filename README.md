@@ -49,7 +49,13 @@ Cloud sessions — an admin adds one required entry under
 ```
 
 Required plugins install recursively, so requiring `dark-factory-pack` brings
-`factory-baseline`, `pstack`, and `cursor-team-kit` with it.
+`factory-baseline`, `pstack`, and `cursor-team-kit` with it. `optionalPlugins`
+do **not** auto-install - they are opt-in offers, and `lua-kit` is listed as
+the example. Seat language kits per repo with `/factory-baseline:seat-kit`
+(or let `factory-init` do it during bootstrap); it reads `kits.json` at this
+repo's root for the extension-to-kit map. Cloud sessions only get kits from
+the org manifest (org-wide, admin action) - per-repo plugin requirements do
+not exist.
 
 Devin Cloud supports rules, skills, hooks (except `session_start` / `session_end`),
 and MCP servers. Subagents (`agents/`) are CLI/Desktop-only today, so the ported
