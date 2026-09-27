@@ -20,7 +20,7 @@ Keep <2-4 invariants>
 
 All must be true. Do not claim done on prose.
 
-1. `bash scripts/ts-rg-gate.sh <product-root>` exits 0 (product copy of pack script; scans `src`, else `lib`/`app`; override with `TS_RG_SRC`; requires rg; single-walk). Product mode scans `.d.ts`. Global `fetch` only (method `.fetch` allowed); whole-object `process.env` to a schema is OK.
+1. `bash scripts/ts-rg-gate.sh <product-root>` exits 0 (product copy of pack script; scans `src`, else `lib`/`app`; override with `TS_RG_SRC`; requires rg; single-walk). Product mode scans `.d.ts`. Global `fetch` only (method `.fetch` allowed); whole-object `process.env` to a schema is OK. Empty `catch {}` and empty `.catch(() => {})` fail (handle/rethrow or `ts-rg-allow`).
 2. `bash scripts/ts-hotpath-gate.sh <product-root>` exits 0 (rg-gate wall ≤ `TS_RG_BUDGET_MS`, default 250ms).
 3. `bash scripts/ts-strict-gate.sh <product-root>` exits 0 (strict via extends; typecheck aliases accepted).
 4. `bash scripts/ts-runtime-gate.sh <product-root>` exits 0 (runtime/drive proof script present).
@@ -78,7 +78,7 @@ Standing extras (list separately; do not fold into the 100% weighted overall unl
 
 | Extra | /10 | Prove |
 |-------|-----|-------|
-| Handbook / strict alignment | checklist: strict+noImplicitAny, no unexplained any, no DOM `!`, boundary parse (JSON/global-fetch/URL/env; method `.fetch` OK), exhaustive unions, no floating/misused promises (type-aware oxlint + tsgolint), CI typecheck, runtime/drive proof, oxlint adoption |
+| Handbook / strict alignment | checklist: strict+noImplicitAny, no unexplained any, no DOM `!`, boundary parse (JSON/global-fetch/URL/env; method `.fetch` OK), no empty catch / empty `.catch(() => {})`, exhaustive unions, no floating/misused promises (type-aware oxlint + tsgolint), CI typecheck, runtime/drive proof, oxlint adoption |
 | CI green | `ts-rg-gate` + `ts-hotpath-gate` + `ts-strict-gate` + `ts-runtime-gate` + `ts-oxlint-gate` + product typecheck/lint PASS on the artifact; if GitHub Actions cannot run, note billing / runner and still prove local gate exit 0 |
 
 Also report Quality / Opts / Amount narrative + LOC (+/− / net) and compare history across runs (`R1`-`Rn` or dates internally; descriptive titles user-facing).

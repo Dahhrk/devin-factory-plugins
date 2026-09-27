@@ -14,3 +14,11 @@ export const raw = JSON.parse('{}')
 export const res = fetch('/api')
 export const loc = new URL('https://example.com')
 export const port = process.env.PORT
+export function swallow(): void {
+  try {
+    JSON.parse('{')
+  } catch (_e) {}
+}
+export function fireForget(p: Promise<void>): void {
+  p.catch(() => {})
+}

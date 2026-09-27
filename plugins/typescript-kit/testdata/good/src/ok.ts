@@ -63,3 +63,17 @@ export function parseAppEnv(raw: Record<string, string | undefined> = process.en
   if (!Number.isFinite(port)) throw new Error('invalid PORT')
   return { port }
 }
+
+export function parseOrThrow(text: string): unknown {
+  try {
+    return JSON.parse(text) // ts-rg-allow named boundary
+  } catch (e) {
+    throw new Error('invalid json', { cause: e })
+  }
+}
+
+export function settle(p: Promise<void>): void {
+  void p.catch((e) => {
+    console.error(e)
+  })
+}

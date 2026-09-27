@@ -123,6 +123,26 @@ else
   fail=1
 fi
 
+
+# empty catch / empty .catch discrimination
+require_fgrep "$ROOT/testdata/bad/src/smell.ts" 'catch (_e) {}' "bad fixture encodes empty catch"
+require_fgrep "$ROOT/testdata/bad/src/smell.ts" 'p.catch(() => {})' "bad fixture encodes empty .catch"
+require_fgrep "$ROOT/testdata/good/src/ok.ts" 'catch (e) {' "good fixture encodes handled catch true-negative"
+require_fgrep "$ROOT/testdata/good/src/ok.ts" 'p.catch((e) =>' "good fixture encodes non-empty .catch true-negative"
+if grep -q 'empty catch' "$WORKDIR/bad-rg.out" 2>/dev/null && grep -q 'empty .catch' "$WORKDIR/bad-rg.out" 2>/dev/null; then
+  echo "ok: empty catch / empty .catch discriminated"
+elif bash "$RG_GATE" "$ROOT/testdata/bad" 2>&1 | tee "$WORKDIR/bad-rg-empty.out" | grep -q 'empty catch' \
+  && grep -q 'empty .catch' "$WORKDIR/bad-rg-empty.out"; then
+  echo "ok: empty catch / empty .catch discriminated"
+else
+  echo "FAIL selfcheck: empty catch / empty .catch not reported"
+  cat "$WORKDIR/bad-rg.out" 2>/dev/null || true
+  cat "$WORKDIR/bad-rg-empty.out" 2>/dev/null || true
+  fail=1
+fi
+require_grep "$RG_GATE" 'emptycatch' "rg gate encodes emptycatch id"
+require_grep "$RG_GATE" 'emptypcatch' "rg gate encodes emptypcatch id"
+
 # Pins + live flags
 if [[ ! -f "$PIN_FILE" || ! -f "$TSG_PIN_FILE" ]]; then
   echo "FAIL selfcheck: missing oxlint / oxlint-tsgolint version stamps"; fail=1
