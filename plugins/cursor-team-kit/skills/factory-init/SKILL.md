@@ -40,25 +40,13 @@ self-provisions packs and the kitchen before touching the repo.
    delete `.cursor/rules/anti-ai-ui.mdc` and `scripts/check-anti-ai-ui.mjs` -
    a UI trope gate on a backend is noise.
 
-5. **Seat the language kit(s).** Census the repo's file extensions; for
-   each dominant language check whether the write home carries a kit
-   (`Dahhrk/plug-factory` → `<lang>-kit`; public twin `Dahhrk/plugins`).
-   For each matching kit:
-
-   - Vendor repo-side gates from the kit checkout: `scripts/*` → repo
-     `scripts/`, `templates/github-workflows/*` → `.github/workflows/`,
-     other `templates/*` configs → repo root (rename `luacheckrc`-style
-     names to their dotted form if needed).
-   - Install the agent side so skills/rules load:
-     `/add-plugin <lang>-kit` via the Cursor marketplace path (write home
-     `Dahhrk/plug-factory`; public twin `Dahhrk/plugins`). Documented
-     path when `/add-plugin` is unavailable: enable the kit under
-     `.cursor/settings.json` from a local checkout of the write home.
-   - Extension→kit is mostly literal (`.lua`→lua-kit, `.py`→python-kit);
-     watch aliases: `.ts/.tsx`→typescript-kit, `.cs`→csharp-kit,
-     `.ps1/.psm1`→powershell-kit, `.yml/.yaml` alone is not a kit.
-   - Skip a kit when the repo only has a stray file or two - a vendored
-     gate guarding one file is noise.
+5. **Seat the language kit(s).** Apply the `seat-kit` procedure
+   (`../seat-kit/SKILL.md`, also `/seat-kit` standalone): census the
+   repo's extensions via `kits.json`, vendor each matching kit's
+   repo-side gates, and install its plugin. If the packs were just
+   installed this session and the skill file isn't on disk yet, read it
+   from the write-home checkout
+   (`cursor-team-kit/skills/seat-kit/SKILL.md`).
 
 6. **Make the blueprint true.** Edit `.devin/blueprint.yaml` `knowledge`
    to the repo's real commands (build.ps1/cmake/npm test - whatever its
