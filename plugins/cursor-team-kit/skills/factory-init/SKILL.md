@@ -40,22 +40,43 @@ self-provisions packs and the kitchen before touching the repo.
    delete `.cursor/rules/anti-ai-ui.mdc` and `scripts/check-anti-ai-ui.mjs` -
    a UI trope gate on a backend is noise.
 
-5. **Make the blueprint true.** Edit `.devin/blueprint.yaml` `knowledge`
+5. **Seat the language kit(s).** Census the repo's file extensions; for
+   each dominant language check whether the write home carries a kit
+   (`Dahhrk/plug-factory` → `<lang>-kit`; public twin `Dahhrk/plugins`).
+   For each matching kit:
+
+   - Vendor repo-side gates from the kit checkout: `scripts/*` → repo
+     `scripts/`, `templates/github-workflows/*` → `.github/workflows/`,
+     other `templates/*` configs → repo root (rename `luacheckrc`-style
+     names to their dotted form if needed).
+   - Install the agent side so skills/rules load:
+     `/add-plugin <lang>-kit` via the Cursor marketplace path (write home
+     `Dahhrk/plug-factory`; public twin `Dahhrk/plugins`). Documented
+     path when `/add-plugin` is unavailable: enable the kit under
+     `.cursor/settings.json` from a local checkout of the write home.
+   - Extension→kit is mostly literal (`.lua`→lua-kit, `.py`→python-kit);
+     watch aliases: `.ts/.tsx`→typescript-kit, `.cs`→csharp-kit,
+     `.ps1/.psm1`→powershell-kit, `.yml/.yaml` alone is not a kit.
+   - Skip a kit when the repo only has a stray file or two - a vendored
+     gate guarding one file is noise.
+
+6. **Make the blueprint true.** Edit `.devin/blueprint.yaml` `knowledge`
    to the repo's real commands (build.ps1/cmake/npm test - whatever its
    gate actually is). A blueprint naming commands that do not exist is
    worse than none. Cursor-only products still keep `.cursor/settings.json`
    enabling `pstack` and `cursor-team-kit`.
 
-6. **Verify:** `node scripts/close-loop.mjs doctor` prints `ok` when that
-   script landed; `.cursor/settings.json` enables the packs.
+7. **Verify:** `node scripts/close-loop.mjs doctor` prints `ok` when that
+   script landed; `.cursor/settings.json` enables the packs; vendored gate
+   scripts are executable where the platform supports it.
 
-7. **Ship it.** On a feature branch, draft PR `chore: factory bootstrap` -
+8. **Ship it.** On a feature branch, draft PR `chore: factory bootstrap` -
    factory files only, never the human's in-flight work. Add the repo to
    `~/Projects/registry.md` if it is not listed.
 
-8. Report what landed, what was merged back from pre-existing files, and
-   the first suggested run (`/factory-status` or `/poteto-mode` to start
-   real work under the contract).
+9. Report what landed, what was merged back from pre-existing files, which
+   kits were seated, and the first suggested run (`/factory-status` or
+   `/poteto-mode` to start real work under the contract).
 
 The ambient shipping bar is smallest-correct-diff; `/no-comments` and
 `/deslop` before ready.
