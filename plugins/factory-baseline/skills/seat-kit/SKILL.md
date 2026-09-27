@@ -15,13 +15,16 @@ Kits live in `Dahhrk/devin-factory-plugins` under `plugins/<lang>-kit`
 
 ## Steps
 
-1. **Census the repo.** Count source files by extension; take the
-   dominant languages. Map to kit names — mostly literal
-   (`.lua`→lua-kit, `.py`→python-kit, `.go`→go-kit), watch aliases:
-   `.ts/.tsx`→typescript-kit, `.cs`→csharp-kit, `.ps1/.psm1`→powershell-kit,
-   `.js/.jsx`→javascript-kit, `.rs`→rust-kit, `.html`→html-kit,
-   `.css/.scss`→css-kit/scss-kit. `.yml/.yaml`, `.json`, `.md` alone are
-   not kits.
+1. **Census the repo.** Count source files by extension and key
+   filenames (`Dockerfile`, `Makefile`, `justfile`). Read the kit map
+   from `kits.json` at the root of the devin-factory-plugins checkout -
+   the same source the vendor step pulls kit files from; if it is not
+   cloned:
+   `gh repo clone Dahhrk/devin-factory-plugins ~/Projects/devin-factory-plugins`.
+   `language`/`tooling` kits auto-match; `framework` kits
+   (react/vite/tailwind/astro) are reported as suggestions only -
+   extension alone cannot prove the framework. `.yml/.yaml`, `.json`,
+   `.md` alone are not kits.
 2. **Skip what doesn't apply.** A stray file or two does not justify a
    kit — a vendored gate guarding one file is noise. Report skipped
    detections so the human can override.
