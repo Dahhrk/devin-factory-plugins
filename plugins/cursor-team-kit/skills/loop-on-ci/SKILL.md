@@ -42,6 +42,7 @@ gh run view <run-id> --log-failed
 - If the failure is clearly unrelated to the PR and appears fixed on main, merge latest main instead of bloating the PR with unrelated fixes.
 - If failures are flaky, retry once and report flake evidence.
 - Re-run `gh pr checks --json name,bucket,state,workflow,link` after every push; the check set can change.
+- No checks queued within a minute of a push means GitHub likely dropped the `synchronize` event — close and reopen the PR to fire `reopened` rather than waiting on runs that never started.
 
 ## Output
 
