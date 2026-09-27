@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Tier 0: PSR TypeScript smells (any/assertions, DOM !, JSON.parse, global
-# fetch/URL/env, double assertion, bare @ts-expect-error).
+# fetch/URL/env, double assertion, bare @ts-expect-error, empty catch / empty .catch).
 # Usage: bash scripts/ts-rg-gate.sh [root]
 # Scan: TS_RG_SRC or src|lib|app. Escape: ts-rg-allow.
 # .d.ts: product scans; TS_RG_SKIP_DTS=1 for library host research.
@@ -39,7 +39,7 @@ FILT="$TMPDIR_GATE/filt"
 SKIP_DTS=0
 case "${TS_RG_SKIP_DTS:-}" in 1|true|TRUE|yes|YES) SKIP_DTS=1 ;; esac
 
-IDS=(asany colonany genany anyarr promiseany recordany tsignore tsnocheck unknownas tsexpect domid domqs jsonparse fetch newurl processenv)
+IDS=(asany colonany genany anyarr promiseany recordany tsignore tsnocheck unknownas tsexpect domid domqs jsonparse fetch newurl processenv emptycatch emptypcatch)
 PATS=(
   '\bas\s+any\b' ':\s*any\b' '<any>' '\bany\[' '\bPromise\s*<\s*any\s*>'
   '\bRecord\s*<\s*[^,]+,\s*any\s*>' '@ts-ignore\b' '@ts-nocheck\b'
@@ -47,6 +47,8 @@ PATS=(
   'getElementById\s*\([^)]*\)\s*!' 'querySelector(All)?\s*\([^)]*\)\s*!'
   '\bJSON\.parse\s*\(' '(^|[^.\w])fetch\s*\(' '\bnew\s+URL\s*\('
   '\bprocess\.env(?:\.\w+|\[)'
+  'catch\s*(\([^)]*\))?\s*\{\s*\}'
+  '\.catch\s*\(\s*(?:async\s*)?\([^)]*\)\s*=>\s*\{\s*\}\s*\)'
 )
 MSGS=(
   'as any banned' 'explicit : any banned' 'generic any banned' 'any[] banned'
@@ -61,8 +63,10 @@ MSGS=(
   'fetch in src banned without a named boundary (parse Response into a domain type; ts-rg-allow on the boundary line; method .fetch is allowed)'
   'new URL in src banned without a named boundary (validate input; ts-rg-allow on the boundary line)'
   'process.env in src banned without a named env parse boundary (ts-rg-allow on the parser line; whole-object process.env to a schema is OK)'
+  'empty catch {} banned (handle, rethrow, or ts-rg-allow with rationale; not oxlint no-empty theatre)'
+  'empty .catch(() => {}) banned (handle error or ts-rg-allow with rationale)'
 )
-DROPS=('' '' '' '' '' '' '' '' '' '@ts-expect-error\s+\S' '' '' '' '' '' '')
+DROPS=('' '' '' '' '' '' '' '' '' '@ts-expect-error\s+\S' '' '' '' '' '' '' '' '')
 
 PAT_ARGS=()
 for pat in "${PATS[@]}"; do PAT_ARGS+=(-e "$pat"); done
