@@ -6,9 +6,9 @@ disable-model-invocation: true
 
 # Unslop
 
-Secondary pattern gate under **orwell-prose**. Orwell builds the writing
-muscle; this catalog trims leftover AI tells. Apply orwell-prose rules 1-12
-first. Use this list after, not instead.
+Secondary pattern gate under the **orwell-prose** default. Orwell builds
+the writing muscle; this catalog trims leftover AI tells. Agents already
+run orwell-prose on every prose path; use this list after, not instead.
 
 Edit text to remove AI patterns.
 

@@ -67,8 +67,10 @@ self-provisions packs and the kitchen before touching the repo.
    (vague → `/poteto-prompt` → `/poteto-mode`; structured → `/poteto-mode`
    with Done means + Keep; until-X on Cursor → autonomous-run + `/loop`).
    Prose defaults to `orwell-prose` (rules 1-12) on every docs, PR, commit,
-   chat report, and landing line; `unslop` stays secondary. If the product
-   `AGENTS.md` / `CLAUDE.md` needs a different voice, note the override.
+   chat report, and landing line. Agents apply automatically; do not wait
+   to be asked. `/orwell-prose` names the contract (same shape as
+   one-shot-task). `unslop` stays secondary. If the product `AGENTS.md` /
+   `CLAUDE.md` needs a different voice, note the override.
    `/factory-status` remains the health sweep.
 
 The ambient shipping bar is smallest-correct-diff; `/no-comments` and

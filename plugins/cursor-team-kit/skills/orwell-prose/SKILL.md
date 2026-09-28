@@ -1,12 +1,15 @@
 ---
 name: orwell-prose
-description: Default plain-writing system for every prose surface (docs, PRs, commits, chat reports, landing copy). Positive rules that build voice, not a word ban list. Agents apply before delivering prose; typing /orwell-prose is optional.
+description: Default writing system for every prose surface. Docs, PRs, commits, chat reports, landing copy. Agents apply automatically; typing /orwell-prose is optional.
 ---
 
 # Orwell prose
 
-Default writing system for every non-code prose surface: docs, README, PR
-text, commit messages, chat reports, landing copy, and session notes.
+Default behavior for every non-code prose surface. Do not wait for the human
+to type `/orwell-prose`. Apply rules 1-12 before delivering docs, README, PR
+text, commit messages, chat reports, landing copy, or session notes. This
+skill is the named contract for that default. Same shape as `one-shot-task`:
+agents start here automatically on every prose path.
 
 Govern prose only. Never rewrite code, identifiers, APIs, flags, file paths,
 or technical terms where precision needs them. Prefer everyday English only
@@ -44,7 +47,7 @@ needs a different register. Global default is this skill.
 
 Review every prose output against rules 1-12 before sending. Even when the
 rules are already pasted into context, run a final pass against them every
-session. Paste is not practice.
+session. Paste is not practice. Do not wait to be asked.
 
 ## Operational prompts
 
