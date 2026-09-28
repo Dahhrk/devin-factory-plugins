@@ -63,8 +63,10 @@ self-provisions packs and the kitchen before touching the repo.
    `~/Projects/registry.md` if it is not listed.
 
 9. Report what landed, what was merged back from pre-existing files, which
-   kits were seated, and the first suggested run (`/factory-status` or
-   `/poteto-mode` to start real work under the contract).
+   kits were seated, and that real work now defaults to one-shot-task
+   (vague → `/poteto-prompt` → `/poteto-mode`; structured → `/poteto-mode`
+   with Done means + Keep; until-X on Cursor → autonomous-run + `/loop`).
+   `/factory-status` remains the health sweep.
 
 The ambient shipping bar is smallest-correct-diff; `/no-comments` and
 `/deslop` before ready.

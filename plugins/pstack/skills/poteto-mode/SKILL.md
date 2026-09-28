@@ -10,6 +10,15 @@ reminder: New task? Playbook match or rigor needed -> apply /poteto-mode. Casual
 
 # Poteto mode
 
+**Default entry.** Every non-trivial ask is a one-shot task before any
+playbook match. Vague → `/poteto-prompt` (composes Done means + Keep,
+then continues here). Structured → this mode directly with Done means +
+Keep. Until-X phrasing on this lane → verifiable units and re-invoke
+until Done means holds (no fake Cursor `/loop`). The named contract is
+`cursor-team-kit` skill `one-shot-task`; agents start on that route
+automatically. Autopilot-full and Autopilot-stack playbooks below are
+not factory overnight Autopilot and do not green TRUST-NEXT.
+
 ## Non-negotiables
 
 The Principles section below grounds every trigger. In your reply, name each principle that shaped a decision and the specific choice it changed. Cite only principles whose leaf SKILL.md you read this session.
