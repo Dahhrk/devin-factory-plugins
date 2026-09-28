@@ -17,9 +17,10 @@ verifiable units + re-invoke, no fake Cursor `/loop`). Typing
 `/cursor-team-kit:one-shot-task` is optional; the skill names the
 contract. Autopilot and TRUST-NEXT stay off unless already greened.
 
-**Prose:** every docs, PR, commit, chat report, and landing line runs through
-`orwell-prose` (rules 1-12) before delivery. Typing
-`/cursor-team-kit:orwell-prose` is optional; the skill names the contract.
+**Default (prose):** every docs, PR, commit, chat report, and landing line
+runs through `orwell-prose` (rules 1-12) before delivery. Agents apply
+automatically; do not wait to be asked. Typing `/cursor-team-kit:orwell-prose`
+is optional; the skill names the contract. Same shape as one-shot-task.
 `unslop` and no-em-dash stay secondary.
 
 Factory skills also include `factory-init`, `seat-kit`, `factory-status`,
