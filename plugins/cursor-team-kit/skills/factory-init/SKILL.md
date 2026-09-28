@@ -66,6 +66,9 @@ self-provisions packs and the kitchen before touching the repo.
    kits were seated, and that real work now defaults to one-shot-task
    (vague → `/poteto-prompt` → `/poteto-mode`; structured → `/poteto-mode`
    with Done means + Keep; until-X on Cursor → autonomous-run + `/loop`).
+   Prose defaults to `orwell-prose` (rules 1-12) on every docs, PR, commit,
+   chat report, and landing line; `unslop` stays secondary. If the product
+   `AGENTS.md` / `CLAUDE.md` needs a different voice, note the override.
    `/factory-status` remains the health sweep.
 
 The ambient shipping bar is smallest-correct-diff; `/no-comments` and
