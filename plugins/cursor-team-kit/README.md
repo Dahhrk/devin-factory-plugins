@@ -8,7 +8,7 @@ Not affiliated with or endorsed by Cursor — see
 
 Skills resolve as `/cursor-team-kit:<skill>`, e.g.
 `/cursor-team-kit:deslop`, `/cursor-team-kit:verify-this`,
-`/cursor-team-kit:one-shot-task`, `/cursor-team-kit:orwell-prose`.
+`/cursor-team-kit:one-shot-task`, `/cursor-team-kit:orwell-prose`, `/cursor-team-kit:figma-from-system`, `/cursor-team-kit:product-debate`.
 
 **Default:** every non-trivial ask is a one-shot task. Agents start on
 that route automatically (vague → `poteto-prompt` → `poteto-mode`;
@@ -22,6 +22,18 @@ runs through `orwell-prose` (rules 1-12) before delivery. Agents apply
 automatically; do not wait to be asked. Typing `/cursor-team-kit:orwell-prose`
 is optional; the skill names the contract. Same shape as one-shot-task.
 `unslop` and no-em-dash stay secondary.
+
+**Default (UI / Figma):** every `ui:yes` / Figma ask starts from the existing
+design system plus one approved keyframe, expands the full flow in Figma,
+proves visual parity, gets a frontend look, then encodes. Fail closed without
+system, keyframe, or Figma access. Typing `/cursor-team-kit:figma-from-system`
+is optional; the skill names the contract.
+
+**Default (new product idea):** every new product idea opens a temporary
+product/design/engineering debate room (plain product name), captures
+requirements and the decision in writing, then closes the room before encode.
+Typing `/cursor-team-kit:product-debate` is optional; the skill names the
+contract.
 
 Factory skills also include `factory-init`, `seat-kit`, `factory-status`,
 and `merge-queue` when present.

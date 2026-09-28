@@ -1,8 +1,18 @@
 {
   "name": "cursor-team-kit",
-  "version": "0.1.14",
-  "description": "Dark factory conversion of the public MIT-licensed cursor-team-kit Cursor plugin: deslop, verify-this, control-cli, control-ui, and PR/CI helpers, repackaged as Devin Agent Skills, plus orwell-prose plain writing",
-  "author": { "name": "Dark factory" },
+  "version": "0.1.15",
+  "description": "Dark factory conversion of the public MIT-licensed cursor-team-kit Cursor plugin: deslop, verify-this, control-cli, control-ui, and PR/CI helpers, repackaged as Devin Agent Skills, plus orwell-prose plain writing, figma-from-system UI default, product-debate default",
+  "author": {
+    "name": "Dark factory"
+  },
   "license": "MIT",
-  "keywords": ["devin", "plugin", "converted", "ci", "code-review", "verification", "shipping"]
+  "keywords": [
+    "devin",
+    "plugin",
+    "converted",
+    "ci",
+    "code-review",
+    "verification",
+    "shipping"
+  ]
 }
