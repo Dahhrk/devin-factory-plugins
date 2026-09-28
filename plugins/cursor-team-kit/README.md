@@ -7,7 +7,18 @@ Not affiliated with or endorsed by Cursor — see
 [`../../NOTICE.md`](../../NOTICE.md).
 
 Skills resolve as `/cursor-team-kit:<skill>`, e.g.
-`/cursor-team-kit:deslop`, `/cursor-team-kit:verify-this`.
+`/cursor-team-kit:deslop`, `/cursor-team-kit:verify-this`,
+`/cursor-team-kit:one-shot-task`.
+
+**Default:** every non-trivial ask is a one-shot task. Agents start on
+that route automatically (vague → `poteto-prompt` → `poteto-mode`;
+structured → `poteto-mode` with Done means + Keep; until-X on this lane →
+verifiable units + re-invoke, no fake Cursor `/loop`). Typing
+`/cursor-team-kit:one-shot-task` is optional; the skill names the
+contract. Autopilot and TRUST-NEXT stay off unless already greened.
+
+Factory skills also include `factory-init`, `seat-kit`, `factory-status`,
+and `merge-queue` when present.
 
 ## Caveats
 

@@ -59,3 +59,12 @@ Continue this turn as if the human had typed the composed prompt verbatim:
 apply `/poteto-mode` to it in full - triggers, principles, evidence bar,
 Done means as the exit predicate. The composed prompt is the contract; the
 work does not start until it exists on screen.
+
+## Default entry
+
+Three-word starts are the normal case. Every non-trivial ask defaults to
+the one-shot-task route: this skill when vague, then poteto-mode. Agents
+start here automatically; the human does not need to type
+`/one-shot-task`. Structured asks with Done means + Keep skip straight
+to poteto-mode. On this lane, until-X means verifiable units and
+re-invoke (no fake Cursor `/loop`).

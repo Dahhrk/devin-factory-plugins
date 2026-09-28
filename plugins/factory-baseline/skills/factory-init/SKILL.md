@@ -59,9 +59,11 @@ packs and the kitchen before touching the repo.
    `~/Projects/registry.md` if it isn't listed.
 
 9. Report what landed, what was merged back from pre-existing files, which
-   kits were seated, and the first suggested run
-   (`/factory-baseline:factory-pass` to audit the existing code against
-   the contract).
+   kits were seated, and that real work now defaults to one-shot-task
+   (vague compose then poteto; structured enter directly; verifiable
+   units + re-invoke; no fake Cursor `/loop`). Autopilot stays off.
+   `/factory-baseline:factory-pass` audits existing code against the
+   contract when needed.
 
 The ambient shipping bar is `rules/code-quality-bar.md`: smallest-correct-diff;
 `/no-comments` and `/deslop` before ready.
