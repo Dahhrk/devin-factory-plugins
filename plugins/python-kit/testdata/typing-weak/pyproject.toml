@@ -1,0 +1,12 @@
+[project]
+name = "python-kit-typing-weak-fixture"
+version = "0.0.0"
+requires-python = ">=3.10"
+
+[tool.ruff.lint]
+select = ["E", "F", "B"]
+
+# Typing present but not strict (must FAIL py-typing-gate).
+[tool.mypy]
+python_version = "3.10"
+files = ["."]

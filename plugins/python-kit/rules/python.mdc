@@ -9,7 +9,7 @@ alwaysApply: false
 Follow skills **python** and **poteto-python** when applicable.
 
 - One formatter (Ruff format); Ruff lint includes E / F / B
-- mypy or Pyright config present for packages and services
+- mypy or Pyright config in strict mode for packages and services (`strict = true` or `typeCheckingMode = "strict"`)
 - Tests cover exceptions, I/O, and runtime validation
 - No bare `except:`; no bare `type: ignore` or bare `noqa`
 - No mutable default arguments

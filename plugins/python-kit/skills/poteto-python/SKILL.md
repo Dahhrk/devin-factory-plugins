@@ -23,7 +23,7 @@ All must be true. Do not claim done on prose.
 1. `bash scripts/py-rg-gate.sh <product-root>` exits 0 (product copy of pack script; scans `src`, else `lib`/`app`/root `*.py`; override with `PY_RG_SRC`; requires rg; single-walk).
 2. `bash scripts/py-hotpath-gate.sh <product-root>` exits 0 (rg-gate wall ≤ `PY_RG_BUDGET_MS`, default 250ms).
 3. `bash scripts/py-ruff-gate.sh <product-root>` exits 0 (Ruff config encodes E/F/B; live ruff unless `PY_RUFF_CONFIG_ONLY=1`).
-4. `bash scripts/py-typing-gate.sh <product-root>` exits 0 (or `PY_TYPING_GATE_SKIP=1` documented for tiny scripts).
+4. `bash scripts/py-typing-gate.sh <product-root>` exits 0 (mypy `strict = true` or pyright `typeCheckingMode = "strict"`; or `PY_TYPING_GATE_SKIP=1` documented for tiny scripts).
 5. `bash scripts/py-test-gate.sh <product-root>` exits 0 (or `PY_TEST_GATE_SKIP=1` documented for pure stubs).
 6. Diff adds no narration comments that restate the next statement. Survivors only for non-obvious external constraints.
 7. Smallest correct change: prefer deletion; no new helper with one caller; no invent fake handlers for score.
@@ -76,7 +76,7 @@ Standing extras (list separately; do not fold into the 100% weighted overall unl
 
 | Extra | /10 | Prove |
 |-------|-----|-------|
-| PSR Python alignment | checklist: one formatter (Ruff), Ruff E/F/B, mypy or Pyright, isolated env, tests for exceptions/I/O/validation, no bare except/type:ignore/noqa, trust boundaries for env/JSON/shell/pickle |
+| PSR Python alignment | checklist: one formatter (Ruff), Ruff E/F/B, mypy or Pyright (strict), isolated env, tests for exceptions/I/O/validation, no bare except/type:ignore/noqa, trust boundaries for env/JSON/shell/pickle |
 | CI green | `py-rg-gate` + `py-hotpath-gate` + `py-ruff-gate` + `py-typing-gate` + `py-test-gate` PASS on the artifact; if GitHub Actions cannot run, note billing / runner and still prove local gate exit 0 |
 
 Also report Quality / Opts / Amount narrative + LOC (+/− / net) and compare history across runs (`R1`-`Rn` or dates internally; descriptive titles user-facing).

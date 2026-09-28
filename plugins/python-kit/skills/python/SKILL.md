@@ -1,6 +1,6 @@
 ---
 name: python
-description: Python PSR bar. Ruff format+lint (E/F/B), mypy or Pyright, isolated env, test exceptions/I/O/runtime validation, trust boundaries for env/JSON/shell/pickle. Use when reading or editing any .py in a factory product.
+description: Python PSR bar. Ruff format+lint (E/F/B), mypy or Pyright (strict), isolated env, test exceptions/I/O/runtime validation, trust boundaries for env/JSON/shell/pickle. Use when reading or editing any .py in a factory product.
 paths: ["**/*.py", "**/pyproject.toml", "**/ruff.toml", "**/mypy.ini", "**/pyrightconfig.json"]
 ---
 
@@ -12,7 +12,7 @@ Apply pstack **principle-encode-lessons-in-structure** first. This skill encodes
 
 1. **One formatter** — Ruff format is the factory formatter. Do not mix Black + Ruff format without an explicit product decision.
 2. **Ruff lint** — at least E (pycodestyle), F (pyflakes), B (bugbear). Gate: `scripts/py-ruff-gate.sh`. Template: `templates/ruff.toml`.
-3. **mypy or Pyright** — typing config present for libraries and services. Gate: `scripts/py-typing-gate.sh`.
+3. **mypy or Pyright (strict)** — typing config in strict mode for libraries and services (`strict = true` or `typeCheckingMode = "strict"`). Gate: `scripts/py-typing-gate.sh`.
 4. **Isolate environments** — venv / uv / tox; never install product deps into the system Python in CI docs.
 5. **Test exceptions, I/O, runtime validation** — `tests/` (or pytest wiring) required. Gate: `scripts/py-test-gate.sh`.
 6. **Trust boundaries** — no bare `os.environ[` / `json.loads` / `eval` / `exec` / `pickle.load*` / `yaml.load` / `shell=True` / `os.system` without a named boundary + `py-rg-allow`. Templates: `templates/env_schema.py`, `templates/typed_parse.py`.
