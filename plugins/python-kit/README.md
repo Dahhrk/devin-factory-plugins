@@ -2,6 +2,8 @@
 
 Python bar for the dark factory Cursor lane. Public research pilot: pallets/flask (BSD-3-Clause).
 
+Version **0.2.0**: `py-typing-gate` requires mypy `strict = true` or pyright `typeCheckingMode = "strict"` (config-level; `PY_TYPING_GATE_SKIP=1` escape).
+
 | Surface | Path |
 |---------|------|
 | Skills | `skills/python`, `skills/poteto-python` |
@@ -9,13 +11,13 @@ Python bar for the dark factory Cursor lane. Public research pilot: pallets/flas
 | Tier 0 | `scripts/py-rg-gate.sh` (bare except / bare type:ignore / bare noqa / mutable defaults / shell=True / os.system / eval / exec / pickle.load* / yaml.load / bare os.environ[ / bare json.loads; **single-walk**; requires **rg**) |
 | Tier 0.5 | `scripts/py-hotpath-gate.sh` (wall-clock budget for rg-gate; default **250ms**; override `PY_RG_BUDGET_MS`) |
 | Tier 0.5 | `scripts/py-ruff-gate.sh` (Ruff config with E/F/B select; live `ruff check` unless `PY_RUFF_CONFIG_ONLY=1`; formatter is Ruff format) |
-| Tier 1 | `scripts/py-typing-gate.sh` (mypy or Pyright config present) |
+| Tier 1 | `scripts/py-typing-gate.sh` (mypy or Pyright config in **strict** mode) |
 | Tier 1 | `scripts/py-test-gate.sh` (tests/ or pytest wiring present) |
 | Boundaries | `templates/env_schema.py`, `templates/typed_parse.py` |
 | Selfcheck | `scripts/py-kit-selfcheck.sh` |
 | Product CI | `templates/github-workflows/py-gates.yml` + `templates/ruff.toml` |
 
-PSR Python encode (Programming Standards Reference): Python reference, PEP 8, PEP 257, typing guidance, PyPA standards. Select one formatter; lint with Ruff; use mypy or Pyright when useful; isolate environments; test exceptions, I/O and runtime validation.
+PSR Python encode (Programming Standards Reference): Python reference, PEP 8, PEP 257, typing guidance, PyPA standards. Select one formatter; lint with Ruff; use mypy or Pyright in strict mode when useful; isolate environments; test exceptions, I/O and runtime validation.
 
 Compose with `/poteto-mode`. Write home: this repo. Mirrors: `Dahhrk/devin-factory-plugins` (`plugins/python-kit`), `Dahhrk/zcode-factory` (exported skills).
 
@@ -33,4 +35,4 @@ Line marker `py-rg-allow` with a short rationale. Prefer named boundaries from `
 
 ## Selfcheck
 
-`bash scripts/py-kit-selfcheck.sh` proves rg/hotpath/ruff/typing/test gates discriminate fixtures, single-walk encode, budget discrimination (`PY_RG_BUDGET_MS=1`), and template presence.
+`bash scripts/py-kit-selfcheck.sh` proves rg/hotpath/ruff/typing (including non-strict fail)/test gates discriminate fixtures, single-walk encode, budget discrimination (`PY_RG_BUDGET_MS=1`), and template presence.

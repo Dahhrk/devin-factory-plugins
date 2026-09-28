@@ -51,6 +51,7 @@ expect_fail ruff-missing "ruff fails when config missing" env PY_RUFF_CONFIG_ONL
 expect_fail ruff-weak "ruff fails when E/F/B missing" env PY_RUFF_CONFIG_ONLY=1 bash "$HERE/py-ruff-gate.sh" "$ROOT/testdata/ruff-weak" &
 expect_pass good-typing "typing passes on good" bash "$HERE/py-typing-gate.sh" "$ROOT/testdata/good" &
 expect_fail typing-missing "typing fails when missing" bash "$HERE/py-typing-gate.sh" "$ROOT/testdata/typing-missing" &
+expect_fail typing-weak "typing fails when not strict" bash "$HERE/py-typing-gate.sh" "$ROOT/testdata/typing-weak" &
 expect_pass good-test "test gate passes on good" bash "$HERE/py-test-gate.sh" "$ROOT/testdata/good" &
 expect_fail test-missing "test gate fails when missing" bash "$HERE/py-test-gate.sh" "$ROOT/testdata/test-missing" &
 wait
@@ -66,6 +67,7 @@ require_grep "$ROOT/templates/env_schema.py" 'parse_env' "env_schema template en
 require_grep "$ROOT/templates/typed_parse.py" 'json\.loads' "typed_parse template encodes json.loads"
 require_grep "$ROOT/templates/typed_parse.py" 'py-rg-allow' "typed_parse carries py-rg-allow"
 require_grep "$ROOT/templates/ruff.toml" 'select' "ruff template encodes select"
+require_grep "$HERE/py-typing-gate.sh" 'strict' "typing gate encodes strict"
 
 for f in env_schema.py typed_parse.py ruff.toml github-workflows/py-gates.yml; do
   if [[ ! -f "$ROOT/templates/$f" ]]; then
