@@ -28,7 +28,7 @@ All must be true. Do not claim done on prose.
 6. `bash scripts/go-golangci-gate.sh <product-root>` exits 0 (or `GO_GOLANGCI_GATE_SKIP=1` documented for tiny modules).
 7. Diff adds no narration comments that restate the next statement. Survivors only for non-obvious external constraints.
 8. Smallest correct change: prefer deletion; no new helper with one caller; no invent fake handlers for score.
-9. If goroutines / HTTP / files / exec touched: bound lifecycle, propagate ctx, close resources on all paths (see `templates/ctx_errgroup.go` / `templates/http_close.go`).
+9. If goroutines / HTTP / files / exec touched: bound lifecycle, propagate ctx, close resources on all paths (see `templates/ctx_errgroup.go` / `templates/http_close.go` / `templates/http_request_ctx.go`). No `http.NewRequest` / `http.Get|Post|Head|PostForm` without allow.
 10. Stricter product gates (`golangci-lint`, verify-*) override when present. Prove on the real artifact (`go test`, race where supported).
 11. Do not disable, skip, or weaken gates / expectations merely to make a build pass (PSR AI rule 11). Record what was tested and what remains uncertain.
 

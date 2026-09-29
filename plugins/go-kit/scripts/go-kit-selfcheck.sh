@@ -76,13 +76,16 @@ require_grep "$ROOT/testdata/bad/smell.go" '[[:space:]]go[[:space:]]' "bad fixtu
 require_grep "$ROOT/testdata/bad/smell.go" 'ioutil\.' "bad fixture encodes ioutil"
 require_grep "$ROOT/testdata/bad/smell.go" 'panic\(' "bad fixture encodes panic"
 require_grep "$ROOT/testdata/bad/smell.go" 'errgroup\.WithContext' "bad fixture encodes errgroup Background"
+require_grep "$ROOT/testdata/bad/smell.go" 'http\.NewRequest' "bad fixture encodes http.NewRequest"
+require_grep "$ROOT/testdata/bad/smell.go" 'http\.Get' "bad fixture encodes http.Get"
 require_grep "$ROOT/testdata/good/ok.go" 'go-rg-allow' "good fixture encodes allow on named boundary"
 require_grep "$ROOT/templates/ctx_errgroup.go" 'errgroup' "ctx_errgroup template encodes errgroup"
 require_grep "$ROOT/templates/http_close.go" 'Body\.Close' "http_close template encodes Body.Close"
+require_grep "$ROOT/templates/http_request_ctx.go" 'NewRequestWithContext' "http_request_ctx template encodes NewRequestWithContext"
 require_grep "$ROOT/templates/golangci/golangci.yml" 'bodyclose' "golangci template encodes bodyclose"
 require_grep "$ROOT/templates/golangci/golangci.yml" 'errcheck' "golangci template encodes errcheck"
 
-for f in ctx_errgroup.go http_close.go golangci/golangci.yml github-workflows/go-gates.yml; do
+for f in ctx_errgroup.go http_close.go http_request_ctx.go golangci/golangci.yml github-workflows/go-gates.yml; do
   if [[ ! -f "$ROOT/templates/$f" ]]; then
     echo "FAIL selfcheck: missing templates/$f"; fail=1
   else echo "ok: template $f present"; fi
