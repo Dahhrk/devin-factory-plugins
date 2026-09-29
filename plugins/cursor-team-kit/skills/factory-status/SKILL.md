@@ -39,3 +39,10 @@ state. Default repo set: `Dahhrk/plugins`, `Dahhrk/devin-factory-plugins`,
   mergeable set, `/fix-ci` for red checks).
 - A repo with no clone locally gets a remote-only row - say so rather than
   skipping it silently.
+
+## Silence on healthy
+
+Ambient checks stay quiet when healthy. Ping only on real drift (open
+anomaly, dirty tree that matters, offline runner, unmerged residue with
+ahead > 0). Do not invent routines. A clean sweep can be one short
+"clean" line, not a ceremony.
