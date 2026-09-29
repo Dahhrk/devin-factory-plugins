@@ -76,7 +76,9 @@ self-provisions packs and the kitchen before touching the repo.
    (mergeable artifact exit, no homework list), `fleet-orchestrate` when the
    ask spans multiple workstreams, `teach-to-skill` post-pass after a flow
    recurs twice, `leave-machine-clean` EXIT + on-demand reclaim of local agent
-   children, and fresh `verify-this` evidence before shipping falsifiable
+   children, `routine-by-default` for recurring / scheduled / monitor asks,
+   `harness-not-training` for capability / agent / AI product work (harnesses
+   over frontier training), and fresh `verify-this` evidence before shipping falsifiable
    done or substance merge claims. Ambient `/factory-status` stays quiet when
    healthy and pings only on real drift.
    `/factory-status` remains the health sweep.
