@@ -8,7 +8,7 @@ Not affiliated with or endorsed by Cursor — see
 
 Skills resolve as `/cursor-team-kit:<skill>`, e.g.
 `/cursor-team-kit:deslop`, `/cursor-team-kit:verify-this`,
-`/cursor-team-kit:one-shot-task`, `/cursor-team-kit:orwell-prose`, `/cursor-team-kit:figma-from-system`, `/cursor-team-kit:product-debate`.
+`/cursor-team-kit:one-shot-task`, `/cursor-team-kit:orwell-prose`, `/cursor-team-kit:figma-from-system`, `/cursor-team-kit:product-debate`, `/cursor-team-kit:outcome-repeat-back`, `/cursor-team-kit:results-not-homework`, `/cursor-team-kit:fleet-orchestrate`, `/cursor-team-kit:teach-to-skill`.
 
 **Default:** every non-trivial ask is a one-shot task. Agents start on
 that route automatically (vague → `poteto-prompt` → `poteto-mode`;
@@ -34,6 +34,29 @@ product/design/engineering debate room (plain product name), captures
 requirements and the decision in writing, then closes the room before encode.
 Typing `/cursor-team-kit:product-debate` is optional; the skill names the
 contract.
+
+**Default (repeat-back):** before any non-trivial ask, restate Goal /
+Constraints / Done means / Keep in plain words, then act. Typing
+`/cursor-team-kit:outcome-repeat-back` is optional; the skill names the
+contract.
+
+**Default (exit):** leave a mergeable artifact (PR, brief, scorecard,
+verified claim). Never end with a "you should…" homework list. Typing
+`/cursor-team-kit:results-not-homework` is optional; the skill names the
+contract.
+
+**Default (multi-workstream):** when an ask spans multiple workstreams, run
+parent + specialists with clear ownership, an ordered plate with merge holds,
+and parent waits on children. Verify before merge. Typing
+`/cursor-team-kit:fleet-orchestrate` is optional; the skill names the
+contract.
+
+**Default (post-pass):** if the same manual flow recurred twice, offer
+skill-authoring / learn-from-demonstration once; drop if declined. Typing
+`/cursor-team-kit:teach-to-skill` is optional; the skill names the contract.
+
+**Default (verify):** falsifiable "done" and substance merge claims need
+fresh `verify-this` evidence before ship.
 
 Factory skills also include `factory-init`, `seat-kit`, `factory-status`,
 and `merge-queue` when present.

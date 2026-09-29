@@ -56,6 +56,15 @@ If artifacts may contain sensitive code, prompts, screenshots, HTTP bodies, or h
 - `NOT VERIFIED`: the behavior is unchanged, moves the wrong way, or misses the threshold.
 - `INCONCLUSIVE`: no valid baseline, noisy signal, failed measurement, or an environment difference invalidates the comparison.
 
+
+## Non-negotiable / Default
+
+Falsifiable "done" claims and substance merge claims require fresh
+`verify-this` evidence before ship. Restate the claim, capture baseline
+and treatment, compare artifacts, and keep the verdict with the PR or
+brief. Recap is not evidence. Do not green TRUST-NEXT or Autopilot from
+a self-report.
+
 ## Output
 
 Use this shape:

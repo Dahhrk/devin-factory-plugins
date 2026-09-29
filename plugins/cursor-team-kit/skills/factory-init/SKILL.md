@@ -71,6 +71,13 @@ self-provisions packs and the kitchen before touching the repo.
    to be asked. `/orwell-prose` names the contract (same shape as
    one-shot-task). `unslop` stays secondary. If the product `AGENTS.md` /
    `CLAUDE.md` needs a different voice, note the override.
+   Also name the Day-1 defaults now seated with the kit: `outcome-repeat-back`
+   (Goal / Constraints / Done means / Keep before act), `results-not-homework`
+   (mergeable artifact exit, no homework list), `fleet-orchestrate` when the
+   ask spans multiple workstreams, `teach-to-skill` post-pass after a flow
+   recurs twice, and fresh `verify-this` evidence before shipping falsifiable
+   done or substance merge claims. Ambient `/factory-status` stays quiet when
+   healthy and pings only on real drift.
    `/factory-status` remains the health sweep.
 
 The ambient shipping bar is smallest-correct-diff; `/no-comments` and
