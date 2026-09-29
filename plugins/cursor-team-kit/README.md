@@ -8,7 +8,7 @@ Not affiliated with or endorsed by Cursor — see
 
 Skills resolve as `/cursor-team-kit:<skill>`, e.g.
 `/cursor-team-kit:deslop`, `/cursor-team-kit:verify-this`,
-`/cursor-team-kit:one-shot-task`, `/cursor-team-kit:orwell-prose`, `/cursor-team-kit:figma-from-system`, `/cursor-team-kit:product-debate`, `/cursor-team-kit:outcome-repeat-back`, `/cursor-team-kit:results-not-homework`, `/cursor-team-kit:fleet-orchestrate`, `/cursor-team-kit:teach-to-skill`.
+`/cursor-team-kit:one-shot-task`, `/cursor-team-kit:orwell-prose`, `/cursor-team-kit:figma-from-system`, `/cursor-team-kit:product-debate`, `/cursor-team-kit:outcome-repeat-back`, `/cursor-team-kit:results-not-homework`, `/cursor-team-kit:fleet-orchestrate`, `/cursor-team-kit:teach-to-skill`, `/cursor-team-kit:leave-machine-clean`.
 
 **Default:** every non-trivial ask is a one-shot task. Agents start on
 that route automatically (vague → `poteto-prompt` → `poteto-mode`;
@@ -54,6 +54,12 @@ contract.
 **Default (post-pass):** if the same manual flow recurred twice, offer
 skill-authoring / learn-from-demonstration once; drop if declined. Typing
 `/cursor-team-kit:teach-to-skill` is optional; the skill names the contract.
+
+**Default (leave clean):** kill orphaned local agent children before you stop;
+mid-session `/cursor-team-kit:leave-machine-clean` reclaims session orphans
+only. Cap parallel local workstreams; prefer remote for heavy verify. Typing
+`/cursor-team-kit:leave-machine-clean` is optional; the skill names the
+contract.
 
 **Default (verify):** falsifiable "done" and substance merge claims need
 fresh `verify-this` evidence before ship.

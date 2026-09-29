@@ -40,6 +40,7 @@ Remaining triggers:
 - Before you stop a non-trivial ask → **results-not-homework** by default (`cursor-team-kit`). Leave a mergeable artifact. Never end with a "you should…" homework list. Do not wait for `/results-not-homework` to be typed.
 - Ask spans multiple workstreams → **fleet-orchestrate** by default (`cursor-team-kit`). Parent + specialists, ordered plate with merge holds, parent waits on children, verify before merge. Do not wait for `/fleet-orchestrate` to be typed. The poteto playbook `playbooks/fleet-orchestrate.md` is opt-in like greenfield, not this Non-negotiable.
 - After a pass, if the same manual flow recurred twice → **teach-to-skill** by default (`cursor-team-kit`). Offer skill-authoring once; drop if declined. Do not wait for `/teach-to-skill` to be typed.
+- Before you stop after starting local browsers, Node, Vite, Playwright, Docker, watchers, Electron, or agent side processes → **leave-machine-clean** by default (`cursor-team-kit`). Tear them down before exit. Mid-session `/leave-machine-clean` or ask to reclaim: census orphans and kill only session or orphaned agent work. Cap parallel local workstreams; prefer remote for heavy verify. Restart is nuclear clear, not the encoded fix. Do not wait for `/leave-machine-clean` to be typed.
 - Falsifiable "done" or substance merge claim → fresh **verify-this** evidence before ship (`cursor-team-kit`). Recap is not evidence.
 - Before commit → the `deslop` skill from the `cursor-team-kit` plugin (`/deslop`).
 - Before review → the **no-comments** skill (`/no-comments`).
