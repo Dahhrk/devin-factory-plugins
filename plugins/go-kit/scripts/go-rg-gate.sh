@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Tier 0: Programming Standards Reference Go smells (portable regex bar).
 # PSR: propagate errors/cancellation; bound goroutines; close resources;
-# avoid uncontrolled globals. Product golangci (errcheck/bodyclose) remains
+# avoid uncontrolled globals; HTTP with context. Product golangci (errcheck/bodyclose) remains
 # authoritative for typed depth; this gate is the portable rg bar.
 #
 # Usage: bash scripts/go-rg-gate.sh [root] [path ...]
@@ -36,13 +36,14 @@ FILT="$TMPDIR_GATE/filt"
 # single-walk smell set
 # SCAN_PATS match source lines. CLASS_PATS match rg "path:line:code" output
 # (anchors apply to the code portion after path:line:).
-IDS=(funchook barego ioutil paniccall errgroupbg)
+IDS=(funchook barego ioutil paniccall errgroupbg httpnocontext)
 SCAN_PATS=(
   '^var [A-Z][A-Za-z0-9_]*[[:space:]]*=[[:space:]]*func'
   '^[[:space:]]*go[[:space:]]'
   '\bioutil\.'
   '^[[:space:]]*panic[[:space:]]*\('
   'errgroup\.WithContext\([[:space:]]*context\.Background[[:space:]]*\([[:space:]]*\)[[:space:]]*\)'
+  'http\.NewRequest\(|http\.(Get|Post|Head|PostForm)\('
 )
 CLASS_PATS=(
   ':[0-9]+:var [A-Z][A-Za-z0-9_]*[[:space:]]*=[[:space:]]*func'
@@ -50,6 +51,7 @@ CLASS_PATS=(
   '\bioutil\.'
   ':[0-9]+:[[:space:]]*panic[[:space:]]*\('
   'errgroup\.WithContext\([[:space:]]*context\.Background[[:space:]]*\([[:space:]]*\)[[:space:]]*\)'
+  'http\.NewRequest\(|http\.(Get|Post|Head|PostForm)\('
 )
 MSGS=(
   'exported package-level func hook (uncontrolled global); inject via param or go-rg-allow with rationale'
@@ -57,6 +59,7 @@ MSGS=(
   'deprecated ioutil (use io and os)'
   'panic( in prod path (prefer error return; go-rg-allow for must-init)'
   'errgroup.WithContext(context.Background()) (prefer request/parent ctx; do not drop cancel)'
+  'http.NewRequest / http.Get|Post|Head|PostForm without context (use NewRequestWithContext or client.Do with ctx; go-rg-allow for generated)'
 )
 
 PAT_ARGS=()
