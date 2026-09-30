@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Tier 0: Programming Standards Reference Shell smells (portable regex bar).
 # PSR: quote expansions; explicit failure; safe temp files; avoid eval and
-# pipe-to-shell. Product ShellCheck/shfmt remain authoritative for depth;
+# pipe-to-shell; read -r (SC2162). Product ShellCheck/shfmt remain authoritative for depth;
 # this gate is the portable rg bar.
 #
 # Usage: bash scripts/sh-rg-gate.sh [root] [path ...]
@@ -34,7 +34,7 @@ ALL="$TMPDIR_GATE/all"
 FILT="$TMPDIR_GATE/filt"
 
 # single-walk smell set
-IDS=(evalcall unsafetmp forunquoted cdunquoted rmunquoted curlpipe)
+IDS=(evalcall unsafetmp forunquoted cdunquoted rmunquoted curlpipe readnor)
 SCAN_PATS=(
   '(^|[^[:alnum:]_])eval[[:space:]]'
   '/tmp/[^[:space:]"'"'"']*\$\$'
@@ -42,6 +42,7 @@ SCAN_PATS=(
   '^[[:space:]]*cd[[:space:]]+\$[A-Za-z_{]'
   'rm[[:space:]]+(-[a-zA-Z]*f[a-zA-Z]*|--recursive)[[:space:]]+\$[A-Za-z_{]'
   '(curl|wget)[^\n|]*\|[[:space:]]*(ba)?sh\b'
+  '(^|[[:space:];|&{(])read[[:space:]]+[^[:space:]-]'
 )
 CLASS_PATS=(
   'eval[[:space:]]'
@@ -50,6 +51,7 @@ CLASS_PATS=(
   ':[0-9]+:[[:space:]]*cd[[:space:]]+\$[A-Za-z_{]'
   'rm[[:space:]]+(-[a-zA-Z]*f[a-zA-Z]*|--recursive)[[:space:]]+\$[A-Za-z_{]'
   '(curl|wget)[^\n|]*\|[[:space:]]*(ba)?sh\b'
+  'read[[:space:]]+[^[:space:]-]'
 )
 MSGS=(
   'eval banned (prefer argv arrays / functions; sh-rg-allow with rationale)'
@@ -58,6 +60,7 @@ MSGS=(
   'unquoted cd $var (quote: cd "$var"; sh-rg-allow with rationale)'
   'unquoted rm -f/$var (quote paths; prefer rm -f -- "$path"; sh-rg-allow with rationale)'
   'curl|sh / wget|bash pipe-to-shell banned (download, ShellCheck, then run; sh-rg-allow with rationale)'
+  'read without -r (SC2162: use IFS= read -r; templates/read_r.sh; sh-rg-allow with rationale)'
 )
 
 PAT_ARGS=()
