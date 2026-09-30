@@ -8,7 +8,7 @@ Not affiliated with or endorsed by Cursor — see
 
 Skills resolve as `/cursor-team-kit:<skill>`, e.g.
 `/cursor-team-kit:deslop`, `/cursor-team-kit:verify-this`,
-`/cursor-team-kit:one-shot-task`, `/cursor-team-kit:orwell-prose`, `/cursor-team-kit:figma-from-system`, `/cursor-team-kit:product-debate`, `/cursor-team-kit:outcome-repeat-back`, `/cursor-team-kit:results-not-homework`, `/cursor-team-kit:fleet-orchestrate`, `/cursor-team-kit:teach-to-skill`, `/cursor-team-kit:leave-machine-clean`, `/cursor-team-kit:routine-by-default`, `/cursor-team-kit:harness-not-training`.
+`/cursor-team-kit:one-shot-task`, `/cursor-team-kit:orwell-prose`, `/cursor-team-kit:figma-from-system`, `/cursor-team-kit:product-debate`, `/cursor-team-kit:outcome-repeat-back`, `/cursor-team-kit:results-not-homework`, `/cursor-team-kit:fleet-orchestrate`, `/cursor-team-kit:teach-to-skill`, `/cursor-team-kit:leave-machine-clean`, `/cursor-team-kit:routine-by-default`, `/cursor-team-kit:harness-not-training`, `/cursor-team-kit:software-factory-gates`, `/cursor-team-kit:design-eng`, `/cursor-team-kit:design-control-loop`, `/cursor-team-kit:improve-agents-md`, `/cursor-team-kit:grill-me`.
 
 **Default:** every non-trivial ask is a one-shot task. Agents start on
 that route automatically (vague → `poteto-prompt` → `poteto-mode`;
@@ -73,6 +73,27 @@ optional; the skill names the contract.
 
 **Default (verify):** falsifiable "done" and substance merge claims need
 fresh `verify-this` evidence before ship.
+
+**Default (factory gates):** non-trivial multi-file feature work passes
+`software-factory-gates` (Product, Architecture, Program Design, Build Order)
+with explicit user approval at each gate before implementation. Trivial
+one-liners skip. Typing `/cursor-team-kit:software-factory-gates` is optional;
+the skill names the contract.
+
+**Default (design-eng):** UI and animation work applies `design-eng` taste and
+runs `review-animations` before ship. Vague motion feedback applies
+`animation-vocabulary` first. Typing `/cursor-team-kit:design-eng` is optional;
+the skill names the contract.
+
+**Default (control loop):** new agent loop, overnight automation, or
+feedback-driven system applies `design-control-loop`
+(sensor/controller/actuator/disturbances) before implementation. Typing
+`/cursor-team-kit:design-control-loop` is optional; the skill names the
+contract.
+
+**Default (agents-md):** AGENTS.md drift or rewrite applies `improve-agents-md`
+for structured instruction blocks. Typing `/cursor-team-kit:improve-agents-md`
+is optional; the skill names the contract.
 
 Factory skills also include `factory-init`, `seat-kit`, `factory-status`,
 and `merge-queue` when present.

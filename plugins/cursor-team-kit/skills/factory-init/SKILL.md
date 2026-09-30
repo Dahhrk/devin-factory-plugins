@@ -78,9 +78,15 @@ self-provisions packs and the kitchen before touching the repo.
    recurs twice, `leave-machine-clean` EXIT + on-demand reclaim of local agent
    children, `routine-by-default` for recurring / scheduled / monitor asks,
    `harness-not-training` for capability / agent / AI product work (harnesses
-   over frontier training), and fresh `verify-this` evidence before shipping falsifiable
-   done or substance merge claims. Ambient `/factory-status` stays quiet when
-   healthy and pings only on real drift.
+   over frontier training), `software-factory-gates` for non-trivial multi-file
+   work (four gates before implementation), `design-eng` for UI and animation
+   taste (with `review-animations` before ship), `animation-vocabulary` when
+   motion feedback is vague, `design-control-loop` for new agent loops or
+   overnight automation, `improve-agents-md` when AGENTS.md drifts or needs
+   rewrite, `grill-me` for adversarial stress-testing before build, and fresh
+   `verify-this` evidence before shipping falsifiable done or substance merge
+   claims. Ambient `/factory-status` stays quiet when healthy and pings only
+   on real drift.
    `/factory-status` remains the health sweep.
 
 The ambient shipping bar is smallest-correct-diff; `/no-comments` and
