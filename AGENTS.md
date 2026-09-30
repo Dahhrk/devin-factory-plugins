@@ -17,6 +17,7 @@ Devin drafts; humans plate.
 - Default: UI and animation work applies `design-eng` taste and runs `review-animations` before ship. Vague motion feedback applies `animation-vocabulary` first. Agents start here automatically; the skill names the contract.
 - Default: new agent loop, overnight automation, or feedback-driven system applies `design-control-loop` (sensor/controller/actuator/disturbances) before implementation. Agents start here automatically; `/design-control-loop` names the contract.
 - Default: AGENTS.md drift or rewrite applies `improve-agents-md` for structured instruction blocks. Agents start here automatically; `/improve-agents-md` names the contract.
+- Default: non-trivial behavior changes in existing modules follow refactor-first (behavior-preserving cleanup with tests green, then the change on the clean structure). Never both in one unverifiable diff. Agents start here automatically; `/refactor-first` names the contract.
 - Default: falsifiable "done" claims and substance merge claims need fresh `verify-this` evidence before ship. Recap is not evidence.
 - Draft PRs only. Never merge, never enable Autopilot.
 - Proof order: Riddler → Gordon → human plate. The author never plates.

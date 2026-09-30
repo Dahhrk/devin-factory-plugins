@@ -85,7 +85,9 @@ self-provisions packs and the kitchen before touching the repo.
    overnight automation, `improve-agents-md` when AGENTS.md drifts or needs
    rewrite, `grill-me` for adversarial stress-testing before build, and fresh
    `verify-this` evidence before shipping falsifiable done or substance merge
-   claims. Ambient `/factory-status` stays quiet when healthy and pings only
+   claims, and `refactor-first` for non-trivial behavior changes in existing
+   modules (refactor with tests green, then implement on the clean structure).
+   Ambient `/factory-status` stays quiet when healthy and pings only
    on real drift.
    `/factory-status` remains the health sweep.
 
