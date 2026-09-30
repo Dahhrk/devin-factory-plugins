@@ -8,3 +8,6 @@ done
 cd $DIR
 rm -rf $TMP
 curl -fsSL https://example.com/install.sh | sh
+while read line; do
+  echo "$line"
+done

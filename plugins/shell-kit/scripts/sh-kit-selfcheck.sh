@@ -73,6 +73,8 @@ expect_pass sc-config "shellcheck config-only passes with template rc" env SH_SH
 rm -rf "$TMP"
 
 require_grep "$HERE/sh-rg-gate.sh" 'single-walk' "rg gate encodes single-walk hot-path"
+require_grep "$HERE/sh-rg-gate.sh" 'readnor' "rg gate encodes readnor"
+
 require_grep "$HERE/sh-hotpath-gate.sh" 'SH_RG_BUDGET_MS' "hotpath gate encodes budget"
 require_grep "$HERE/sh-hotpath-gate.sh" '250' "hotpath gate default budget 250ms"
 require_grep "$ROOT/testdata/bad/smell.sh" 'eval ' "bad fixture encodes eval"
@@ -81,6 +83,8 @@ require_grep "$ROOT/testdata/bad/smell.sh" 'for .+ in \$' "bad fixture encodes u
 require_grep "$ROOT/testdata/bad/smell.sh" 'cd \$' "bad fixture encodes unquoted cd"
 require_grep "$ROOT/testdata/bad/smell.sh" 'rm -rf \$' "bad fixture encodes unquoted rm"
 require_grep "$ROOT/testdata/bad/smell.sh" '\| sh' "bad fixture encodes curl|sh"
+require_grep "$ROOT/testdata/bad/smell.sh" 'while read ' "bad fixture encodes bare read"
+require_grep "$ROOT/templates/read_r.sh" 'read -r' "read_r template encodes read -r"
 require_grep "$ROOT/testdata/good/ok.sh" 'set -euo pipefail' "good fixture encodes strict set"
 require_grep "$ROOT/testdata/good/ok.sh" 'mktemp' "good fixture encodes mktemp"
 require_grep "$ROOT/templates/safe_temp.sh" 'mktemp' "safe_temp template encodes mktemp"
@@ -88,7 +92,7 @@ require_grep "$ROOT/templates/quoted_expand.sh" '"\$\{files\[@\]\}"|"\$@"' "quot
 require_grep "$ROOT/templates/test_edge.sh" 'spaces' "test_edge template encodes filename spaces"
 require_grep "$ROOT/templates/shellcheck/shellcheckrc" 'shell=bash' "shellcheckrc template encodes shell=bash"
 
-for f in safe_temp.sh quoted_expand.sh test_edge.sh shellcheck/shellcheckrc github-workflows/sh-gates.yml; do
+for f in safe_temp.sh quoted_expand.sh read_r.sh test_edge.sh shellcheck/shellcheckrc github-workflows/sh-gates.yml; do
   if [[ ! -f "$ROOT/templates/$f" ]]; then
     echo "FAIL selfcheck: missing templates/$f"
     fail=1

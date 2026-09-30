@@ -28,7 +28,7 @@ All must be true. Do not claim done on prose.
 6. `bash scripts/sh-test-gate.sh <product-root>` exits 0.
 7. Diff adds no narration comments that restate the next statement. Survivors only for non-obvious external constraints.
 8. Smallest correct change: prefer deletion; no new helper with one caller; no invent fake handlers for score.
-9. If temps / downloads / expansions touched: mktemp+trap, quote paths, no eval / curl|sh (see `templates/safe_temp.sh` / `templates/quoted_expand.sh`).
+9. If temps / downloads / expansions / line reads touched: mktemp+trap, quote paths, `IFS= read -r`, no eval / curl|sh (see `templates/safe_temp.sh` / `templates/quoted_expand.sh` / `templates/read_r.sh`).
 10. Stricter product gates (bats, shellspec, Makefile check) override when present. Prove on the real artifact.
 11. Do not disable, skip, or weaken gates / expectations merely to make a build pass (PSR AI rule 11). Record what was tested and what remains uncertain.
 
@@ -44,7 +44,7 @@ All must be true. Do not claim done on prose.
 1. Trust boundary (quote / temp / download / eval) before micro-opts
 2. Delete dead path before adding
 3. Explicit failure (`set -euo pipefail`) before more control flow
-4. Named boundaries (`safe_temp`, quoted expand) before scattered `sh-rg-allow`
+4. Named boundaries (`safe_temp`, quoted expand, `read_r`) before scattered `sh-rg-allow`
 5. Measure (time, `SH_RG_BUDGET_MS`) before further micro-opt
 
 Load skill **shell** as needed. Second smell -> lint/CI/skill (encode-lessons), not more prose.
@@ -77,7 +77,7 @@ Standing extras (list separately; do not fold into the 100% weighted overall unl
 
 | Extra | /10 | Prove |
 |-------|-----|-------|
-| PSR Shell alignment | checklist: ShellCheck, shfmt, quote expansions, set -euo pipefail, mktemp+trap, tests for filenames/signals/empty, no eval/curl\|sh |
+| PSR Shell alignment | checklist: ShellCheck, shfmt, quote expansions, set -euo pipefail, mktemp+trap, read -r (SC2162), tests for filenames/signals/empty, no eval/curl\|sh |
 | CI green | `sh-rg-gate` + `sh-hotpath-gate` + `sh-shellcheck-gate` + `sh-fmt-gate` + `sh-strict-gate` + `sh-test-gate` PASS on the artifact; if GitHub Actions cannot run, note billing / runner and still prove local gate exit 0 |
 
 Also report Quality / Opts / Amount narrative + LOC (+/− / net) and compare history across runs (`R1`-`Rn` or dates internally; descriptive titles user-facing).
