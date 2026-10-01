@@ -55,6 +55,7 @@ expect_pass good-testci "test-ci passes with workflow cargo test" bash "$HERE/ru
 expect_fail testci-missing "test-ci fails without cargo test wiring" bash "$HERE/rust-test-ci-gate.sh" "$ROOT/testdata/test-ci-missing"
 
 require_grep "$HERE/rust-rg-gate.sh" 'single-walk' "rg gate encodes single-walk hot-path"
+require_grep "$HERE/rust-rg-gate.sh" 'lockunwrap' "rg gate encodes lockunwrap"
 require_grep "$HERE/rust-hotpath-gate.sh" 'RUST_RG_BUDGET_MS' "hotpath gate encodes budget"
 require_grep "$HERE/rust-hotpath-gate.sh" '250' "hotpath gate default budget 250ms"
 require_grep "$ROOT/testdata/bad/smell.rs" '\bunsafe\b' "bad fixture encodes unsafe"
@@ -62,12 +63,14 @@ require_grep "$ROOT/testdata/bad/smell.rs" 'transmute' "bad fixture encodes tran
 require_grep "$ROOT/testdata/bad/smell.rs" 'extern "C"' "bad fixture encodes extern C"
 require_grep "$ROOT/testdata/bad/smell.rs" 'todo!' "bad fixture encodes todo!"
 require_grep "$ROOT/testdata/bad/smell.rs" 'no_mangle' "bad fixture encodes no_mangle"
+require_grep "$ROOT/testdata/bad/smell.rs" 'lock\(\)\.unwrap' "bad fixture encodes lockunwrap"
+require_grep "$ROOT/templates/lock_poison.rs" 'into_inner' "lock_poison template encodes poison recovery"
 require_grep "$ROOT/testdata/good/smell_free.rs" 'rust-rg-allow' "good fixture encodes allow marker"
 require_grep "$ROOT/templates/unsafe_boundary.rs" 'SAFETY' "unsafe_boundary template encodes SAFETY"
 require_grep "$ROOT/templates/ffi_extern.rs" 'extern "C"' "ffi_extern template encodes extern C"
 require_grep "$ROOT/templates/clippy/clippy.toml" 'cognitive-complexity' "clippy template present"
 
-for f in unsafe_boundary.rs ffi_extern.rs rustfmt.toml clippy/clippy.toml github-workflows/rust-gates.yml; do
+for f in unsafe_boundary.rs ffi_extern.rs lock_poison.rs rustfmt.toml clippy/clippy.toml github-workflows/rust-gates.yml; do
   if [[ ! -f "$ROOT/templates/$f" ]]; then
     echo "FAIL selfcheck: missing templates/$f"; fail=1
   else echo "ok: template $f present"; fi
