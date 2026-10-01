@@ -27,7 +27,7 @@ All must be true. Do not claim done on prose.
 5. `bash scripts/rust-test-ci-gate.sh <product-root>` exits 0.
 6. Diff adds no narration comments that restate the next statement. Survivors only for non-obvious SAFETY / FFI / external constraints.
 7. Smallest correct change: prefer deletion; no new helper with one caller; no invent fake handlers for score.
-8. If unsafe / FFI / transmute touched: SAFETY docs, named boundary templates, `rust-rg-allow` on the smell line.
+8. If unsafe / FFI / transmute / Mutex|RwLock touched: SAFETY docs, named boundary templates (`lock_poison` for poison), `rust-rg-allow` on the smell line.
 9. Stricter product gates (`cargo clippy -D warnings`, Miri, deny lints) override when present. Prove on the real artifact (`cargo test`).
 10. Do not disable, skip, or weaken gates / expectations merely to make a build pass (PSR AI rule 11). Record what was tested and what remains uncertain.
 
@@ -43,7 +43,7 @@ All must be true. Do not claim done on prose.
 1. Trust boundary (unsafe / FFI / net / parse) before micro-opts
 2. Delete dead path before adding
 3. Safe wrappers before more unsafe
-4. Named domain errors before panic/unwrap sprawl
+4. Named domain errors and poison recovery before panic/unwrap sprawl
 5. Measure (criterion / flamegraph) before further micro-opt
 
 Load skill **rust** as needed. Second smell -> lint/CI/skill (encode-lessons), not more prose.
@@ -76,7 +76,7 @@ Standing extras (list separately; do not fold into the 100% weighted overall unl
 
 | Extra | /10 | Prove |
 |-------|-----|-------|
-| PSR Rust alignment | checklist: rustfmt, Clippy, cargo test wired, SAFETY on unsafe, FFI docs, no unchecked transmute, lockfile policy stated |
+| PSR Rust alignment | checklist: rustfmt, Clippy, cargo test wired, SAFETY on unsafe, FFI docs, no unchecked transmute, no Mutex/RwLock poison unwrap, lockfile policy stated |
 | CI green | `rust-rg-gate` + `rust-hotpath-gate` + `rust-fmt-gate` + `rust-clippy-gate` + `rust-test-ci-gate` PASS on the artifact; if GitHub Actions cannot run, note billing / runner and still prove local gate exit 0 |
 
 Also report Quality / Opts / Amount narrative + LOC (+/− / net) and compare history across runs (`R1`-`Rn` or dates internally; descriptive titles user-facing).

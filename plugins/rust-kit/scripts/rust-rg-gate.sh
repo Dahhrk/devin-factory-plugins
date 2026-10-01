@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Tier 0: Programming Standards Reference Rust smells (portable regex bar).
 # PSR: rustfmt, Clippy, cargo test; document unsafe invariants and FFI;
-# avoid unchecked assumptions at external boundaries.
+# avoid unchecked assumptions at external boundaries; no Mutex/RwLock poison unwrap.
 # Product Clippy / rustfmt remain authoritative for typed depth; this gate is
 # the portable rg bar.
 #
@@ -36,13 +36,14 @@ FILT="$TMPDIR_GATE/filt"
 
 # single-walk smell set
 # SCAN_PATS match source lines. CLASS_PATS match rg "path:line:code" output.
-IDS=(unsafe transmute externc todounimp nomangle)
+IDS=(unsafe transmute externc todounimp nomangle lockunwrap)
 SCAN_PATS=(
   '\bunsafe\b'
   'mem::transmute|transmute_copy|\btransmute[[:space:]]*!'
   'extern[[:space:]]+"C"'
   '\b(todo!|unimplemented!)[[:space:]]*\('
   '#\[no_mangle\]'
+  '\.(lock|read|write)\(\)\s*\.(unwrap|expect)\('
 )
 CLASS_PATS=(
   '\bunsafe\b'
@@ -50,6 +51,7 @@ CLASS_PATS=(
   'extern[[:space:]]+"C"'
   '\b(todo!|unimplemented!)[[:space:]]*\('
   '#\[no_mangle\]'
+  '\.(lock|read|write)\(\)\s*\.(unwrap|expect)\('
 )
 MSGS=(
   'unsafe without rust-rg-allow (document SAFETY invariants / FFI; prefer safe API)'
@@ -57,6 +59,7 @@ MSGS=(
   'extern "C" FFI boundary (document invariants; rust-rg-allow on named boundary)'
   'todo! / unimplemented! in prod path (finish or return Result; rust-rg-allow for scaffold)'
   '#[no_mangle] export (document ABI/FFI; rust-rg-allow on named boundary)'
+  'Mutex/RwLock .lock|.read|.write().unwrap|expect (handle poison or rust-rg-allow; templates/lock_poison.rs)'
 )
 
 PAT_ARGS=()

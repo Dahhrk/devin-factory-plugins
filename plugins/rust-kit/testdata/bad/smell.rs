@@ -22,3 +22,9 @@ pub fn unfinished() {
 pub fn also_unfinished() {
     unimplemented!()
 }
+
+use std::sync::Mutex;
+
+pub fn poison_unwrap(m: &Mutex<i32>) -> i32 {
+    *m.lock().unwrap()
+}
