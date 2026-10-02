@@ -16,3 +16,7 @@ void bad_fmt(char *buf, int n) {
 void bad_gets(char *buf) {
   gets(buf);
 }
+
+int bad_parse(const char *s) {
+  return atoi(s);
+}
