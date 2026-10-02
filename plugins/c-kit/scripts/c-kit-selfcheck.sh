@@ -66,8 +66,11 @@ require_grep "$ROOT/testdata/bad/smell.c" 'gets' "bad fixture encodes gets"
 require_grep "$ROOT/testdata/good/ok.c" 'c-rg-allow' "good fixture encodes allow marker"
 require_grep "$ROOT/templates/bounded_string.c" 'snprintf' "bounded_string template encodes snprintf"
 require_grep "$ROOT/templates/malloc_check.c" 'NULL' "malloc_check template encodes NULL check"
+require_grep "$HERE/c-rg-gate.sh" 'atoi' "rg gate encodes atoi"
+require_grep "$ROOT/testdata/bad/smell.c" 'atoi' "bad fixture encodes atoi"
+require_grep "$ROOT/templates/strtol_check.c" 'strtol' "strtol_check template encodes strtol"
 
-for f in bounded_string.c malloc_check.c clang-format github-workflows/c-gates.yml; do
+for f in bounded_string.c malloc_check.c strtol_check.c clang-format github-workflows/c-gates.yml; do
   if [[ ! -f "$ROOT/templates/$f" ]]; then
     echo "FAIL selfcheck: missing templates/$f"; fail=1
   else echo "ok: template $f present"; fi

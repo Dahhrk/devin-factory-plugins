@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Tier 0: Programming Standards Reference C smells (portable regex bar).
 # PSR: strong diagnostics; bounds/lifetime; sanitizers; explicit UB handling.
-# Practical encode (language-farm): unsafe string APIs (strcpy/strcat/sprintf/gets).
+# Practical encode (language-farm): unsafe string APIs (strcpy/strcat/sprintf/gets)
+# plus atoi/atol/atoll/atof (prefer strtol family with endptr).
 # Product clang-format / -Wall -Wextra / sanitizers remain authoritative for depth;
 # this gate is the portable rg bar for buffer/unsafe string smells.
 #
@@ -36,24 +37,27 @@ FILT="$TMPDIR_GATE/filt"
 
 # single-walk smell set
 # SCAN_PATS match source lines. CLASS_PATS match rg "path:line:code" output.
-IDS=(strcpy strcat sprintf gets)
+IDS=(strcpy strcat sprintf gets atoi)
 SCAN_PATS=(
   '\bstrcpy[[:space:]]*\('
   '\bstrcat[[:space:]]*\('
   '\bsprintf[[:space:]]*\('
   '\bgets[[:space:]]*\('
+  '\b(atoi|atol|atoll|atof)[[:space:]]*\('
 )
 CLASS_PATS=(
   '\bstrcpy[[:space:]]*\('
   '\bstrcat[[:space:]]*\('
   '\bsprintf[[:space:]]*\('
   '\bgets[[:space:]]*\('
+  '\b(atoi|atol|atoll|atof)[[:space:]]*\('
 )
 MSGS=(
   'strcpy banned (prefer snprintf/strlcpy/bounded copy; c-rg-allow with rationale)'
   'strcat banned (prefer snprintf/strlcat/bounded append; c-rg-allow with rationale)'
   'sprintf banned (prefer snprintf; c-rg-allow with rationale)'
   'gets banned (prefer fgets with bound; c-rg-allow never for prod)'
+  'atoi/atol/atoll/atof banned (prefer strtol/strtoll/strtod with endptr; c-rg-allow with rationale; templates/strtol_check.c)'
 )
 
 PAT_ARGS=()

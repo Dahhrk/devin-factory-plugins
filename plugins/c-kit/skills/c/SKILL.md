@@ -1,6 +1,6 @@
 ---
 name: c
-description: C PSR bar. clang-format, -Wall -Wextra, sanitizers where practical, no unsafe string APIs, malloc NULL checks. Use when reading or editing any .c / .h / CMakeLists.txt in a factory product.
+description: C PSR bar. clang-format, -Wall -Wextra, sanitizers where practical, no unsafe string APIs, no atoi/atol/atoll/atof, malloc NULL checks. Use when reading or editing any .c / .h / CMakeLists.txt in a factory product.
 paths: ["**/*.c", "**/*.h", "**/CMakeLists.txt", "**/Makefile", "**/Makefile.am", "**/meson.build", "**/.clang-format", "**/.github/workflows/**"]
 ---
 
@@ -14,9 +14,10 @@ Apply pstack **principle-encode-lessons-in-structure** first. This skill encodes
 2. **Strong diagnostics** — `-Wall` and `-Wextra` in CMake/Make/meson/CI. Gate: `scripts/c-warn-gate.sh`.
 3. **Sanitizers where practical** — ASAN/UBSAN/TSAN or `-fsanitize=` wired. Gate: `scripts/c-san-ci-gate.sh` (wiring); run sanitizer builds in product CI when the host supports them.
 4. **Buffer / unsafe string smells** — no `strcpy` / `strcat` / `sprintf` / `gets`. Gate: `scripts/c-rg-gate.sh` (single-walk). Template: `templates/bounded_string.c`.
-5. **malloc check** — every `malloc` / `calloc` / `realloc` NULL-checked nearby. Gate: `scripts/c-malloc-gate.sh`. Template: `templates/malloc_check.c`.
-6. **Hot-path** — `scripts/c-hotpath-gate.sh` fails if rg-gate wall exceeds `C_RG_BUDGET_MS` (default 250ms).
-7. **Ownership / UB** — prefer clear ownership, bounds-checked copies, and sanitizer-backed CI over silent undefined behaviour.
+5. **Numeric parse smells** — no `atoi` / `atol` / `atoll` / `atof` (prefer `strtol` / `strtoll` / `strtod` with endptr). Gate: `scripts/c-rg-gate.sh` (single-walk). Template: `templates/strtol_check.c`.
+6. **malloc check** — every `malloc` / `calloc` / `realloc` NULL-checked nearby. Gate: `scripts/c-malloc-gate.sh`. Template: `templates/malloc_check.c`.
+7. **Hot-path** — `scripts/c-hotpath-gate.sh` fails if rg-gate wall exceeds `C_RG_BUDGET_MS` (default 250ms).
+8. **Ownership / UB** — prefer clear ownership, bounds-checked copies, and sanitizer-backed CI over silent undefined behaviour.
 
 ## Rules
 

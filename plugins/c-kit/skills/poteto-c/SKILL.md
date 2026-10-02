@@ -28,7 +28,7 @@ All must be true. Do not claim done on prose.
 6. `bash scripts/c-malloc-gate.sh <product-root> [paths...]` exits 0.
 7. Diff adds no narration comments that restate the next statement. Survivors only for non-obvious ownership / bounds / UB constraints.
 8. Smallest correct change: prefer deletion; no new helper with one caller; no invent fake handlers for score.
-9. If strcpy/sprintf/malloc touched: bounded helpers, NULL checks, `c-rg-allow` on the smell line when intentional.
+9. If strcpy/sprintf/atoi/malloc touched: bounded helpers, strtol with endptr, NULL checks, `c-rg-allow` on the smell line when intentional.
 10. Stricter product gates (clang-tidy, `-Werror`, CI sanitizer jobs) override when present. Prove on the real artifact (tests / sanitizer build).
 11. Do not disable, skip, or weaken gates / expectations merely to make a build pass (PSR AI rule 11). Record what was tested and what remains uncertain.
 
@@ -77,7 +77,7 @@ Standing extras (list separately; do not fold into the 100% weighted overall unl
 
 | Extra | /10 | Prove |
 |-------|-----|-------|
-| PSR C alignment | checklist: clang-format, -Wall -Wextra, sanitizer wiring, no unchecked strcpy/sprintf/gets, malloc NULL checks |
+| PSR C alignment | checklist: clang-format, -Wall -Wextra, sanitizer wiring, no unchecked strcpy/sprintf/gets/atoi, malloc NULL checks |
 | CI green | `c-rg-gate` + `c-hotpath-gate` + `c-fmt-gate` + `c-warn-gate` + `c-san-ci-gate` + `c-malloc-gate` PASS on the artifact; if GitHub Actions cannot run, note billing / runner and still prove local gate exit 0 |
 
 Also report Quality / Opts / Amount narrative + LOC (+/− / net) and compare history across runs (`R1`-`Rn` or dates internally; descriptive titles user-facing).
