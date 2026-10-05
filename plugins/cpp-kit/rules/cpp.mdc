@@ -14,6 +14,7 @@ Follow skills **cpp** and **poteto-cpp** when applicable.
 - No raw `new` / `delete` without `cpp-rg-allow` + rationale; prefer `std::unique_ptr` / `std::make_unique`
 - No C-style casts without `cpp-rg-allow` + rationale; prefer `static_cast` / `reinterpret_cast` / `const_cast`
 - No `sprintf` / `vsprintf` without `cpp-rg-allow` + rationale; prefer `{fmt}` / `std::format` / `snprintf`
+- No `atoi` / `atol` / `atoll` / `atof` without `cpp-rg-allow` + rationale; prefer `std::from_chars` or `strtol` / `strtoll` / `strtod` with endptr (`templates/from_chars_check.cpp`)
 - Required product gates: `cpp-rg-gate` + `cpp-hotpath-gate` + `cpp-fmt-gate` + `cpp-warn-gate` + `cpp-tidy-ci-gate`. Do not disable checks to force green.
 - Prove runtime behaviour with tests / sanitizer builds, not "fmt pass" alone
 

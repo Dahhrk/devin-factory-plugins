@@ -27,7 +27,7 @@ All must be true. Do not claim done on prose.
 5. `bash scripts/cpp-tidy-ci-gate.sh <product-root>` exits 0.
 6. Diff adds no narration comments that restate the next statement. Survivors only for non-obvious ownership / lifetime / UB constraints.
 7. Smallest correct change: prefer deletion; no new helper with one caller; no invent fake handlers for score.
-8. If new/delete/cast/sprintf touched: `unique_ptr` / `static_cast` / `{fmt}`, `cpp-rg-allow` on the smell line when intentional.
+8. If new/delete/cast/sprintf/atoi touched: `unique_ptr` / `static_cast` / `{fmt}` / `std::from_chars`, `cpp-rg-allow` on the smell line when intentional.
 9. Stricter product gates (live clang-tidy, `-Werror`, sanitizer jobs) override when present. Prove on the real artifact (tests / tidy / sanitizer build).
 10. Do not disable, skip, or weaken gates / expectations merely to make a build pass (PSR AI rule 11). Record what was tested and what remains uncertain.
 
@@ -75,7 +75,7 @@ Standing extras (list separately; do not fold into the 100% weighted overall unl
 
 | Extra | /10 | Prove |
 |-------|-----|-------|
-| PSR C++ alignment | checklist: clang-format, -Wall -Wextra, clang-tidy wiring, no unchecked raw new/delete / C-style casts / sprintf|vsprintf |
+| PSR C++ alignment | checklist: clang-format, -Wall -Wextra, clang-tidy wiring, no unchecked raw new/delete / C-style casts / sprintf|vsprintf / atoi|atol|atoll|atof |
 | CI green | `cpp-rg-gate` + `cpp-hotpath-gate` + `cpp-fmt-gate` + `cpp-warn-gate` + `cpp-tidy-ci-gate` PASS on the artifact; if GitHub Actions cannot run, note billing / runner and still prove local gate exit 0 |
 
 Also report Quality / Opts / Amount narrative + LOC (+/− / net) and compare history across runs (`R1`-`Rn` or dates internally; descriptive titles user-facing).

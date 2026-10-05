@@ -20,3 +20,7 @@ int bad_numeric(double x) {
 void bad_fmt(char *buf, int n) {
   sprintf(buf, "%d", n);
 }
+
+int bad_parse(const char *s) {
+  return std::atoi(s);
+}
