@@ -1,6 +1,6 @@
 ---
 name: cpp
-description: C++ PSR bar. clang-format, -Wall -Wextra, clang-tidy where practical, no raw new/delete, no C-style casts, no sprintf/vsprintf. Use when reading or editing any .cpp / .cc / .cxx / .hpp / .hh / .h / CMakeLists.txt in a factory product.
+description: C++ PSR bar. clang-format, -Wall -Wextra, clang-tidy where practical, no raw new/delete, no C-style casts, no sprintf/vsprintf, no atoi/atol/atoll/atof. Use when reading or editing any .cpp / .cc / .cxx / .hpp / .hh / .h / CMakeLists.txt in a factory product.
 paths: ["**/*.cpp", "**/*.cc", "**/*.cxx", "**/*.hpp", "**/*.hh", "**/*.h", "**/CMakeLists.txt", "**/Makefile", "**/Makefile.am", "**/meson.build", "**/.clang-format", "**/.clang-tidy", "**/.github/workflows/**"]
 ---
 
@@ -16,7 +16,8 @@ Apply pstack **principle-encode-lessons-in-structure** first. This skill encodes
 4. **Raw new/delete** — no `new Type(...)` / `new T[]` / `delete` / `delete[]` without allow. Prefer `std::unique_ptr` / `std::make_unique`. Gate: `scripts/cpp-rg-gate.sh` (single-walk). Template: `templates/unique_ptr_new.cpp`.
 5. **C-style casts** — no `(T)x` / `(T*)p` for primitive/pointer types; prefer `static_cast` / `reinterpret_cast` / `const_cast`. Gate: `scripts/cpp-rg-gate.sh`. Template: `templates/static_cast.cpp`.
 6. **sprintf family** — no `sprintf` / `vsprintf`. Prefer `{fmt}` / `std::format` / `snprintf`. Gate: `scripts/cpp-rg-gate.sh`.
-7. **Hot-path** — `scripts/cpp-hotpath-gate.sh` fails if rg-gate wall exceeds `CPP_RG_BUDGET_MS` (default 250ms).
+7. **Numeric parse smells** — no `atoi` / `atol` / `atoll` / `atof` (silent 0 on garbage, UB on overflow). Prefer `std::from_chars` or `strtol` / `strtoll` / `strtod` with endptr. Gate: `scripts/cpp-rg-gate.sh` (single-walk). Template: `templates/from_chars_check.cpp`.
+8. **Hot-path** — `scripts/cpp-hotpath-gate.sh` fails if rg-gate wall exceeds `CPP_RG_BUDGET_MS` (default 250ms).
 
 ## Rules
 

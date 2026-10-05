@@ -64,8 +64,11 @@ require_grep "$ROOT/testdata/bad/smell.cpp" '(int)' "bad fixture encodes C-style
 require_grep "$ROOT/testdata/good/ok.cpp" 'cpp-rg-allow' "good fixture encodes allow marker"
 require_grep "$ROOT/templates/unique_ptr_new.cpp" 'unique_ptr' "unique_ptr_new template encodes unique_ptr"
 require_grep "$ROOT/templates/static_cast.cpp" 'static_cast' "static_cast template encodes static_cast"
+require_grep "$HERE/cpp-rg-gate.sh" 'atoi' "rg gate encodes atoi"
+require_grep "$ROOT/testdata/bad/smell.cpp" 'atoi' "bad fixture encodes atoi"
+require_grep "$ROOT/templates/from_chars_check.cpp" 'from_chars' "from_chars_check template encodes from_chars"
 
-for f in unique_ptr_new.cpp static_cast.cpp clang-format clang-tidy/clang-tidy github-workflows/cpp-gates.yml; do
+for f in unique_ptr_new.cpp static_cast.cpp from_chars_check.cpp clang-format clang-tidy/clang-tidy github-workflows/cpp-gates.yml; do
   if [[ ! -f "$ROOT/templates/$f" ]]; then
     echo "FAIL selfcheck: missing templates/$f"; fail=1
   else echo "ok: template $f present"; fi

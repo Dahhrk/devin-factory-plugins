@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Tier 0: Programming Standards Reference C++ smells (portable regex bar).
 # PSR: clang-format; -Wall -Wextra; clang-tidy; modern ownership/casts.
-# Practical encode (language-farm): raw new/delete, C-style casts, sprintf/vsprintf.
+# Practical encode (language-farm): raw new/delete, C-style casts, sprintf/vsprintf,
+# atoi/atol/atoll/atof (prefer std::from_chars or strtol family with endptr).
 # Product clang-format / -Wall -Wextra / clang-tidy remain authoritative for depth;
 # this gate is the portable rg bar for modern C++ smells.
 #
@@ -36,24 +37,27 @@ FILT="$TMPDIR_GATE/filt"
 
 # single-walk smell set
 # SCAN_PATS match source lines. CLASS_PATS match rg "path:line:code" output.
-IDS=(raw_new raw_delete c_cast sprintf)
+IDS=(raw_new raw_delete c_cast sprintf atoi)
 SCAN_PATS=(
   '\bnew[[:space:]]+[A-Za-z_][A-Za-z0-9_:<>,[:space:]]*[\(\[]'
   '\bdelete[[:space:]]*(\[[^\]]*\]|[[:space:]]+[A-Za-z_~])'
   '(?:^|[^[:alnum:]_])\([[:space:]]*(?:const[[:space:]]+)?(?:unsigned[[:space:]]+)?(?:void|char|short|int|long|float|double|bool|size_t|u?int[0-9]+_t)[[:space:]]*\*+[[:space:]]*\)[[:space:]]*(?:[[:alnum:]_(]|&[[:alpha:]_])|(?:^|[^[:alnum:]_])\([[:space:]]*(?:unsigned[[:space:]]+)?(?:char|short|int|long|float|double|bool|size_t|u?int[0-9]+_t)[[:space:]]*\)[[:space:]]*(?:[[:alnum:]_(]|&[[:alpha:]_])'
   '\b(sprintf|vsprintf)[[:space:]]*\('
+  '\b(atoi|atol|atoll|atof)[[:space:]]*\('
 )
 CLASS_PATS=(
   '\bnew[[:space:]]+[A-Za-z_][A-Za-z0-9_:<>,[:space:]]*[\(\[]'
   '\bdelete[[:space:]]*(\[[^\]]*\]|[[:space:]]+[A-Za-z_~])'
   '(?:^|[^[:alnum:]_])\([[:space:]]*(?:const[[:space:]]+)?(?:unsigned[[:space:]]+)?(?:void|char|short|int|long|float|double|bool|size_t|u?int[0-9]+_t)[[:space:]]*\*+[[:space:]]*\)[[:space:]]*(?:[[:alnum:]_(]|&[[:alpha:]_])|(?:^|[^[:alnum:]_])\([[:space:]]*(?:unsigned[[:space:]]+)?(?:char|short|int|long|float|double|bool|size_t|u?int[0-9]+_t)[[:space:]]*\)[[:space:]]*(?:[[:alnum:]_(]|&[[:alpha:]_])'
   '\b(sprintf|vsprintf)[[:space:]]*\('
+  '\b(atoi|atol|atoll|atof)[[:space:]]*\('
 )
 MSGS=(
   'raw new banned (prefer unique_ptr/make_unique; cpp-rg-allow with rationale)'
   'raw delete banned (prefer unique_ptr RAII; cpp-rg-allow with rationale)'
   'C-style cast banned (prefer static_cast/reinterpret_cast/const_cast; cpp-rg-allow with rationale)'
   'sprintf/vsprintf banned (prefer fmt/std::format/snprintf; cpp-rg-allow with rationale)'
+  'atoi/atol/atoll/atof banned (prefer std::from_chars or strtol/strtoll/strtod with endptr; cpp-rg-allow with rationale; templates/from_chars_check.cpp)'
 )
 
 PAT_ARGS=()
