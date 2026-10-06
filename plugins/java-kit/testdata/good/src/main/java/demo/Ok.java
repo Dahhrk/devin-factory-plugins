@@ -5,6 +5,8 @@ import java.lang.System.Logger.Level;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 @org.jspecify.annotations.NullMarked
 public class Ok {
@@ -18,6 +20,10 @@ public class Ok {
     PreparedStatement ps = conn.prepareStatement("SELECT name FROM users WHERE id = ?");
     ps.setLong(1, id);
     return ps.executeQuery();
+  }
+
+  public static DateFormat dateFormat() {
+    return new SimpleDateFormat("yyyy-MM-dd");
   }
 
   /* Named boundary docs; intentional legacy uses java-rg-allow on the smell line. */
