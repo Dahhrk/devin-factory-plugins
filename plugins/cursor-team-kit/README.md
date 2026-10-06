@@ -49,11 +49,12 @@ Internal-style workflows for CI, code review, shipping, and test reliability. Th
 
 **Default (local preview):** UI or page preview asks apply `local-preview` when a desk is present (reserved port + desk UI); otherwise fall back to `control-ui`. Typing `/local-preview` is optional; the skill names the contract.
 
-**Default (encode-in-codebase):** durable corrections and conventions go in CODEOWNERS, AGENTS.md, repo skills, BUGBOT.md, or CI. Typing `/encode-in-codebase` is optional; the skill names the contract.
-
 **Default (event hooks):** event-hook or before-gate automation applies `event-hooks` (distinct from `software-factory-gates`). Typing `/event-hooks` is optional; the skill names the contract.
 
 **Default (fleet / desk drive):** multi-workstream asks and desk agent drive (prompt / wait / loop / hand-off / review; never answer for the human) stay on `fleet-orchestrate`. No second orchestrate skill.
+
+**Default (encode-in-codebase):** durable corrections and conventions go in CODEOWNERS, AGENTS.md, repo skills, BUGBOT.md, or CI. Typing `/encode-in-codebase` is optional; the skill names the contract.
+
 
 ## Installation
 
