@@ -86,7 +86,14 @@ self-provisions packs and the kitchen before touching the repo.
    rewrite, `grill-me` for adversarial stress-testing before build, and fresh
    `verify-this` evidence before shipping falsifiable done or substance merge
    claims, and `refactor-first` for non-trivial behavior changes in existing
-   modules (refactor with tests green, then implement on the clean structure).
+   modules (refactor with tests green, then implement on the clean structure),
+   `progressive-disclosure` for public API / library / props / CLI / SDK
+   seams (zero-config default, complexity opt-in, call-site-first),
+   `pit-of-success` for public-seam footgun tests (obvious call correct;
+   misuse hard), `zero-tech-debt` when reshaping toward a known target
+   (delete dead compatibility; rework from the intended end state), and
+   `ux-flow-plan` for user-facing feature work (current vs desired UX flow
+   trees, then file/function anchors).
    Ambient `/factory-status` stays quiet when healthy and pings only
    on real drift.
    `/factory-status` remains the health sweep.
