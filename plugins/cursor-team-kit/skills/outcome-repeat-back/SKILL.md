@@ -25,6 +25,10 @@ path. It does not replace that default.
    matching default skill). Do not restate again mid-task unless the
    goal changed.
 
+Ignore the model's own time estimates. Fire the work off with a clear
+**Done means** and let it run. Never schedule, gate, or promise anything
+on an ETA the model gave.
+
 ## Why
 
 A dump of intent without a restated outcome is how agents build the

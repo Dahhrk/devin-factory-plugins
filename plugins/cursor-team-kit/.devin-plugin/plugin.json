@@ -1,7 +1,7 @@
 {
   "name": "cursor-team-kit",
-  "version": "0.1.21",
-  "description": "Dark factory conversion of the public MIT-licensed cursor-team-kit Cursor plugin: deslop, verify-this, control-cli, control-ui, and PR/CI helpers, repackaged as Devin Agent Skills, plus orwell-prose plain writing, figma-from-system UI default, product-debate default, outcome-repeat-back, results-not-homework, fleet-orchestrate, teach-to-skill, leave-machine-clean, routine-by-default, harness-not-training, software-factory-gates, design-control-loop, improve-agents-md, design-eng, review-animations, animation-vocabulary, pick-ui-library, find-animation-opportunities, grill-me, refactor-first, progressive-disclosure, pit-of-success, zero-tech-debt, ux-flow-plan, code-refactor-review, prepare-branch-context, create-draft-pr, parallel-task, parallel-pr-followup, e2e-verify, inference-perf.",
+  "version": "0.1.22",
+  "description": "Dark factory conversion of the public MIT-licensed cursor-team-kit Cursor plugin: deslop, verify-this, control-cli, control-ui, and PR/CI helpers, repackaged as Devin Agent Skills, plus orwell-prose plain writing, figma-from-system UI default, product-debate default, outcome-repeat-back, results-not-homework, fleet-orchestrate, teach-to-skill, leave-machine-clean, routine-by-default, harness-not-training, software-factory-gates, design-control-loop, improve-agents-md, design-eng, review-animations, animation-vocabulary, pick-ui-library, find-animation-opportunities, grill-me, refactor-first, progressive-disclosure, pit-of-success, zero-tech-debt, ux-flow-plan, code-refactor-review, prepare-branch-context, create-draft-pr, parallel-task, parallel-pr-followup, e2e-verify, inference-perf, perf-watch.",
   "author": {
     "name": "Dark factory"
   },
