@@ -60,9 +60,11 @@ absent, this skill still works.
 ## Overlap
 
 `fleet-orchestrate` owns multi-workstream parent + specialists with
-holds. `one-shot-task` owns the default single-session route.
-`create-draft-pr` owns the draft PR exit. This skill owns parallel
-kickoff of one focused task without local `ga`/tmux/Pi.
+holds, and desk agent drive (prompt / wait / loop / hand-off / review)
+when a desk CLI is present. `one-shot-task` owns the default
+single-session route. `create-draft-pr` owns the draft PR exit.
+`desk-boxes` owns worktree and session orientation. This skill owns
+parallel kickoff of one focused task without local `ga`/tmux/Pi.
 
 ## Fail closed
 
