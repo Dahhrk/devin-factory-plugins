@@ -1,6 +1,6 @@
 ---
 name: fleet-orchestrate
-description: Default when an ask spans multiple workstreams (frontend, backend, research, docs, CI, review, QA). Parent orchestrator plus specialists with clear ownership; ordered plate with merge holds; parent waits on children. Agents start here automatically; slash optional.
+description: Default when an ask spans multiple workstreams (frontend, backend, research, docs, CI, review, QA), or when driving other coding agents on a desk (prompt, wait, check, loop, hand-off, review). Parent orchestrator plus specialists with clear ownership; ordered plate with merge holds; parent waits on children; never answer for the human. Agents start here automatically; slash optional.
 ---
 
 # Fleet orchestrate
@@ -34,11 +34,65 @@ not an always-on Non-negotiable; this skill is the default).
 7. Single-workstream asks stay on `one-shot-task` / Feature. Do not fan
    out for show.
 
+
+## Desk agent drive
+
+When a desk CLI is present and the ask is to delegate, parallelise, hand
+off, get a second opinion, or keep going until a check passes with
+another agent, use these primitives (box form; on a laptop name the box
+first). Inspired by Berth orchestrate patterns; rewritten here so we do
+not ship a duplicate skill.
+
+```sh
+desk task new shop/checkout-tests --agent codex --prompt "…" --open tab
+desk session send NAME "Also cover refunds." --json
+desk session wait NAME --turn 'NAME#3' --timeout 5m --json
+desk exec shop/checkout -- pnpm test
+```
+
+- Start agents with `--agent ID --prompt TEXT`, never a raw vendor
+  command string. `--open split|tab` puts them in front of the user
+  (see `desk-boxes`).
+- `session send` types one prompt and returns a turn id. Wait on that
+  turn. No clocks, no polling the screen.
+- The box refuses to type into an agent that is `waiting` for someone.
+  Never force an answer. Tell the user who needs them and why.
+- On retry, pass the same idempotency key so the prompt is not typed
+  twice.
+- After starting long work, end your turn and let the desk report back.
+  Short waits (about a minute) may use `session wait` in steps that fit
+  the shell tool timeout.
+- Prefer a new worktree (`task new`) over two agents editing the same
+  files. Worktrees do not share uncommitted changes.
+- Durable run templates when the desk supports them: loop, review,
+  handoff, broadcast, attempts, fix-ci, address-review, exec. A run
+  waiting at a gate is the user's to approve or reject. Never decide a
+  gate yourself.
+- Loop until a check passes: prompt, wait, run the check, send back only
+  the failing lines, until pass, rounds run out, or the agent waits.
+- Hand off: write a short handoff note (Done, Left, Decisions, Gotchas;
+  at most 30 lines, paths not code), then start a fresh agent in its own
+  worktree pointed at that note.
+- Review: a read-only second agent, or a split the user can see. List
+  bugs first. Do not edit files in a review-only turn.
+- Fan out several tasks, then end your turn; reports that land together
+  arrive as one message.
+- Never put secrets in prompts; they are typed into a terminal the user
+  reads.
+- Stop when the goal is met. Report what each agent did and where.
+
+When no desk is present, keep the Route below (cloud agents, local
+subagents, ordered plate). `parallel-task` owns one focused parallel
+kickoff without requiring tmux or a Pi harness.
+
 ## Fail closed
 
 Stop and report when ownership is unclear, a child returns no artifact,
 or verify-this is `NOT VERIFIED` / `INCONCLUSIVE` on a claim the Done
-means needs. Do not invent green. Do not self-merge.
+means needs. Do not invent green. Do not self-merge. When a desk agent
+turn ends `waiting`, or the box refuses a send because the agent waits,
+tell the user which agent needs them and why. Do not send "yes", approve
+permissions, or pick options for them.
 
 ## Autopilot stays off
 

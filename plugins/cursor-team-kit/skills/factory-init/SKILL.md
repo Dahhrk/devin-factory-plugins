@@ -93,7 +93,13 @@ self-provisions packs and the kitchen before touching the repo.
    misuse hard), `zero-tech-debt` when reshaping toward a known target
    (delete dead compatibility; rework from the intended end state), and
    `ux-flow-plan` for user-facing feature work (current vs desired UX flow
-   trees, then file/function anchors).
+   trees, then file/function anchors), `desk-boxes` for box / worktree /
+   session / port / desk-config asks, `local-preview` for page preview on a
+   desk (else `control-ui`), `event-hooks` for event hooks and before-gates
+   (distinct from `software-factory-gates`), and desk agent drive on
+   `fleet-orchestrate` (no second orchestrate skill). Available:
+   `agent-cli-lanes` when seating Cursor / Claude Code / Codex / Gemini CLI /
+   OpenCode / Devin hooks.
    Ambient `/factory-status` stays quiet when healthy and pings only
    on real drift.
    `/factory-status` remains the health sweep.
