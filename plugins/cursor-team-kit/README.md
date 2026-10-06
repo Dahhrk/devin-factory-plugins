@@ -8,7 +8,7 @@ Not affiliated with or endorsed by Cursor — see
 
 Skills resolve as `/cursor-team-kit:<skill>`, e.g.
 `/cursor-team-kit:deslop`, `/cursor-team-kit:verify-this`,
-`/cursor-team-kit:one-shot-task`, `/cursor-team-kit:orwell-prose`, `/cursor-team-kit:figma-from-system`, `/cursor-team-kit:product-debate`, `/cursor-team-kit:outcome-repeat-back`, `/cursor-team-kit:results-not-homework`, `/cursor-team-kit:fleet-orchestrate`, `/cursor-team-kit:teach-to-skill`, `/cursor-team-kit:leave-machine-clean`, `/cursor-team-kit:routine-by-default`, `/cursor-team-kit:harness-not-training`, `/cursor-team-kit:software-factory-gates`, `/cursor-team-kit:design-eng`, `/cursor-team-kit:design-control-loop`, `/cursor-team-kit:improve-agents-md`, `/cursor-team-kit:grill-me`, `/cursor-team-kit:refactor-first`, `/cursor-team-kit:inference-perf`.
+`/cursor-team-kit:one-shot-task`, `/cursor-team-kit:orwell-prose`, `/cursor-team-kit:figma-from-system`, `/cursor-team-kit:product-debate`, `/cursor-team-kit:outcome-repeat-back`, `/cursor-team-kit:results-not-homework`, `/cursor-team-kit:fleet-orchestrate`, `/cursor-team-kit:teach-to-skill`, `/cursor-team-kit:leave-machine-clean`, `/cursor-team-kit:routine-by-default`, `/cursor-team-kit:harness-not-training`, `/cursor-team-kit:software-factory-gates`, `/cursor-team-kit:design-eng`, `/cursor-team-kit:design-control-loop`, `/cursor-team-kit:improve-agents-md`, `/cursor-team-kit:grill-me`, `/cursor-team-kit:refactor-first`, `/cursor-team-kit:progressive-disclosure`, `/cursor-team-kit:pit-of-success`, `/cursor-team-kit:zero-tech-debt`, `/cursor-team-kit:ux-flow-plan`, `/cursor-team-kit:inference-perf`.
 
 **Default:** every non-trivial ask is a one-shot task. Agents start on
 that route automatically (vague → `poteto-prompt` → `poteto-mode`;
@@ -99,6 +99,14 @@ is optional; the skill names the contract.
 follow refactor-first (behavior-preserving cleanup with tests green, then the
 change on the clean structure). Never both in one unverifiable diff. Typing
 `/cursor-team-kit:refactor-first` is optional; the skill names the contract.
+
+**Default (progressive-disclosure):** designing or reviewing public APIs, libraries, component props, CLI flags, or SDK surfaces applies progressive-disclosure (zero-config default, complexity opt-in, call-site-first, four layers). Typing `/cursor-team-kit:progressive-disclosure` is optional; the skill names the contract.
+
+**Default (pit-of-success):** public seams apply pit-of-success (obvious call correct; misuse hard; footgun test on the seam). Typing `/cursor-team-kit:pit-of-success` is optional; the skill names the contract.
+
+**Default (zero-tech-debt):** reshaping existing code toward a known target applies zero-tech-debt (delete dead compatibility; rework from the intended end state). Typing `/cursor-team-kit:zero-tech-debt` is optional; the skill names the contract.
+
+**Default (ux-flow-plan):** user-facing feature work applies ux-flow-plan (current vs desired UX flow trees, then file/function anchors). Typing `/cursor-team-kit:ux-flow-plan` is optional; the skill names the contract.
 
 Factory skills also include `factory-init`, `seat-kit`, `factory-status`,
 and `merge-queue` when present.
