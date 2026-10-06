@@ -27,7 +27,7 @@ All must be true. Do not claim done on prose.
 5. `bash scripts/java-nullability-gate.sh <product-root>` exits 0.
 6. Diff adds no narration comments that restate the next statement. Survivors only for non-obvious nullability / concurrency / resource constraints.
 7. Smallest correct change: prefer deletion; no new helper with one caller; no invent fake handlers for score.
-8. If System.out / SQL concat / NPE catch touched: logger / PreparedStatement / nullable contract, `java-rg-allow` on the smell line when intentional.
+8. If System.out / SQL concat / NPE catch / static DateFormat touched: logger / PreparedStatement / nullable contract / DateTimeFormatter, `java-rg-allow` on the smell line when intentional.
 9. Stricter product gates (live Checkstyle, Error Prone, NullAway) override when present. Prove on the real artifact (tests / Checkstyle / Error Prone build).
 10. Do not disable, skip, or weaken gates / expectations merely to make a build pass (PSR AI rule 11). Record what was tested and what remains uncertain.
 
@@ -75,7 +75,7 @@ Standing extras (list separately; do not fold into the 100% weighted overall unl
 
 | Extra | /10 | Prove |
 |-------|-----|-------|
-| PSR Java alignment | checklist: formatter (google-java-format/Spotless), Checkstyle/Error Prone wiring, nullability contracts, no unchecked System.out/printStackTrace/SQL concat/NPE catch |
+| PSR Java alignment | checklist: formatter (google-java-format/Spotless), Checkstyle/Error Prone wiring, nullability contracts, no unchecked System.out/printStackTrace/SQL concat/NPE catch/static DateFormat |
 | CI green | `java-rg-gate` + `java-hotpath-gate` + `java-fmt-gate` + `java-checkstyle-ci-gate` + `java-nullability-gate` PASS on the artifact; if GitHub Actions cannot run, note billing / runner and still prove local gate exit 0 |
 
 Also report Quality / Opts / Amount narrative + LOC (+/− / net) and compare history across runs (`R1`-`Rn` or dates internally; descriptive titles user-facing).

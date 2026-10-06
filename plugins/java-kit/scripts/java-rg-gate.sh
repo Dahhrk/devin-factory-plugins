@@ -2,7 +2,8 @@
 # Tier 0: Programming Standards Reference Java smells (portable regex bar).
 # PSR: formatter; Checkstyle/Error Prone; nullability; SQL/string concat; System.out.
 # Practical encode (language-farm): System.out/err, printStackTrace, SQL string concat,
-# catch NullPointerException.
+# catch NullPointerException, static SimpleDateFormat/DateFormat field (not thread-safe;
+# prefer java.time.format.DateTimeFormatter).
 # Product formatter / Checkstyle / nullability tooling remain authoritative for depth;
 # this gate is the portable rg bar for Java trust smells.
 #
@@ -36,24 +37,27 @@ ALL="$TMPDIR_GATE/all"
 FILT="$TMPDIR_GATE/filt"
 
 # single-walk smell set
-IDS=(system_out print_stack sql_concat npe_catch)
+IDS=(system_out print_stack sql_concat npe_catch static_dateformat)
 SCAN_PATS=(
   '\bSystem\.(out|err)\.print(ln|f)?[[:space:]]*\('
   '\.[[:space:]]*printStackTrace[[:space:]]*\('
   '"(SELECT|INSERT|UPDATE|DELETE|WITH)[[:space:]][^"]*"[[:space:]]*\+|\+[[:space:]]*"(SELECT|INSERT|UPDATE|DELETE|[[:space:]]+WHERE|[[:space:]]+FROM|[[:space:]]+AND|[[:space:]]+OR)[^"]*"'
   'catch[[:space:]]*\([[:space:]]*NullPointerException\b'
+  '\bstatic\b[^(=;]*\b(Simple)?DateFormat[[:space:]]+[A-Za-z_][A-Za-z0-9_]*[[:space:]]*(=|;)'
 )
 CLASS_PATS=(
   '\bSystem\.(out|err)\.print(ln|f)?[[:space:]]*\('
   '\.[[:space:]]*printStackTrace[[:space:]]*\('
   '"(SELECT|INSERT|UPDATE|DELETE|WITH)[[:space:]][^"]*"[[:space:]]*\+|\+[[:space:]]*"(SELECT|INSERT|UPDATE|DELETE|[[:space:]]+WHERE|[[:space:]]+FROM|[[:space:]]+AND|[[:space:]]+OR)[^"]*"'
   'catch[[:space:]]*\([[:space:]]*NullPointerException\b'
+  '\bstatic\b[^(=;]*\b(Simple)?DateFormat[[:space:]]+[A-Za-z_][A-Za-z0-9_]*[[:space:]]*(=|;)'
 )
 MSGS=(
   'System.out/err print banned (prefer logger; java-rg-allow with rationale)'
   'printStackTrace banned (prefer logger; java-rg-allow with rationale)'
   'SQL/string concat banned (prefer PreparedStatement / named params; java-rg-allow with rationale)'
   'catch NullPointerException banned (fix nullable contracts; java-rg-allow with rationale)'
+  'static SimpleDateFormat/DateFormat field banned (not thread-safe; prefer static final DateTimeFormatter; java-rg-allow with rationale; templates/date_time_formatter.java)'
 )
 
 PAT_ARGS=()

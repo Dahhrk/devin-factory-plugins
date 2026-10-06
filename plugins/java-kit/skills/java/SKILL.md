@@ -1,6 +1,6 @@
 ---
 name: java
-description: Java PSR bar. google-java-format or Spotless, Checkstyle/Error Prone where practical, nullability contracts, no System.out/err print, no printStackTrace, no SQL string concat, no catch NullPointerException. Use when reading or editing any .java / build.gradle / pom.xml in a factory product.
+description: Java PSR bar. google-java-format or Spotless, Checkstyle/Error Prone where practical, nullability contracts, no System.out/err print, no printStackTrace, no SQL string concat, no catch NullPointerException, no static SimpleDateFormat/DateFormat field. Use when reading or editing any .java / build.gradle / pom.xml in a factory product.
 paths: ["**/*.java", "**/build.gradle", "**/build.gradle.kts", "**/pom.xml", "**/spotless.gradle", "**/checkstyle.xml", "**/.github/workflows/**"]
 ---
 
@@ -17,7 +17,8 @@ Apply pstack **principle-encode-lessons-in-structure** first. This skill encodes
 5. **printStackTrace** — no `printStackTrace(` without allow. Prefer logger. Gate: `scripts/java-rg-gate.sh`.
 6. **SQL/string concat** — no `"SELECT..."` + / + `" WHERE..."` into queries. Prefer `PreparedStatement` / named params. Gate: `scripts/java-rg-gate.sh`. Template: `templates/prepared_statement.java`.
 7. **catch NullPointerException** — banned; fix nullable contracts instead. Gate: `scripts/java-rg-gate.sh`.
-8. **Hot-path** — `scripts/java-hotpath-gate.sh` fails if rg-gate wall exceeds `JAVA_RG_BUDGET_MS` (default 250ms).
+8. **Static DateFormat** - no `static` `SimpleDateFormat` / `DateFormat` field (mutable, not thread-safe when shared). Prefer `static final DateTimeFormatter` (java.time). Gate: `scripts/java-rg-gate.sh` (single-walk). Template: `templates/date_time_formatter.java`.
+9. **Hot-path** — `scripts/java-hotpath-gate.sh` fails if rg-gate wall exceeds `JAVA_RG_BUDGET_MS` (default 250ms).
 
 ## Rules
 

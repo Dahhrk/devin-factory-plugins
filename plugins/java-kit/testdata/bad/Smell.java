@@ -3,8 +3,11 @@ package demo;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 
 public class Smell {
+  private static final SimpleDateFormat STAMP = new SimpleDateFormat("yyyy-MM-dd");
+
   public void logBad() {
     System.out.println("bad");
   }

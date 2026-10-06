@@ -64,8 +64,12 @@ require_grep "$ROOT/testdata/bad/Smell.java" 'NullPointerException' "bad fixture
 require_grep "$ROOT/testdata/good/src/main/java/demo/Ok.java" 'java-rg-allow' "good fixture encodes allow marker"
 require_grep "$ROOT/templates/prepared_statement.java" 'PreparedStatement' "prepared_statement template encodes PreparedStatement"
 require_grep "$ROOT/templates/logger_not_stdout.java" 'Logger' "logger_not_stdout template encodes Logger"
+require_grep "$HERE/java-rg-gate.sh" 'static_dateformat' "rg gate encodes static_dateformat"
+require_grep "$WORKDIR/bad-rg.out" 'static SimpleDateFormat' "rg flags static SimpleDateFormat field on bad (factory method on good passes)"
+require_grep "$ROOT/testdata/bad/Smell.java" 'static final SimpleDateFormat' "bad fixture encodes static SimpleDateFormat"
+require_grep "$ROOT/templates/date_time_formatter.java" 'DateTimeFormatter' "date_time_formatter template encodes DateTimeFormatter"
 
-for f in prepared_statement.java logger_not_stdout.java spotless.gradle checkstyle/checkstyle.xml github-workflows/java-gates.yml; do
+for f in prepared_statement.java logger_not_stdout.java date_time_formatter.java spotless.gradle checkstyle/checkstyle.xml github-workflows/java-gates.yml; do
   if [[ ! -f "$ROOT/templates/$f" ]]; then
     echo "FAIL selfcheck: missing templates/$f"; fail=1
   else echo "ok: template $f present"; fi

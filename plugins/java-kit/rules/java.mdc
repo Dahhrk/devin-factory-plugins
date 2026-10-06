@@ -15,6 +15,7 @@ Follow skills **java** and **poteto-java** when applicable.
 - No `printStackTrace` without `java-rg-allow` + rationale; prefer a logger
 - No SQL/string concat without `java-rg-allow` + rationale; prefer `PreparedStatement`
 - No `catch (NullPointerException` without `java-rg-allow` + rationale; fix nullable contracts
+- No static `SimpleDateFormat` / `DateFormat` field without `java-rg-allow` + rationale; prefer `static final DateTimeFormatter` (`templates/date_time_formatter.java`)
 - Required product gates: `java-rg-gate` + `java-hotpath-gate` + `java-fmt-gate` + `java-checkstyle-ci-gate` + `java-nullability-gate`. Do not disable checks to force green.
 - Prove runtime behaviour with tests / Checkstyle / Error Prone, not "fmt pass" alone
 
