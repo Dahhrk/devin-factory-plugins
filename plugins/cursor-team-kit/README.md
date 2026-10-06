@@ -53,6 +53,9 @@ Internal-style workflows for CI, code review, shipping, and test reliability. Th
 
 **Default (fleet / desk drive):** multi-workstream asks and desk agent drive (prompt / wait / loop / hand-off / review; never answer for the human) stay on `fleet-orchestrate`. No second orchestrate skill.
 
+**Default (encode-in-codebase):** durable corrections and conventions go in CODEOWNERS, AGENTS.md, repo skills, BUGBOT.md, or CI. Typing `/encode-in-codebase` is optional; the skill names the contract.
+
+
 ## Installation
 
 ```bash
@@ -124,6 +127,9 @@ Internal-style workflows for CI, code review, shipping, and test reliability. Th
 | `e2e-verify` | Require a real e2e path for end-to-end product claims (pairs with verify-this) |
 | `inference-perf` | Operational checks for LLM inference serving performance (TTFT, TPOT, KV cache, parallelism, quantization) |
 | `perf-watch` | Routine that watches production traces and metrics; on a regression a worker reproduces on staging, fixes, and opens a draft PR with before and after numbers |
+| `encode-in-codebase` | Default: put durable guidance in CODEOWNERS, AGENTS, skills, Bugbot rules, or CI (named contract) |
+| `understand-code` | Living docs + visualize diagrams + short TLA+/inline summaries for knowing the system |
+| `bugbot-dogfood` | Enable Bugbot, keep BUGBOT.md, fix real findings, dismiss noise with disproof |
 
 ### Agents
 
