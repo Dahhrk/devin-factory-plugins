@@ -63,8 +63,12 @@ require_grep "$ROOT/testdata/bad/Smell.cs" '\.Result' "bad fixture encodes block
 require_grep "$ROOT/testdata/good/src/Ok.cs" 'csharp-rg-allow' "good fixture encodes allow marker"
 require_grep "$ROOT/templates/parameterized_command.cs" 'SqlParameter|Parameters\.Add' "parameterized_command template encodes params"
 require_grep "$ROOT/templates/logger_not_console.cs" 'ILogger' "logger_not_console template encodes ILogger"
+require_grep "$HERE/csharp-rg-gate.sh" 'lock_public' "rg gate encodes lock_public"
+require_grep "$WORKDIR/bad-rg.out" 'lock \(this\)' "rg flags lock (this) on bad (private lock object on good passes)"
+require_grep "$ROOT/testdata/bad/Smell.cs" 'lock \(this\)' "bad fixture encodes lock (this)"
+require_grep "$ROOT/templates/private_lock.cs" 'readonly Lock' "private_lock template encodes private readonly Lock"
 
-for f in parameterized_command.cs logger_not_console.cs editorconfig/.editorconfig github-workflows/csharp-gates.yml Directory.Build.props; do
+for f in parameterized_command.cs logger_not_console.cs private_lock.cs editorconfig/.editorconfig github-workflows/csharp-gates.yml Directory.Build.props; do
   if [[ ! -f "$ROOT/templates/$f" ]]; then
     echo "FAIL selfcheck: missing templates/$f"; fail=1
   else echo "ok: template $f present"; fi

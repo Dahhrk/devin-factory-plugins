@@ -1,6 +1,6 @@
 ---
 name: csharp
-description: C# PSR bar. dotnet format / .editorconfig, Roslyn analyzers, nullable enable, no Console.WriteLine in libs, no SQL string concat, no blocking on async. Use when reading or editing any .cs / .csproj / Directory.Build.props in a factory product.
+description: C# PSR bar. dotnet format / .editorconfig, Roslyn analyzers, nullable enable, no Console.WriteLine in libs, no SQL string concat, no blocking on async, no lock on this/typeof/string literal. Use when reading or editing any .cs / .csproj / Directory.Build.props in a factory product.
 paths: ["**/*.cs", "**/*.csproj", "**/Directory.Build.props", "**/Directory.Build.targets", "**/.editorconfig", "**/*.sln", "**/.github/workflows/**"]
 ---
 
@@ -16,7 +16,8 @@ Apply pstack **principle-encode-lessons-in-structure** first. This skill encodes
 4. **Console.WriteLine in libs** — no `Console.Write` / `Console.WriteLine` / `Console.Error.Write` without allow. Prefer `ILogger` / `ILogger<T>`. Gate: `scripts/csharp-rg-gate.sh` (single-walk). Template: `templates/logger_not_console.cs`.
 5. **SQL/string concat** — no `"SELECT..."` + / + `" WHERE..."` into queries. Prefer parameterized `SqlCommand` / Dapper. Gate: `scripts/csharp-rg-gate.sh`. Template: `templates/parameterized_command.cs`.
 6. **Blocking on async** — no `.Result` / `.Wait(` / `GetAwaiter().GetResult()` without allow. Prefer `await`. Gate: `scripts/csharp-rg-gate.sh`.
-7. **Hot-path** — `scripts/csharp-hotpath-gate.sh` fails if rg-gate wall exceeds `CSHARP_RG_BUDGET_MS` (default 250ms).
+7. **Lock identity** - no `lock (this)` / `lock (typeof(...))` / `lock ("literal")`. Callers can take the same lock on a public instance or Type, and string literals are interned (C# lock statement guidelines). Lock a private readonly `System.Threading.Lock` (.NET 9+) or `object`. Gate: `scripts/csharp-rg-gate.sh` (single-walk). Template: `templates/private_lock.cs`.
+8. **Hot-path** — `scripts/csharp-hotpath-gate.sh` fails if rg-gate wall exceeds `CSHARP_RG_BUDGET_MS` (default 250ms).
 
 ## Rules
 

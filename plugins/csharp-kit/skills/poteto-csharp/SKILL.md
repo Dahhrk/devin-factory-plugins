@@ -27,7 +27,7 @@ All must be true. Do not claim done on prose.
 5. `bash scripts/csharp-nullable-gate.sh <product-root>` exits 0.
 6. Diff adds no narration comments that restate the next statement. Survivors only for non-obvious nullable / concurrency / disposal constraints.
 7. Smallest correct change: prefer deletion; no new helper with one caller; no invent fake handlers for score.
-8. If Console / SQL concat / blocking-async touched: ILogger / parameterized command / await, `csharp-rg-allow` on the smell line when intentional.
+8. If Console / SQL concat / blocking-async / lock identity touched: ILogger / parameterized command / await / private lock object, `csharp-rg-allow` on the smell line when intentional.
 9. Stricter product gates (live `dotnet format`, analyzers, nullable warnings-as-errors) override when present. Prove on the real artifact (tests / analyzers / format).
 10. Do not disable, skip, or weaken gates / expectations merely to make a build pass (PSR AI rule 11). Record what was tested and what remains uncertain.
 
@@ -75,7 +75,7 @@ Standing extras (list separately; do not fold into the 100% weighted overall unl
 
 | Extra | /10 | Prove |
 |-------|-----|-------|
-| PSR C# alignment | checklist: formatter (dotnet format / .editorconfig), Roslyn analyzers wiring, nullable enable, no unchecked Console.WriteLine / SQL concat / blocking-async |
+| PSR C# alignment | checklist: formatter (dotnet format / .editorconfig), Roslyn analyzers wiring, nullable enable, no unchecked Console.WriteLine / SQL concat / blocking-async / lock on this-typeof-string |
 | CI green | `csharp-rg-gate` + `csharp-hotpath-gate` + `csharp-fmt-gate` + `csharp-analyzers-gate` + `csharp-nullable-gate` PASS on the artifact; if GitHub Actions cannot run, note billing / runner and still prove local gate exit 0 |
 
 Also report Quality / Opts / Amount narrative + LOC (+/− / net) and compare history across runs (`R1`-`Rn` or dates internally; descriptive titles user-facing).

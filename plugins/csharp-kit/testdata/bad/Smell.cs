@@ -21,4 +21,14 @@ public class Smell
     {
         return task.Result;
     }
+
+    private int _count;
+
+    public void LockBad()
+    {
+        lock (this)
+        {
+            _count++;
+        }
+    }
 }

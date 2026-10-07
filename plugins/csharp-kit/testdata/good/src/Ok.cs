@@ -9,6 +9,8 @@ namespace Demo;
 public class Ok
 {
     private readonly ILogger<Ok> _log;
+    private readonly object _gate = new();
+    private int _count;
 
     public Ok(ILogger<Ok> log)
     {
@@ -26,6 +28,14 @@ public class Ok
         cmd.Parameters.Add(new SqlParameter("@id", SqlDbType.BigInt) { Value = id });
         var result = await cmd.ExecuteScalarAsync(ct);
         return result as string;
+    }
+
+    public void LockOk()
+    {
+        lock (_gate)
+        {
+            _count++;
+        }
     }
 
     /* Named boundary docs; intentional legacy uses csharp-rg-allow on the smell line. */
