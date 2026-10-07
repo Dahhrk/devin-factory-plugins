@@ -14,6 +14,7 @@ Follow skills **csharp** and **poteto-csharp** when applicable.
 - No `Console.Write` / `Console.WriteLine` / `Console.Error.Write` in libraries without `csharp-rg-allow` + rationale; prefer `ILogger` / `ILogger<T>`
 - No SQL/string concat without `csharp-rg-allow` + rationale; prefer parameterized commands (`SqlParameter` / Dapper params)
 - No blocking on async (`.Result` / `.Wait(` / `GetAwaiter().GetResult()`) without `csharp-rg-allow` + rationale
+- No `lock (this)` / `lock (typeof(...))` / `lock ("...")` without `csharp-rg-allow` + rationale; lock a private readonly `Lock` or `object` (`templates/private_lock.cs`)
 - Required product gates: `csharp-rg-gate` + `csharp-hotpath-gate` + `csharp-fmt-gate` + `csharp-analyzers-gate` + `csharp-nullable-gate`. Do not disable checks to force green.
 - Prove runtime behaviour with tests / analyzers / `dotnet format`, not "fmt pass" alone
 

@@ -3,7 +3,8 @@
 # PSR: .editorconfig / Roslyn analyzers / dotnet format; nullable; SQL/string concat;
 # Console.WriteLine in libs; avoid blocking on async.
 # Practical encode (language-farm): Console.Write/WriteLine/Error.Write, SQL string
-# concat, blocking-on-async (.Result / .Wait( / GetAwaiter().GetResult()).
+# concat, blocking-on-async (.Result / .Wait( / GetAwaiter().GetResult()),
+# lock on this / typeof(...) / string literal (prefer a private readonly lock object).
 # Product formatter / analyzers / nullable tooling remain authoritative for depth;
 # this gate is the portable rg bar for C# trust smells.
 #
@@ -37,21 +38,24 @@ ALL="$TMPDIR_GATE/all"
 FILT="$TMPDIR_GATE/filt"
 
 # single-walk smell set
-IDS=(console_write sql_concat block_async)
+IDS=(console_write sql_concat block_async lock_public)
 SCAN_PATS=(
   '\bConsole\.(WriteLine|Write|Error\.Write(Line)?)\s*\('
   '"(SELECT|INSERT|UPDATE|DELETE|WITH)[[:space:]][^"]*"[[:space:]]*\+|\+[[:space:]]*"(SELECT|INSERT|UPDATE|DELETE|[[:space:]]+WHERE|[[:space:]]+FROM|[[:space:]]+AND|[[:space:]]+OR)[^"]*"'
   '\.GetAwaiter\s*\(\s*\)\s*\.GetResult\s*\(|\.Result\b|\.Wait\s*\('
+  '\block\s*\(\s*(this|typeof\s*\([^)]*\)|"[^"]*")\s*\)'
 )
 CLASS_PATS=(
   '\bConsole\.(WriteLine|Write|Error\.Write(Line)?)\s*\('
   '"(SELECT|INSERT|UPDATE|DELETE|WITH)[[:space:]][^"]*"[[:space:]]*\+|\+[[:space:]]*"(SELECT|INSERT|UPDATE|DELETE|[[:space:]]+WHERE|[[:space:]]+FROM|[[:space:]]+AND|[[:space:]]+OR)[^"]*"'
   '\.GetAwaiter\s*\(\s*\)\s*\.GetResult\s*\(|\.Result\b|\.Wait\s*\('
+  '\block\s*\(\s*(this|typeof\s*\([^)]*\)|"[^"]*")\s*\)'
 )
 MSGS=(
   'Console.Write/WriteLine in libs banned (prefer ILogger; csharp-rg-allow with rationale)'
   'SQL/string concat banned (prefer parameterized SqlCommand / Dapper; csharp-rg-allow with rationale)'
   'blocking on async banned (.Result / .Wait( / GetAwaiter().GetResult(); prefer await; csharp-rg-allow with rationale)'
+  'lock on this / typeof / string literal banned (callers or interning can take the same lock; prefer private readonly Lock or object; csharp-rg-allow with rationale)'
 )
 
 PAT_ARGS=()
